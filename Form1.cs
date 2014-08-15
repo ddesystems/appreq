@@ -14,7 +14,7 @@ using System.Management;
 using Microsoft.Win32;
 using System.Data.Sql;
 using System.Net.NetworkInformation;
-
+using System.Xml.XPath;
 
 namespace Appreq
 {
@@ -1281,6 +1281,18 @@ namespace Appreq
                 doc.Save(saveFileDialog1.FileName);     // Save to file 
             }
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (null == doc) return;
+            treeView2.Nodes.Clear();
+
+            // Check OS
+            foreach (var element in doc.XPathSelectElements("/Appl/Environment/SW/OSs/OS/Releases/Release/name"))
+            {
+                treeView2.Nodes.Add(element.Value);
+            }
         }
       }
 }
