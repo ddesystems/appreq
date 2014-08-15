@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Appl>
+  <!-- Parte "Anagrafica" Applicazione -->
+  <Id>01</Id>
+  <IdDesc>SM</IdDesc>
+  <LongDesc>saldi e Movimenti</LongDesc>
+  <!-- Parte "Versioni" Applicazione -->
+  <Versions>
+    <Version>
+      <ApplVersion>V. 3.0.1</ApplVersion>
+      <PatchVersion>V. 1.0.0.1</PatchVersion>
+      <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+      <DLLVersion>V. 4</DLLVersion>
+    </Version>
+    <Version>
+      <ApplVersion>V. 3.0.4</ApplVersion>
+      <PatchVersion>V. 1.0.0.1</PatchVersion>
+      <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+      <DLLVersion>V. 4</DLLVersion>
+    </Version>
+  </Versions>
+  <Environment>
+    <!-- Parte requisiti Software -->
+    <SW>
+      <OSs>
+        <OS name="Windows 2008">
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+        <OS name="Windows 2012">
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+      </OSs>
+      <NetFramework>
+        <Versions>
+          <Version WCFEnable="yes">3.5</Version>
+          <Version WCFEnable="yes">4.0</Version>
+          <Version WCFEnable="yes">4.5</Version>
+        </Versions>
+      </NetFramework>
+      <IIS>
+        <Versions>
+          <Version>6</Version>
+          <Version>7</Version>
+          <Version>8</Version>
+        </Versions>
+      </IIS>
+      <!-- Java -->
+      <JavaFramework>
+        <Versions>
+          <Version security-enabled="yes">6</Version>
+          <Version security-enabled="yes">7</Version>
+          <Version security-enabled="yes">8</Version>
+        </Versions>
+      </JavaFramework>
+      <!-- Client (Browser) -->
+      <Browsers>
+        <Browser>
+          <name>Internet Explorer</name>
+          <Versions>
+            <Version CompatibilityMode="yes">10</Version>
+            <Version CompatibilityMode="yes">11</Version>
+          </Versions>
+        </Browser>
+        <Browser>
+          <name>Chrome</name>
+          <Versions>
+            <Version CompatibilityMode="yes">8</Version>
+            <Version CompatibilityMode="yes">9</Version>
+          </Versions>
+        </Browser>
+      </Browsers>
+      <!-- Parte database -->
+      <Databases OnAppServer="yes">
+        <Database name="SQLSERVER 2008">
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </Database>
+        <Database name="SQLSERVER 2012">
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </Database>
+      </Databases>
+    </SW>
+    <!-- Parte requisiti Hardware -->
+    <HW>
+      <Processor>
+        <Model>Intel</Model>
+        <Model>AMD</Model>
+      </Processor>
+      <Disks>
+        <Disk>
+          <Label>Windows</Label>
+          <Letter>C</Letter>
+          <SpaceMB>8000</SpaceMB>
+        </Disk>
+        <Disk>
+          <Label>Data</Label>
+          <Letter>D</Letter>
+          <SpaceMB>16000</SpaceMB>
+        </Disk>
+      </Disks>
+      <RAM>
+        <Appl>
+          <MinQuantityMB>2000</MinQuantityMB>
+          <AdvQuantityMB>4000</AdvQuantityMB>
+        </Appl>
+        <DataBase>
+          <MinQuantityMB>4000</MinQuantityMB>
+          <AdvQuantityMB>8000</AdvQuantityMB>
+        </DataBase>
+        <OnServer>
+          <QuantityMB>8000</QuantityMB>
+        </OnServer>
+      </RAM>
+    </HW>
+    <!-- Parte requisiti Networking -->
+    <Network>
+      <TCPIP>
+        <Ports>
+          <Port open="yes">
+            <Protocols>
+              <Protocol enable="yes">UDP</Protocol>
+              <Protocol enable="yes">
+                TCP
+                <Number>80</Number>
+              </Protocol>
+            </Protocols>
+          </Port>
+          <Port open="yes">
+            <Protocols>
+              <Protocol enable="yes">UDP</Protocol>
+              <Protocol enable="yes">
+                TCP
+                <Number>443</Number>
+              </Protocol>
+            </Protocols>
+          </Port>
+        </Ports>
+      </TCPIP>
+    </Network>
+    <!-- Parte Software Dependency -->
+    <Dependencies>
+      <Dependency>
+        <!-- Parte "Anagrafica" Applicazione -->
+        <Id>02</Id>
+        <IdDesc>GANT</IdDesc>
+        <LongDesc>Gestione Anagrafe Tributaria</LongDesc>
+        <!-- Parte "Versioni" Applicazione -->
+        <Versions>
+          <Version>
+            <ApplVersion>V. 3.0.1</ApplVersion>
+            <PatchVersion>V. 1.0.0.1</PatchVersion>
+            <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+            <DLLVersion>V. 4</DLLVersion>
+          </Version>
+          <Version>
+            <ApplVersion>V. 3.0.4</ApplVersion>
+            <PatchVersion>V. 1.0.0.1</PatchVersion>
+            <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+            <DLLVersion>V. 4</DLLVersion>
+          </Version>
+        </Versions>
+      </Dependency>
+    </Dependencies>
+  </Environment>
+</Appl>
+

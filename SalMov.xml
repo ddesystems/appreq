@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Appl>
+  <Id>01</Id>
+  <IdDesc>SM</IdDesc>
+  <LongDesc>Saldi e Movimenti</LongDesc>
+  <Versions>
+    <Version>
+      <ApplVersion>V. 3.0.1</ApplVersion>
+      <PatchVersion>V. 1.0.0.1</PatchVersion>
+      <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+      <DLLVersion>V. 4</DLLVersion>
+    </Version>
+    <Version>
+      <ApplVersion>V. 3.1.1</ApplVersion>
+      <PatchVersion>V. 1.0.1.1</PatchVersion>
+      <FrameworkVersion>V. 7.4.2.0</FrameworkVersion>
+      <DLLVersion>V. 4.2</DLLVersion>
+    </Version>
+  </Versions>
+  <Environment>
+    <SW>
+      <OSs>
+        <OS>
+          <name>Windows 2008</name>
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+        <OS>
+          <name>Windows 2012</name>
+          <Releases>
+            <Release name="R1">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release name="R2">
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+      </OSs>
+      <NetFramework>
+        <Versions>
+          <Version>
+            <Name>3.5</Name>
+            <WCFEnable>yes</WCFEnable>
+          </Version>
+          <Version>
+            <Name>4.0</Name>
+            <WCFEnable>yes</WCFEnable>
+          </Version>
+          <Version>
+            <Name>4.5</Name>
+            <WCFEnable>yes</WCFEnable>
+          </Version>
+        </Versions>
+      </NetFramework>
+      <IIS>
+        <Versions>
+          <Version>1</Version>
+          <Version>2</Version>
+          <Version>3</Version>
+        </Versions>
+      </IIS>
+      <JavaFramework>
+        <Versions>
+          <Version>
+            <Name>6</Name>
+            <Security>yes</Security>
+          </Version>
+          <Version>
+            <Name>7</Name>
+            <Security>yes</Security>
+          </Version>
+          <Version>
+            <Name>8</Name>
+            <Security>yes</Security>
+          </Version>
+        </Versions>
+      </JavaFramework>
+      <Browsers>
+        <Browser>
+          <name>Internet Explorer</name>
+          <Versions>
+            <Version CompatibilityMode="yes">9</Version>
+            <Version CompatibilityMode="yes">10</Version>
+          </Versions>
+        </Browser>
+        <Browser>
+          <name>Chrome</name>
+          <Versions>
+            <Version CompatibilityMode="yes">7</Version>
+            <Version CompatibilityMode="yes">8</Version>
+          </Versions>
+        </Browser>
+      </Browsers>
+      <Databases>
+        <OnAppServer>Yes</OnAppServer>
+        <Database>
+          <name>SQLSERVER 2008</name>
+          <Releases>
+            <Release>
+              <name>R1</name>
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release>
+              <name>R1</name>
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </Database>
+        <Database>
+          <name>SQLSERVER 2012</name>
+          <Releases>
+            <Release>
+              <name>R1</name>
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+            <Release>
+              <name>R1</name>
+              <ServicePack>SP 1</ServicePack>
+              <ServicePack>SP 2</ServicePack>
+              <ServicePack>SP 3</ServicePack>
+            </Release>
+          </Releases>
+        </Database>
+      </Databases>
+    </SW>
+    <HW>
+      <Processor>
+        <Model>Intel</Model>
+        <Model>AMD</Model>
+      </Processor>
+      <Disks>
+        <Disk>
+          <Label>Windows</Label>
+          <Letter>C</Letter>
+          <SpaceMB>8000</SpaceMB>
+        </Disk>
+        <Disk>
+          <Label>Windows</Label>
+          <Letter>E</Letter>
+          <SpaceMB>4000</SpaceMB>
+        </Disk>
+      </Disks>
+      <RAM>
+        <Appl>
+          <MinQuantityMB>2000</MinQuantityMB>
+          <AdvQuantityMB>4000</AdvQuantityMB>
+        </Appl>
+        <DataBase>
+          <MinQuantityMB>4000</MinQuantityMB>
+          <AdvQuantityMB>8000</AdvQuantityMB>
+        </DataBase>
+        <OnServer>
+          <QuantityMB>8000</QuantityMB>
+        </OnServer>
+      </RAM>
+    </HW>
+    <Network>
+      <Protocols>
+        <Suite>
+          <Name>TCPIP</Name>
+          <Protocol>
+            <Name>UDP</Name>
+            <Enable>yes</Enable>
+          </Protocol>
+          <Protocol>
+            <Name>TCP</Name>
+            <Enable>yes</Enable>
+            <Ports>
+              <Port>
+                <Status>Open</Status>
+                <Number>80</Number>
+              </Port>
+              <Port>
+                <Status>Open</Status>
+                <Number>443</Number>
+              </Port>
+            </Ports>
+          </Protocol>
+        </Suite>
+      </Protocols>
+    </Network>
+    <Dependencies>
+      <Dependency>
+        <Id>02</Id>
+        <IdDesc>GANT</IdDesc>
+        <LongDesc>Gestione Anagrafe Tributaria</LongDesc>
+        <Versions>
+          <Version>
+            <ApplVersion>V. 3.0.1</ApplVersion>
+            <PatchVersion>V. 1.0.0.1</PatchVersion>
+            <FrameworkVersion>V. 7.3.2.0</FrameworkVersion>
+            <DLLVersion>V. 4</DLLVersion>
+          </Version>
+        </Versions>
+      </Dependency>
+    </Dependencies>
+  </Environment>
+</Appl>
