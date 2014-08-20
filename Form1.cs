@@ -117,15 +117,13 @@ namespace Appreq
                              Get_DataBases())),
                      new XElement("HW",
                           Get_Processor(),
+                          //TODO: deserialize disks
                           Get_Disks(),
                           Get_RAM()),
                      new XElement("Network",                          
                           Get_Network(),
                           Get_Ports()
-                          
-                                         
-                                         
-                                         ))));
+                ))));
 
 
 
@@ -628,11 +626,8 @@ namespace Appreq
             return xelem;
         }
 
-        private XElement Get_Disks()
+        private IEnumerable<Disk> Get_Disks()
         {
-
-            XElement xelem;
-
             // What to obtain:             
             //   new XElement("Disks",                                      
             //       new XElement("Disk",                                      
@@ -650,31 +645,27 @@ namespace Appreq
             //           new XElement("PercentFreeSpace", "SSD"))),                       
             //           new XElement("DriveType", "SSD"))),                       
 
-            xelem = new XElement("Disks", "");
-
-            DriveInfo[] drives = DriveInfo.GetDrives();
-
-            foreach (DriveInfo drive in drives)
+            // loop through each drive in the system
+            foreach (var drive in DriveInfo.GetDrives())
             {
-               double fspc = 0.0;
-               double tspc = 0.0;
-               double percent = 0.0;
+                var disk = new Disk
+                { 
+                    Name = drive.Name,
+                    VolumeLabel = drive.Name
+                };
 
-               fspc = drive.TotalFreeSpace;
-               tspc = drive.TotalSize;
-               percent = (fspc / tspc)*100;
-               float num = (float)percent;
-
-               xelem.Add(new XElement("Disk", 
-                             new XElement("Name", drive.Name),
-                             new XElement("VolumeLabel", drive.Name),
-                             new XElement("TotalSize", drive.TotalSize),
-                             new XElement("AvailableFreeSpace", drive.AvailableFreeSpace),
-                             new XElement("PercentFreeSpace", num),
-                             new XElement("DriveType", drive.DriveType)));
-            } 
-            
-            return xelem;
+                try
+                {
+                    disk.PercentFreeSpace = drive.TotalFreeSpace / drive.TotalSize * 100;
+                    disk.TotalSize = drive.TotalSize;
+                    disk.AvailableFreeSpace = drive.AvailableFreeSpace;
+                    disk.DriveType = drive.DriveType.ToString();
+                }
+                catch
+                {
+                }
+                yield return disk;
+            }
         }
 
         private XElement Get_RAM()
@@ -1157,7 +1148,7 @@ namespace Appreq
 
         private string GetJavaInstallationPath()
         {
-            string environmentPath = Environment.GetEnvironmentVariable("JAVA_HOME");
+            string environmentPath = System.Environment.GetEnvironmentVariable("JAVA_HOME");
             if (!string.IsNullOrEmpty(environmentPath))
             {
                 return environmentPath;

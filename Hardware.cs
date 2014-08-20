@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Xml.Serialization;
 
 namespace Appreq
 {
     public class Hardware
     {
+        [XmlArray("Disks")]
+        public Disk[] Disks { get; set; }
     }
 }

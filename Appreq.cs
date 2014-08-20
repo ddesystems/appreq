@@ -7,14 +7,14 @@ using System.Xml.Serialization;
 
 namespace Appreq
 { 
-    [XmlElement("Appl")]
+    [XmlType("Appl")]
     public class Appl
     {         
         [XmlAttribute("Environment")]
         public Environment Environment { get; set; }
     }
 
-    [XmlElement("Environment")]
+    [XmlType("Environment")]
     public class Environment
     {
         [XmlAttribute("SW")]
@@ -24,14 +24,14 @@ namespace Appreq
         public Hardware Hardware { get; set; }
     }
 
-    [XmlElement("SW")]
+    [XmlType("SW")]
     public class Software
     {
         [XmlArray("OSs")]
         public OS OS { get; set; }        
     }
 
-    [XmlElement("OS")]
+    [XmlType("OS")]
     public class OS
     {
         public string Name { get; set; }
@@ -39,12 +39,23 @@ namespace Appreq
         public OsRelease[] Release { get; set; }
     }
 
-    [XmlElement("Release")]
+    [XmlType("Release")]
     public class OsRelease
     {
         [XmlElement("name")]
         public string Name { get; set; }
         [XmlElement("ServicePack")]
         public string ServicePack { get; set; }
+    }
+
+    [XmlType("Disk")]
+    public class Disk
+    {
+        public string Name { get; set; }
+        public string VolumeLabel { get; set; }
+        public double TotalSize { get; set; }
+        public double AvailableFreeSpace { get; set; }
+        public float PercentFreeSpace { get; set; }
+        public string DriveType { get; set; }
     }
 }
