@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Xml;
+using System.Xml.Serialization;
 using System.IO;
 using System.Management;
 using Microsoft.Win32;
-using System.Data.Sql;
 using System.Net.NetworkInformation;
 using System.Xml.XPath;
 
@@ -30,12 +23,21 @@ namespace Appreq
 
         private void button1_Click(object sender, EventArgs e)
         {
-            generatedoc();
+            populateTreeView();
+            //generatedoc();
+        }
+
+        private void populateTreeView() {
+          var profiler = new SystemProfiler();
+          var app = profiler.GetData();
+          var xs = new XmlSerializer(typeof(Appl));
+          var sw = new StringWriter();          
+          xs.Serialize(sw, app);
+          System.Diagnostics.Debug.WriteLine(sw.ToString());
         }
 
         private void generatedoc()
         {
-
             // Get Installed Application information
             // Id and name
             // version
@@ -83,11 +85,57 @@ namespace Appreq
             XmlGather();
 
         }
+      //TODO: mock, remove after downgrade to .net 2.0
+      class XElement {
+        private string p;
+        private XElement xElement;
+        private IEnumerable<Disk> iEnumerable;
+        private XElement xElement_2;
+
+        public XElement(string s, params XElement[] e) { }
+        public XElement(string s, string s1) { }
+        public XElement(string s, object o) { }        
+        public XElement(params XElement[] e) { }
+
+
+        public XElement(string p, XElement xElement, IEnumerable<Disk> iEnumerable, XElement xElement_2) {
+          // TODO: Complete member initialization
+          this.p = p;
+          this.xElement = xElement;
+          this.iEnumerable = iEnumerable;
+          this.xElement_2 = xElement_2;
+        }
+      }
+
+      class XDocument {
+        private XElement xElement;
+
+        public XDocument(XDeclaration d, params XElement[] e) { }
+        public XDocument(XDocument d) { }
+
+        public XDocument(XElement xElement) {
+          // TODO: Complete member initialization
+          this.xElement = xElement;
+        }
+
+        public XmlReader CreateReader() {
+          throw new NotImplementedException();
+        }
+        public XDocument Load(XmlReader r) {
+          throw new NotImplementedException();
+        }
+      }
+      class XDeclaration {
+        public XDeclaration(string s1, string s2, string s3) { }
+      }
+
+
         private void XmlGather()
         {
             // SqlTestInfo(); --> See it can work better to gather SQL SERVER information... (lack of SP info..mmm)
 
             // Create Document
+
             doc = new XDocument(new XDeclaration("1.0", "utf-8", ""),
               // Add Root document (Don't complete at moment)
               new XElement("Appl",
@@ -141,6 +189,14 @@ namespace Appreq
 
             treeView1.Nodes.Clear();
             treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
+            
+            // TODO: experimental
+            foreach (var disk in Get_Disks())
+            {
+                var node = new TreeNode("Disks");
+                node.Nodes.Add(disk.Name);                
+                treeView1.Nodes.Add(node);
+            }
 
             tNode = treeView1.Nodes[0];
             AddNode(xmlnode, tNode);
@@ -179,9 +235,12 @@ namespace Appreq
 
         private string inquiry_OS()
         {
+          /*
             var name = (from x in new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem").Get().OfType<ManagementObject>()
                         select x.GetPropertyValue("Caption")).FirstOrDefault();
             return name != null ? name.ToString() : "Unknown";
+           */
+          throw new NotImplementedException();
         }
 
         private string Get_Release_OS() {
@@ -190,10 +249,10 @@ namespace Appreq
 
             string Version;
             var wmi = new ManagementObjectSearcher("select * from Win32_OperatingSystem")
-                .Get()
-                .Cast<ManagementObject>()
-                .First();
-
+                .Get().GetEnumerator().Current;
+                //.Cast<ManagementObject>()
+                //.First();
+          
             Version = (string)wmi["Version"];
 
             //OS.Name = ((string)wmi["Caption"]).Trim();
@@ -289,7 +348,8 @@ namespace Appreq
                     new XElement("NetFramework",
                         new XElement("Versions"));
 
-               using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+               //using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
+            using (RegistryKey ndpKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
                {
                 foreach (string versionKeyName in ndpKey.GetSubKeyNames())
                 {
@@ -306,11 +366,13 @@ namespace Appreq
                         {
                             if (sp != "" && install == "1")
                             {
+                              /*
                                 xelem.Element("Versions").Add(new XElement("Version", 
                                       new XElement("Name", name),
                                       new XElement("versionKeyName", versionKeyName),
                                       new XElement("sp", sp),
                                       new XElement("WCFEnable", "yes")));
+                               */
                             }
 
                         }
@@ -329,13 +391,15 @@ namespace Appreq
                                 Console.WriteLine(versionKeyName + "  " + name);
                             else
                             {
+                              /*
                                 if (sp != "" && install == "1")
-                                {
+                                {                                  
                                     xelem.Element("Versions").Add(new XElement("Version",
                                            new XElement("Name", name),
                                            new XElement("versionKeyName", versionKeyName),
                                            new XElement("sp", sp),
                                            new XElement("WCFEnable", "yes")));
+                                   
                                 }
                                 else if (install == "1")
                                 {
@@ -345,7 +409,7 @@ namespace Appreq
                                            new XElement("sp", "null"),
                                            new XElement("WCFEnable", "yes")));
                                 }
-
+                              */
                             }
 
                         }
@@ -396,14 +460,18 @@ namespace Appreq
                     minorVersion = (int)componentsKey.GetValue("MinorVersion", -1);
                     if (majorVersion != -1 && minorVersion != -1)
                     {
+                      /*
                         xelem.Element("Version").Add(new XElement("MajorVersion", majorVersion),
                           new XElement("MinorVersion", minorVersion));
+                       */ 
                     }
                 }
                 else
                 {
+                  /*
                    xelem.Element("Version").Add(new XElement("MajorVersion", "null"),
                       new XElement("MinorVersion", "null"));
+                   */
                 }
             }
 
@@ -436,11 +504,11 @@ namespace Appreq
             if (subKey != null)
             {
                string currentVersion = subKey.GetValue("CurrentVersion").ToString();
-               xelem.Element("Version").Add(new XElement("CurrentVersion", currentVersion), new XElement("Security", "yes"));
+               //xelem.Element("Version").Add(new XElement("CurrentVersion", currentVersion), new XElement("Security", "yes"));
             }
             else
             {
-               xelem.Element("Version").Add(new XElement("CurrentVersion", "null"), new XElement("Security", "null"));
+               //xelem.Element("Version").Add(new XElement("CurrentVersion", "null"), new XElement("Security", "null"));
             }
 
             return xelem;
@@ -476,7 +544,7 @@ namespace Appreq
             for (int i = 0; i < browserNames.Length; i++)
             {
                 RegistryKey browserKey = browserKeys.OpenSubKey(browserNames[i]);
-                xelem.Add(new XElement("Browser", new XElement("Name", (string)browserKey.GetValue(null)), new XElement("Version", "null"), new XElement("CompatibilityMode", "null")));
+                //xelem.Add(new XElement("Browser", new XElement("Name", (string)browserKey.GetValue(null)), new XElement("Version", "null"), new XElement("CompatibilityMode", "null")));
 
                 // RegistryKey browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
                 // browser.Path = (string)browserKeyPath.GetValue(null);
@@ -528,9 +596,11 @@ namespace Appreq
 
             if (aaa == null)
             {
+              /*
                 xelem.Add(new XElement("Name", "null"),
                           new XElement("Release", "null"),
                           new XElement("ServicePack", "null"));
+               * */
             }
             else
             {
@@ -547,9 +617,11 @@ namespace Appreq
                 // If nothing is returned, SQL SERVER isn't installed.
                 if (getSql.Get().Count == 0)
                 {
+                  /*
                     xelem.Add(new XElement("Name","null"),
-                              new XElement("Release", "null"),          
+                              new XElement("Release", "null"),         
                               new XElement("ServicePack", "null"));
+                   */
                 }
                 else
                 {
@@ -559,11 +631,11 @@ namespace Appreq
                         switch (sqlEngine["PropertyName"].ToString())
                         {
                              case "SKUNAME":
-                                 xelem.Add(new XElement("Release", sqlEngine["PropertyStrValue"].ToString()));
+                    //             xelem.Add(new XElement("Release", sqlEngine["PropertyStrValue"].ToString()));
                                  break;
                              
                              case "SPLEVEL":
-                                 xelem.Add(new XElement("ServicePack", sqlEngine["PropertyNumValue"].ToString()));
+                      //           xelem.Add(new XElement("ServicePack", sqlEngine["PropertyNumValue"].ToString()));
                                  break;
                          }
                      }
@@ -574,6 +646,7 @@ namespace Appreq
 
         public static IEnumerable<string> EnumCorrectWmiNameSpace()
         {
+          /*
             const string WMI_NAMESPACE_TO_USE = @"root\Microsoft\sqlserver";
             try
             {
@@ -595,6 +668,8 @@ namespace Appreq
             }
 
             return null;
+           */
+          throw new NotImplementedException();
         }
         
         private XElement Get_Processor()
@@ -617,10 +692,12 @@ namespace Appreq
             foreach (ManagementObject mgtObject in objCol)
             {
 
+              /*
                 xelem.Add(new XElement("Manufacturer", mgtObject["manufacturer"].ToString()),
                           new XElement("Name", mgtObject["name"].ToString()),
                           new XElement("Datawidth", mgtObject["datawidth"].ToString()),
                           new XElement("Maxclockspeed", mgtObject["maxclockspeed"].ToString()));
+               */
             } 
          
             return xelem;
@@ -628,34 +705,14 @@ namespace Appreq
 
         private IEnumerable<Disk> Get_Disks()
         {
-            // What to obtain:             
-            //   new XElement("Disks",                                      
-            //       new XElement("Disk",                                      
-            //           new XElement("Name", "C"),                       
-            //           new XElement("VolumeLabel", "Windows"),                       
-            //           new XElement("TotalSize", "8000")),                       
-            //           new XElement("AvailableFreeSpace", "SSD"))),                       
-            //           new XElement("PercentFreeSpace", "SSD"))),                       
-            //           new XElement("DriveType", "Harddisk"))),                       
-            //       new XElement("Disk",                                      
-            //           new XElement("Name", "C"),                       
-            //           new XElement("VolumeLabel", "Windows"),                       
-            //           new XElement("TotalSize", "4000"))),                       
-            //           new XElement("AvailableFreeSpace", "SSD"))),                       
-            //           new XElement("PercentFreeSpace", "SSD"))),                       
-            //           new XElement("DriveType", "SSD"))),                       
-
             // loop through each drive in the system
             foreach (var drive in DriveInfo.GetDrives())
             {
-                var disk = new Disk
-                { 
-                    Name = drive.Name,
-                    VolumeLabel = drive.Name
-                };
-
+                var disk = new Disk();
                 try
                 {
+                    disk.Name = drive.Name;
+                    disk.VolumeLabel = drive.Name;
                     disk.PercentFreeSpace = drive.TotalFreeSpace / drive.TotalSize * 100;
                     disk.TotalSize = drive.TotalSize;
                     disk.AvailableFreeSpace = drive.AvailableFreeSpace;
@@ -663,6 +720,7 @@ namespace Appreq
                 }
                 catch
                 {
+                    continue;
                 }
                 yield return disk;
             }
@@ -699,10 +757,12 @@ namespace Appreq
 
             foreach (ManagementObject queryObj in searcher.Get())
             {
+              /*
                 xelem.Add(new XElement("TotalVisibleMemorySize", queryObj["TotalVisibleMemorySize"].ToString()),
                           new XElement("FreePhysicalMemory", queryObj["FreePhysicalMemory"].ToString()),
                           new XElement("TotalVirtualMemorySize", queryObj["TotalVirtualMemorySize"].ToString()),
                           new XElement("FreeVirtualMemory", queryObj["FreeVirtualMemory"].ToString()));
+               */
             } 
 
             return xelem;
@@ -757,6 +817,7 @@ namespace Appreq
             
             // Get the physical adapters and sort them by their index. 
             // This is needed because they're not sorted by default
+          /*
             IList<ManagementObject> managementObjectList = mos.Get()
                                                               .Cast<ManagementObject>()
                                                               .OrderBy(p => Convert.ToUInt32(p.Properties["Index"].Value))
@@ -772,7 +833,7 @@ namespace Appreq
                     xelem.Element("NIC").Add(new XElement(pd.Name, new XElement("Value", pd.Value)));
                 }
             }
-            
+            */
             return xelem;
 
         }
@@ -815,15 +876,15 @@ namespace Appreq
                 switch (tcpi.LocalEndPoint.Port)
                 {
                     case 80:
-                       xelem.Add(new XElement("Port"), new XElement("Number", "80"), new XElement("Status", "Occupied"));
+                       //xelem.Add(new XElement("Port"), new XElement("Number", "80"), new XElement("Status", "Occupied"));
                        break;  
 
                     case 443:
-                       xelem.Add(new XElement("Port"), new XElement("Number", "443"), new XElement("Status", "Occupied"));
+                       //xelem.Add(new XElement("Port"), new XElement("Number", "443"), new XElement("Status", "Occupied"));
                        break;
 
                     default:
-                       xelem.Add(new XElement("Port"), new XElement("Number", tcpi.LocalEndPoint.Port.ToString()), new XElement("Status", "Ready"));
+                       //xelem.Add(new XElement("Port"), new XElement("Number", tcpi.LocalEndPoint.Port.ToString()), new XElement("Status", "Ready"));
                        break;
                 }
                 // tcpi.LocalEndPoint.Port.GetType
@@ -832,219 +893,6 @@ namespace Appreq
 
             return xelem;
 
-        }
-
- 
-
-        // ----------------------
-        // Demo section function
-        // ----------------------
-        private void XmlDemo()
-        {
-            // Esempio: XNamespace Appreq = "Appreq";
-
-            // Esempio: Version Element to put in a <List> function return variable
-            XElement Version = new XElement("Version",
-                             new XElement("ApplVersion", "V. 3.1.1"),
-                             new XElement("PatchVersion", "V. 1.0.1.1"),
-                             new XElement("FrameworkVersion", "V. 7.4.2.0"),
-                             new XElement("DLLVersion", "V. 4.2"));
-
-            // Create Document
-            doc = new XDocument(new XDeclaration("1.0", "utf-8", ""),
-              // Add Root document
-              new XElement("Appl",
-                new XElement("Id", "01"),
-                new XElement("IdDesc", "SM"),
-                new XElement("LongDesc", "Saldi e Movimenti"),
-                new XElement("Versions",                          
-                     new XElement("Version", 
-                         new XElement("ApplVersion", "V. 3.0.1"),
-                         new XElement("PatchVersion", "V. 1.0.0.1"),
-                         new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                         new XElement("DLLVersion", "V. 4")), Version),
-
-                new XElement("Environment",                          
-                     new XElement("SW",
-                        // OSs element
-                         new XElement("OSs",              // Loop                        
-                             new XElement("OS", 
-                                 new XElement("name", "Windows 2008"),
-                                 new XElement("Releases",              // Loop                        
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),                             
-                                         new XElement("ServicePack", "SP 1"),             // Loop                      
-                                         new XElement("ServicePack", "SP 2"),                                   
-                                         new XElement("ServicePack", "SP 3")),                                    
-                                         new XElement("Release",
-                                         new XElement("name", "R2"),                             
-                                         new XElement("ServicePack", "SP 1"),             // Loop                      
-                                         new XElement("ServicePack", "SP 2"),                                   
-                                         new XElement("ServicePack", "SP 3")))),       
-                             
-                             new XElement("OS",
-                                 new XElement("name", "Windows 2012"),
-                                 new XElement("Releases",              // Loop                        
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),                             
-                                         new XElement("ServicePack", "SP 1"),             // Loop                      
-                                         new XElement("ServicePack", "SP 2"),                                   
-                                         new XElement("ServicePack", "SP 3")),                                    
-                                     new XElement("Release",
-                                         new XElement("name", "R2"),                             
-                                         new XElement("ServicePack", "SP 1"),             // Loop                      
-                                         new XElement("ServicePack", "SP 2"),                                   
-                                         new XElement("ServicePack", "SP 3"))))), 
-
-                         new XElement("NetFramework",                                    
-                             new XElement("Versions",                          
-                                  new XElement("Version", 
-                                      new XElement("Name", "3.5"),
-                                      new XElement("WCFEnable", "yes")),
-                                  new XElement("Version", 
-                                      new XElement("Name", "4.0"),
-                                      new XElement("WCFEnable", "yes")),
-                                  new XElement("Version", 
-                                      new XElement("Name", "4.5"),
-                                      new XElement("WCFEnable", "yes")))),
-
-                         new XElement("IIS",                                    
-                             new XElement("Versions",                          
-                                  new XElement("Version", "1"),
-                                  new XElement("Version", "2"),
-                                  new XElement("Version", "3"))),
-
-                         new XElement("JavaFramework",                                    
-                             new XElement("Versions",                          
-                                  new XElement("Version",
-                                      new XElement("Name", "6"),
-                                      new XElement("Security", "yes")),
-                                  new XElement("Version",
-                                      new XElement("Name", "7"),
-                                      new XElement("Security", "yes")),
-                                  new XElement("Version",
-                                      new XElement("Name", "8"),
-                                      new XElement("Security", "yes")))),
-                             
-                         new XElement("Browsers",                                    
-                             new XElement("Browser",                          
-                                  new XElement("name", "Internet Explorer"),
-                                  new XElement("Versions",                          
-                                      new XElement("Version", new XAttribute("CompatibilityMode", "yes"), "9"),
-                                      new XElement("Version", new XAttribute("CompatibilityMode", "yes"), "10"))),
-                             new XElement("Browser",                          
-                                  new XElement("name", "Chrome"),
-                                  new XElement("Versions",                          
-                                      new XElement("Version", new XAttribute("CompatibilityMode", "yes"), "7"),
-                                      new XElement("Version", new XAttribute("CompatibilityMode", "yes"), "8")))),
-
-                         new XElement("Databases",
-                             new XElement("OnAppServer", "Yes"),                                  
-                             new XElement("Database",
-                                 new XElement("name", "SQLSERVER 2008"),                         
-                                 new XElement("Releases",                          
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),
-                                         new XElement("ServicePack", "SP 1"),
-                                         new XElement("ServicePack", "SP 2"),
-                                         new XElement("ServicePack", "SP 3")),
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),
-                                         new XElement("ServicePack", "SP 1"),
-                                         new XElement("ServicePack", "SP 2"),
-                                         new XElement("ServicePack", "SP 3")))),
-
-                             new XElement("Database",
-                                 new XElement("name", "SQLSERVER 2012"),                         
-                                 new XElement("Releases",                          
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),
-                                         new XElement("ServicePack", "SP 1"),
-                                         new XElement("ServicePack", "SP 2"),
-                                         new XElement("ServicePack", "SP 3")),
-                                     new XElement("Release",
-                                         new XElement("name", "R1"),
-                                         new XElement("ServicePack", "SP 1"),
-                                         new XElement("ServicePack", "SP 2"),
-                                         new XElement("ServicePack", "SP 3")))))),
-
-                     new XElement("HW",                          
-                         new XElement("Processor",                                      
-                             new XElement("Model", "Intel"),                       
-                             new XElement("Model", "AMD")),                       
-                         new XElement("Disks",                                      
-                             new XElement("Disk",                                      
-                                 new XElement("Label", "Windows"),                       
-                                 new XElement("Letter", "C"),                       
-                                 new XElement("SpaceMB", "8000")),                       
-                             new XElement("Disk",                                      
-                                 new XElement("Label", "Windows"),                       
-                                 new XElement("Letter", "E"),                       
-                                 new XElement("SpaceMB", "4000"))),                       
-                         new XElement("RAM",                                      
-                             new XElement("Appl",                                      
-                                 new XElement("MinQuantityMB", "2000"),                       
-                                 new XElement("AdvQuantityMB", "4000")),                       
-                             new XElement("DataBase",                                      
-                                 new XElement("MinQuantityMB", "4000"),                       
-                                 new XElement("AdvQuantityMB", "8000")),                       
-                             new XElement("OnServer",                                      
-                                 new XElement("QuantityMB", "8000")))),       
-                
-                     new XElement("Network",                          
-                         new XElement("Protocols",                                    
-                             new XElement("Suite",
-                                 new XElement("Name", "TCPIP"), 
-                                 new XElement("Protocol", 
-                                     new XElement("Name", "UDP"),
-                                     new XElement("Enable", "yes")),
-                                 new XElement("Protocol", 
-                                     new XElement("Name", "TCP"),
-                                     new XElement("Enable", "yes"),
-                                     new XElement("Ports",                                   
-                                         new XElement("Port", 
-                                             new XElement("Status", "Open"),
-                                             new XElement("Number", "80")),
-                                         new XElement("Port", 
-                                             new XElement("Status", "Open"),
-                                             new XElement("Number", "443"))))))),
-
-                     new XElement("Dependencies",                          
-                         new XElement("Dependency",                                    
-                             new XElement("Id", "02"),
-                             new XElement("IdDesc", "GANT"),
-                             new XElement("LongDesc", "Gestione Anagrafe Tributaria"),
-                            // Loop "Version"
-                             new XElement("Versions",                          
-                                  new XElement("Version", 
-                                      new XElement("ApplVersion", "V. 3.0.1"),
-                                      new XElement("PatchVersion", "V. 1.0.0.1"),
-                                      new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                                      new XElement("DLLVersion", "V. 4"))))))));
-
-            // Load in a TreeView (before Load a XmlDataDocument object from Xdocument Object)
-            XmlDataDocument xmldoc = new XmlDataDocument();
-            TreeNode tNode;
-            XmlNode xmlnode;
-
-            using (var xmlReader = doc.CreateReader())
-            {
-                xmldoc.Load(xmlReader);
-            }
-
-            xmlnode = xmldoc.ChildNodes[0];
-
-            treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-
-            tNode = treeView1.Nodes[0];
-            AddNode(xmlnode, tNode);
-
-            // Expand Treeview
-            treeView1.Nodes[0].Expand();
-
-            // Update Status Bar
-            ststatus.Text = "Caricamento Effettuato";
         }
 
         private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode)
@@ -1084,33 +932,7 @@ namespace Appreq
                     new XAttribute("firstline", c.Address1),
                     // etc
             )); */
-        }
-
-        private void List_element()
-        {
-            // Create an array of element "data" taking value from  "list" (a List<string> )
-             
-            List<string> list = new List<string>() { "Data1", "Data2", "Data3" };
-
-            XDocument doc1 =
-              new XDocument(
-                new XElement("file",
-                  new XElement("name", new XAttribute("filename", "sample")),
-                  new XElement("date", new XAttribute("modified", DateTime.Now)),
-                  new XElement("info",
-                    list.Select(x => new XElement("data", new XAttribute("value", x)))
-                  )
-                )
-              );
-
-            doc1.Save(Console.Out);
-
-        }
-
-        private void Load_document()
-        {
-            XDocument doc = XDocument.Load("pippo.xml");
-        }
+        }        
 
         private void Add_element()
         {
@@ -1269,21 +1091,14 @@ namespace Appreq
             DialogResult result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK)              // Test result.
             {
-                doc.Save(saveFileDialog1.FileName);     // Save to file 
+                //doc.Save(saveFileDialog1.FileName);     // Save to file 
             }
 
-        }
+        }        
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (null == doc) return;
-            treeView2.Nodes.Clear();
-
-            // Check OS
-            foreach (var element in doc.XPathSelectElements("/Appl/Environment/SW/OSs/OS/Releases/Release/name"))
-            {
-                treeView2.Nodes.Add(element.Value);
-            }
+            Application.Exit();
         }
       }
 }

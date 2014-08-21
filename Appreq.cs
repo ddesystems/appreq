@@ -1,48 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Appreq
 { 
     [XmlType("Appl")]
     public class Appl
-    {         
-        [XmlAttribute("Environment")]
+    {
+        [XmlElement("Environment")]
         public Environment Environment { get; set; }
     }
 
     [XmlType("Environment")]
     public class Environment
     {
-        [XmlAttribute("SW")]
+        [XmlElement("SW")]
         public Software Software { get; set; }
 
-        [XmlAttribute("HW")]
+        [XmlElement("HW")]
         public Hardware Hardware { get; set; }
     }
 
     [XmlType("SW")]
-    public class Software
-    {
-        [XmlArray("OSs")]
-        public OS OS { get; set; }        
+    public class Software {
+      [XmlArray("OSs", IsNullable = true)]
+      [XmlArrayItem("OS", typeof(OS))]
+      public OS[] OS { get; set; }        
     }
 
     [XmlType("OS")]
     public class OS
     {
-        public string Name { get; set; }
-        [XmlArray("Releases")]
-        public OsRelease[] Release { get; set; }
+      [XmlElement("Name", IsNullable = true)]
+      public string Name { get; set; }
+      [XmlArray("Releases", IsNullable = true)]
+      [XmlArrayItem("Release", typeof(OsRelease))]
+      public OsRelease[] Release { get; set; }
     }
 
     [XmlType("Release")]
     public class OsRelease
     {
-        [XmlElement("name")]
+        [XmlElement("Name")]
         public string Name { get; set; }
         [XmlElement("ServicePack")]
         public string ServicePack { get; set; }
