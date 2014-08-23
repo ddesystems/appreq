@@ -21,19 +21,30 @@ namespace Appreq
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            populateTreeView();
-            //generatedoc();
-        }
+      private void button1_Click(object sender, EventArgs e) {
+        populateTreeView();            
+      }
 
-        private void populateTreeView() {
-          var profiler = new SystemProfiler();
-          var app = profiler.GetData();
-          var xs = new XmlSerializer(typeof(Appl));
-          var sw = new StringWriter();          
-          xs.Serialize(sw, app);          
-        }
+      private void populateTreeView() {
+        var profiler = new SystemProfiler();
+        var app = profiler.GetData();
+        var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+        var xs = new XmlSerializer(typeof(Appl));
+        var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
+        using (var ms = new MemoryStream()) {
+          using (var xw = XmlWriter.Create(ms, settings)) {
+            xs.Serialize(xw, app, emptyNs);
+            var xmldoc = new XmlDocument();
+            ms.Seek(0, SeekOrigin.Begin);
+            xmldoc.Load(ms);
+            var xmlnode = xmldoc.ChildNodes[0];
+            treeView1.Nodes.Clear();
+            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
+            var tNode = treeView1.Nodes[0];
+            AddNode(xmldoc, tNode);
+          }
+        }          
+      }
 
         private void generatedoc()
         {
