@@ -34,6 +34,8 @@ namespace Appreq
     {
       [XmlElement("Name", IsNullable = true)]
       public string Name { get; set; }
+      [XmlElement("Architecture", IsNullable = true)]
+      public string Architecture { get; set; }
       [XmlArray("Releases", IsNullable = true)]
       [XmlArrayItem("Release", typeof(OsRelease))]
       public OsRelease[] Release { get; set; }

@@ -32,8 +32,7 @@ namespace Appreq
           var app = profiler.GetData();
           var xs = new XmlSerializer(typeof(Appl));
           var sw = new StringWriter();          
-          xs.Serialize(sw, app);
-          System.Diagnostics.Debug.WriteLine(sw.ToString());
+          xs.Serialize(sw, app);          
         }
 
         private void generatedoc()
@@ -188,15 +187,7 @@ namespace Appreq
             xmlnode = xmldoc.ChildNodes[0];
 
             treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-            
-            // TODO: experimental
-            foreach (var disk in Get_Disks())
-            {
-                var node = new TreeNode("Disks");
-                node.Nodes.Add(disk.Name);                
-                treeView1.Nodes.Add(node);
-            }
+            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));           
 
             tNode = treeView1.Nodes[0];
             AddNode(xmlnode, tNode);
@@ -244,7 +235,6 @@ namespace Appreq
         }
 
         private string Get_Release_OS() {
-
             // Environment.OSVersion.ToString();  // Alternative don't like ... I prefere WMI interface as follow
 
             string Version;
