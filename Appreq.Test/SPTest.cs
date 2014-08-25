@@ -26,11 +26,11 @@ namespace Appreq.Test {
     public void SerializeTest() {
       var profiler = new SystemProfiler();
       var app = profiler.GetData();
-      var xs = new XmlSerializer(typeof(Appl));
+      var xs = new XmlSerializer(typeof(App));
       var sw = new StringWriter();
       xs.Serialize(sw, app);
       using(var sr = new StringReader(sw.ToString())) {
-        var app2 = (Appl) xs.Deserialize(sr);
+        var app2 = (App) xs.Deserialize(sr);
         Assert.IsNotNull(app2);
         Assert.IsNotNull(app2.Environment);
         Assert.IsNotNull(app2.Environment.Software);

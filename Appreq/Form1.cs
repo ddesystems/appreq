@@ -1,51 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Management;
+using System.Net.NetworkInformation;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using System.IO;
-using System.Management;
 using Microsoft.Win32;
-using System.Net.NetworkInformation;
-using System.Xml.XPath;
 
-namespace Appreq
-{
-    public partial class Form1 : Form
-    {
-        private XDocument doc;
+namespace Appreq {
+  public partial class Form1 : Form {
+    private XDocument doc;
+    private App _currentProfile;
 
-        public Form1()
-        {
-            InitializeComponent();
+    public Form1() {
+        InitializeComponent();
+    }
+
+    private void button1_Click(object sender, EventArgs e) {
+      populateTreeView();
+    }
+
+    private void populateTreeView() {
+      var profiler = new SystemProfiler();
+      _currentProfile = profiler.GetData();
+      var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+      var xs = new XmlSerializer(typeof(App));
+      //var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
+      var settings = new XmlWriterSettings { OmitXmlDeclaration = false, Indent = true };
+      using (var ms = new MemoryStream()) {
+        using (var xw = XmlWriter.Create(ms, settings)) {
+          xs.Serialize(xw, _currentProfile, emptyNs);
+          var xmldoc = new XmlDocument();
+          ms.Seek(0, SeekOrigin.Begin);
+          xmldoc.Load(ms);
+          var xmlnode = xmldoc.ChildNodes[0];
+          treeView1.Nodes.Clear();
+          treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
+          var tNode = treeView1.Nodes[0];
+          AddNode(xmldoc, tNode);
         }
-
-
-      private void button1_Click(object sender, EventArgs e) {
-        populateTreeView();            
       }
+      saveAsToolStripMenuItem.Enabled = true;
+    }
 
-      private void populateTreeView() {
-        var profiler = new SystemProfiler();
-        var app = profiler.GetData();
-        var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
-        var xs = new XmlSerializer(typeof(Appl));
-        var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
-        using (var ms = new MemoryStream()) {
-          using (var xw = XmlWriter.Create(ms, settings)) {
-            xs.Serialize(xw, app, emptyNs);
-            var xmldoc = new XmlDocument();
-            ms.Seek(0, SeekOrigin.Begin);
-            xmldoc.Load(ms);
-            var xmlnode = xmldoc.ChildNodes[0];
-            treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-            var tNode = treeView1.Nodes[0];
-            AddNode(xmldoc, tNode);
-          }
-        }          
-      }
-
+    [Obsolete]
         private void generatedoc()
         {
             // Get Installed Application information
@@ -140,6 +139,7 @@ namespace Appreq
       }
 
 
+    [Obsolete]
         private void XmlGather()
         {
             // SqlTestInfo(); --> See it can work better to gather SQL SERVER information... (lack of SP info..mmm)
@@ -167,23 +167,20 @@ namespace Appreq
                 new XElement("Environment",
                      new XElement("SW",
                          new XElement("OSs",                                    
-                             Get_OS(),
+                             //Get_OS(),
                              Get_NetFramework(),
                              Get_IIS(),
                              Get_current_javaJVM(),
                              Get_Browsers(),
                              Get_DataBases())),
-                     new XElement("HW",
-                          Get_Processor(),
-                          //TODO: deserialize disks
-                          Get_Disks(),
-                          Get_RAM()),
+                     //new XElement("HW",
+                          //Get_Processor(),
+                          //Get_Disks(),
+                          //Get_RAM()),
                      new XElement("Network",                          
                           Get_Network(),
                           Get_Ports()
                 ))));
-
-
 
             // Load in a TreeView (before Load a XmlDataDocument object from Xdocument Object)
             XmlDataDocument xmldoc = new XmlDataDocument();
@@ -208,109 +205,6 @@ namespace Appreq
 
             // Update Status Bar
             ststatus.Text = "Caricamento Effettuato";
-        }
-
-        private XElement Get_OS()
-        {
-            // --- Example
-
-            //new XElement("OS",
-            //   new XElement("name", "Windows 2008"),
-            //   new XElement("Releases",              // Loop                        
-            //      new XElement("Release",
-            //          new XElement("name", "R1"),
-            //          new XElement("ServicePack", "SP 1"),             // Loop                      
-            //          new XElement("ServicePack", "SP 2"),
-            //          new XElement("ServicePack", "SP 3")),
-
-            XElement xelem =
-              new XElement("OS",
-                  new XElement("name", inquiry_OS()),
-                  new XElement("Releases",
-                      new XElement("Release",
-                          new XElement("name", Get_Release_OS()),
-                          new XElement("ServicePack", Get_SPVersion_OS()))));
-
-            return xelem;
-
-        }
-
-        private string inquiry_OS()
-        {
-          /*
-            var name = (from x in new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem").Get().OfType<ManagementObject>()
-                        select x.GetPropertyValue("Caption")).FirstOrDefault();
-            return name != null ? name.ToString() : "Unknown";
-           */
-          throw new NotImplementedException();
-        }
-
-        private string Get_Release_OS() {
-            // Environment.OSVersion.ToString();  // Alternative don't like ... I prefere WMI interface as follow
-
-            string Version;
-            var wmi = new ManagementObjectSearcher("select * from Win32_OperatingSystem")
-                .Get().GetEnumerator().Current;
-                //.Cast<ManagementObject>()
-                //.First();
-          
-            Version = (string)wmi["Version"];
-
-            //OS.Name = ((string)wmi["Caption"]).Trim();
-            //OS.Version = (string)wmi["Version"];
-            //OS.MaxProcessCount = (uint)wmi["MaxNumberOfProcesses"];
-            //OS.MaxProcessRAM = (ulong)wmi["MaxProcessMemorySize"];
-            //OS.Architecture = (string)wmi["OSArchitecture"];
-            //OS.SerialNumber = (string)wmi["SerialNumber"];
-            //OS.Build = ((string)wmi["BuildNumber"]).ToUint();
-
-            //var cpu =
-            //    new ManagementObjectSearcher("select * from Win32_Processor")
-            //    .Get()
-            //    .Cast<ManagementObject>()
-            //    .First();
-
-            //CPU.ID = (string)cpu["ProcessorId"];
-            //CPU.Socket = (string)cpu["SocketDesignation"];
-            //CPU.Name = (string)cpu["Name"];
-            //CPU.Description = (string)cpu["Caption"];
-            //CPU.AddressWidth = (ushort)cpu["AddressWidth"];
-            //CPU.DataWidth = (ushort)cpu["DataWidth"];
-            //CPU.Architecture = (CPU.CpuArchitecture)(ushort)cpu["Architecture"];
-            //CPU.SpeedMHz = (uint)cpu["MaxClockSpeed"];
-            //CPU.BusSpeedMHz = (uint)cpu["ExtClock"];
-            //CPU.L2Cache = (uint)cpu["L2CacheSize"] * (ulong)1024;
-            //CPU.L3Cache = (uint)cpu["L3CacheSize"] * (ulong)1024;
-            //CPU.Cores = (uint)cpu["NumberOfCores"];
-            //CPU.Threads = (uint)cpu["NumberOfLogicalProcessors"];
-
-            //CPU.Name =
-            //   CPU.Name
-            //   .Replace("(TM)", "™")
-            //   .Replace("(tm)", "™")
-            //   .Replace("(R)", "®")
-            //   .Replace("(r)", "®")
-            //   .Replace("(C)", "©")
-            //   .Replace("(c)", "©")
-            //   .Replace("    ", " ")
-            //   .Replace("  ", " ");
-
-            return Version;
-        }
-
-        private int Get_SPVersion_OS()
-        {
-            // Get last Service Pack Number (Use WMI)
-            int iSPVersionMajor=0;
-
-            SelectQuery query = new SelectQuery("Win32_OperatingSystem");
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
-
-            foreach (ManagementObject mo in searcher.Get()) {
-               iSPVersionMajor = int.Parse(mo["ServicePackMajorVersion"].ToString());
-            }
-
-            return iSPVersionMajor;
         }
 
         private XElement Get_NetFramework()
@@ -673,111 +567,6 @@ namespace Appreq
           throw new NotImplementedException();
         }
         
-        private XElement Get_Processor()
-        {
-
-            XElement xelem;
-
-            // What to obtain:             
-            //        new XElement("Processor",                                      
-            //            new XElement("Manufacturer", "Intel"),                       
-            //            new XElement("Name", "Xeon"),                       
-            //            new XElement("Datawidth", "xxxx"),                       
-            //            new XElement("Maxclockspeed", "3.22")),     
-
-            xelem = new XElement("Processor", "");
-
-            ManagementObjectSearcher searcher =  new ManagementObjectSearcher("SELECT  maxclockspeed, datawidth, name, manufacturer FROM  Win32_Processor");
-            ManagementObjectCollection objCol = searcher.Get();
-            
-            foreach (ManagementObject mgtObject in objCol)
-            {
-
-              /*
-                xelem.Add(new XElement("Manufacturer", mgtObject["manufacturer"].ToString()),
-                          new XElement("Name", mgtObject["name"].ToString()),
-                          new XElement("Datawidth", mgtObject["datawidth"].ToString()),
-                          new XElement("Maxclockspeed", mgtObject["maxclockspeed"].ToString()));
-               */
-            } 
-         
-            return xelem;
-        }
-
-        private IEnumerable<Disk> Get_Disks()
-        {
-            // loop through each drive in the system
-            foreach (var drive in DriveInfo.GetDrives())
-            {
-                var disk = new Disk();
-                try
-                {
-                    disk.Name = drive.Name;
-                    disk.VolumeLabel = drive.Name;
-                    disk.PercentFreeSpace = drive.TotalFreeSpace / drive.TotalSize * 100;
-                    disk.TotalSize = drive.TotalSize;
-                    disk.AvailableFreeSpace = drive.AvailableFreeSpace;
-                    disk.DriveType = drive.DriveType.ToString();
-                }
-                catch
-                {
-                    continue;
-                }
-                yield return disk;
-            }
-        }
-
-        private XElement Get_RAM()
-        {
-
-            XElement xelem;
-
-            //    new XElement("Appl",                             <---- sheeft in appl tag                                      
-            //    new XElement("DataBase",                         <---- sheeft in appl tag                                    
-            //        new XElement("MinQuantityMB", "2000"),       <---- sheeft in appl tag                     
-            //        new XElement("AdvQuantityMB", "4000")),      <---- sheeft in appl tag                          
-
-            // What to obtain:             
-            //   new XElement("RAM",                                      
-            //       new XElement("TotalVisibleMemorySize", "8000")))),        
-            //       new XElement("FreePhysicalMemory", "8000")))),        
-            //       new XElement("TotalVirtualMemorySize", "8000")))),        
-            //       new XElement("FreeVirtualMemory", "8000")))),        
-
-            xelem = new XElement("RAM", "");
-
-            ConnectionOptions connection = new ConnectionOptions();
-            connection.Impersonation = ImpersonationLevel.Impersonate;
-
-            ManagementScope scope = new ManagementScope("\\\\.\\root\\CIMV2", connection);
-            scope.Connect();
-
-            ObjectQuery query = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
-
-            foreach (ManagementObject queryObj in searcher.Get())
-            {
-              /*
-                xelem.Add(new XElement("TotalVisibleMemorySize", queryObj["TotalVisibleMemorySize"].ToString()),
-                          new XElement("FreePhysicalMemory", queryObj["FreePhysicalMemory"].ToString()),
-                          new XElement("TotalVirtualMemorySize", queryObj["TotalVirtualMemorySize"].ToString()),
-                          new XElement("FreeVirtualMemory", queryObj["FreeVirtualMemory"].ToString()));
-               */
-            } 
-
-            return xelem;
-
-            // Briefly with no 'connection' object
-            //ObjectQuery wql = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
-            //ManagementObjectSearcher searcher1 = new ManagementObjectSearcher(wql);
-            //ManagementObjectCollection results = searcher1.Get();
-
-            // foreach (ManagementObject result in results)
-            // ................ 
-        
-        }
-        
         private XElement Get_Network()
         {
 
@@ -918,75 +707,6 @@ namespace Appreq
                 inTreeNode.Text = inXmlNode.InnerText.ToString();
             }
         }
-   
-        private void Search_element() 
-        {
-            // Customers is a List<Customer>
-            // List<string> list = new List<string>() { "Data1", "Data2", "Data3" };
-
-            /* XElement customersElement = new XElement("customers",
-            customers.Select(c => new XElement("customer",
-                new XAttribute("name", c.Name),
-                new XAttribute("lastSeen", c.LastOrder)
-                new XElement("address",
-                    new XAttribute("town", c.Town),
-                    new XAttribute("firstline", c.Address1),
-                    // etc
-            )); */
-        }        
-
-        private void Add_element()
-        {
-            // Example to Add element to existent XML doc
-
-            // Create XDocument doc2
-            XDocument doc2 =
-              new XDocument(
-                new XElement("file")
-              );
-
-            // -- Create a element + Add attribute to this element
-            // -- XElement e1 = new XElement("Address");
-            // e1.Add(new XAttribute("id",44),new XAttribute("value", "label")) ;
-
-            // -- Create a element + Add sub element with related attribute
-            // XElement e1 = new XElement("Address");
-            // e1.Element("Address").Add(new XElement("pippo",
-            //    new XAttribute("id", 233),
-            //    new XAttribute("value", "label23"),
-            //    new XAttribute("desc", "mydesc")));
-            // doc2.Root.Element("file").Add(e1);
-
-            // -- Create a doc + Add element "name" + Add sub element "Address" with related attribute
-            // doc2.Element("file").Element("name").Add(new XElement("Address",
-            //        new XAttribute("id", 2),
-            //        new XAttribute("value", "label"),
-            //        new XAttribute("desc", "")));
-            // doc2.Root.Element("file").Add(e1);
-
-            // doc2.Save(Console.Out);    // Print to console
-            // doc2.Save("doc2.xml");     // Save to file 
-
-        }
-
-        private string GetJavaInstallationPath()
-        {
-            string environmentPath = System.Environment.GetEnvironmentVariable("JAVA_HOME");
-            if (!string.IsNullOrEmpty(environmentPath))
-            {
-                return environmentPath;
-            }
-
-            string javaKey = "SOFTWARE\\JavaSoft\\Java Runtime Environment\\";
-            using (Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(javaKey))
-            {
-                string currentVersion = rk.GetValue("CurrentVersion").ToString();
-                using (Microsoft.Win32.RegistryKey key = rk.OpenSubKey(currentVersion))
-                {
-                    return key.GetValue("JavaHome").ToString();
-                }
-            }
-        }
 
         // ---------------------------------------------
         // Interesting to understand SQL SERVER Status
@@ -1097,9 +817,25 @@ namespace Appreq
 
         }        
 
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+    private void exitToolStripMenuItem1_Click(object sender, EventArgs e) {
+      Application.Exit();
+    }
+
+    private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) {
+      if (null == _currentProfile) return;
+      saveFileDialog1.Filter = "XML Document | *.xml";
+      saveFileDialog1.FileName = string.Format("system.profile_{0}.xml", System.Environment.MachineName);
+      DialogResult result = saveFileDialog1.ShowDialog();
+      if (result == DialogResult.OK) {
+        try {
+          ApplicationSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
+          toolStripStatusLabel1.Text = string.Format("Saved to: {0}", saveFileDialog1.FileName);
+        } catch (Exception ex) {
+          toolStripStatusLabel1.Text = ex.Message;
         }
       }
+    }
+
+    
+  }
 }
