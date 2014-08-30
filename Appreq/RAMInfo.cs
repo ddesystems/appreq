@@ -5,13 +5,13 @@ namespace Appreq {
   [Serializable]
   public class RAMInfo {
     [XmlElement(IsNullable = true)]
-    public int? TotalVisibleMemorySize { get; set; }
+    public UInt64? TotalVisibleMemorySize { get; set; }
     [XmlElement(IsNullable = true)]
-    public int? FreePhysicalMemory { get; set; }
+    public UInt64? FreePhysicalMemory { get; set; }
     [XmlElement(IsNullable = true)]
-    public int? TotalVirtualMemorySize { get; set; }
+    public UInt64? TotalVirtualMemorySize { get; set; }
     [XmlElement(IsNullable = true)]
-    public int? FreeVirtualMemory { get; set; }
+    public UInt64? FreeVirtualMemory { get; set; }
 
     public RAMInfo Diff(RAMInfo other) {
       return new RAMInfo {

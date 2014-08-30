@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Management;
 
@@ -29,22 +28,29 @@ namespace Appreq {
 
     public List<OSInfo> GetOS() {
       var ret = new List<OSInfo>();
-      var searcher = new ManagementObjectSearcher("select * from Win32_OperatingSystem");
-      var _os = new OSInfo();
+      var searcher = new ManagementObjectSearcher(
+        @"select
+            Caption, 
+            OSArchitecture, 
+            ServicePackMajorVersion,
+            Version 
+          from 
+            Win32_OperatingSystem");
+      var os = new OSInfo();
       var release = new List<OsRelease>();
-      _os.Release = new OsRelease[] {};
-      foreach (var os in searcher.Get()) {
-        _os.Name = (string) (os["Caption"] ?? NA);
-        _os.Architecture = (string) (os["OSArchitecture"] ?? NA);
-        var sp = os["ServicePackMajorVersion"];
-        sp = sp ?? NA;
-        release.Add(new OsRelease {
-          Name = (string) (os["Version"] ?? NA),
-          ServicePack = sp.ToString()
-        });
+      os.Release = new OsRelease[] {};
+      foreach (var o in searcher.Get()) {
+        var osRelease = new OsRelease();
+        foreach (var p in o.Properties) {
+               if(p.Name == "Caption")                 { os.Name = p.Value.ToString(); } 
+          else if(p.Name == "OSArchitecture")          { os.Architecture = p.Value.ToString(); }
+          else if(p.Name == "ServicePackMajorVersion") { osRelease.ServicePack = p.Value.ToString(); }
+          else if(p.Name == "Version")                 { osRelease.Name = p.Value.ToString(); }
+        }
+        release.Add(osRelease);
+        os.Release = release.ToArray();
       }
-      _os.Release = release.ToArray();
-      ret.Add(_os);
+      ret.Add(os);
       return ret.Count > 0 ? ret : null;
     }
 
@@ -70,15 +76,24 @@ namespace Appreq {
     }
 
     public List<CPUInfo> GetCPU() {
-      var searcher = new ManagementObjectSearcher("select maxclockspeed, datawidth, name, manufacturer FROM Win32_Processor");
+      var searcher = new ManagementObjectSearcher(
+        @"select
+            MaxClockSpeed,
+            DataWidth,
+            Name,
+            Manufacturer
+          from
+            Win32_Processor");
       var ret = new List<CPUInfo>();
       foreach (var cpu in searcher.Get()) {
-        ret.Add(new CPUInfo {
-          Manufacturer = cpu["manufacturer"].ToString() ?? NA,
-          Name = cpu["name"].ToString() ?? NA,
-          Datawidth = cpu["datawidth"].ToString() ?? NA,
-          Maxclockspeed = cpu["maxclockspeed"].ToString() ?? NA
-        });        
+        var cpuInfo = new CPUInfo();
+        foreach (var p in cpu.Properties) {
+               if (p.Name == "Manufacturer")  { cpuInfo.Manufacturer = p.Value.ToString(); }
+          else if (p.Name == "Name")          { cpuInfo.Name = p.Value.ToString(); }
+          else if (p.Name == "DataWidth")     { cpuInfo.Datawidth = p.Value.ToString(); }
+          else if (p.Name == "MaxClockSpeed") { cpuInfo.Maxclockspeed = p.Value.ToString(); }
+        }
+        ret.Add(cpuInfo);
       }
       return ret;
     }
@@ -88,18 +103,25 @@ namespace Appreq {
       connection.Impersonation = ImpersonationLevel.Impersonate;
       var scope = new ManagementScope("\\\\.\\root\\CIMV2", connection);
       scope.Connect();
-      var query = new ObjectQuery("select * from Win32_OperatingSystem");
+      var query = new ObjectQuery(
+        @"select 
+            TotalVisibleMemorySize,
+            FreePhysicalMemory,
+            TotalVirtualMemorySize,
+            FreeVirtualMemory
+          from 
+            Win32_OperatingSystem");
       var searcher = new ManagementObjectSearcher(scope, query);
-      var ret = new List<RAMInfo>();
-      var col = searcher.Get().GetEnumerator();
-      col.MoveNext();
-      var ram = col.Current;
-      return new RAMInfo {
-        TotalVisibleMemorySize = int.Parse(ram["TotalVisibleMemorySize"].ToString() ?? "-1"),
-        FreePhysicalMemory = int.Parse(ram["FreePhysicalMemory"].ToString() ?? "-1"),
-        TotalVirtualMemorySize = int.Parse(ram["TotalVirtualMemorySize"].ToString() ?? "-1"),
-        FreeVirtualMemory = int.Parse(ram["FreeVirtualMemory"].ToString() ?? "-1")
-      };      
+      var ret = new RAMInfo();
+      foreach (var ram in searcher.Get()) {
+        foreach(var p in ram.Properties) {
+               if(p.Name == "TotalVisibleMemorySize") { ret.TotalVisibleMemorySize = (UInt64) p.Value; }
+          else if(p.Name == "FreePhysicalMemory")     { ret.FreePhysicalMemory = (UInt64) p.Value; }
+          else if(p.Name == "TotalVirtualMemorySize") { ret.TotalVirtualMemorySize = (UInt64) p.Value; }
+          else if(p.Name == "FreeVirtualMemory")      { ret.FreeVirtualMemory = (UInt64) p.Value; }
+        }
+      }
+      return ret;
     }
 
     public Profile GetData() {
