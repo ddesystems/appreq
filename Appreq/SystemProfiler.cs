@@ -101,7 +101,7 @@ namespace Appreq {
     public RAMInfo GetRAM() {
       var connection = new ConnectionOptions();
       connection.Impersonation = ImpersonationLevel.Impersonate;
-      var scope = new ManagementScope("\\\\.\\root\\CIMV2", connection);
+      var scope = new ManagementScope(@"\\.\root\CIMV2", connection);
       scope.Connect();
       var query = new ObjectQuery(
         @"select 

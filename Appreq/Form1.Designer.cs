@@ -28,66 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-          this.button1 = new System.Windows.Forms.Button();
-          this.treeView1 = new System.Windows.Forms.TreeView();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+          this.profileTreeView = new System.Windows.Forms.TreeView();
           this.dataGridView1 = new System.Windows.Forms.DataGridView();
           this.treeView2 = new System.Windows.Forms.TreeView();
           this.grpLocal = new System.Windows.Forms.GroupBox();
-          this.button2 = new System.Windows.Forms.Button();
           this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
           this.ststatus = new System.Windows.Forms.StatusStrip();
           this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
           this.grpmatch = new System.Windows.Forms.GroupBox();
           this.grpAppl = new System.Windows.Forms.GroupBox();
           this.comboBox1 = new System.Windows.Forms.ComboBox();
-          this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-          this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.exitToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-          this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.option1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.option2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-          this.opzione1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.opzione2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.menuMain = new System.Windows.Forms.MenuStrip();
+          this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.optionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.refreshMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+          this.openButton = new System.Windows.Forms.ToolStripButton();
+          this.exportButton = new System.Windows.Forms.ToolStripButton();
+          this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+          this.pasteButton = new System.Windows.Forms.ToolStripButton();
+          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.exitButton = new System.Windows.Forms.ToolStripButton();
           ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
           this.grpAppl.SuspendLayout();
-          this.menuStrip1.SuspendLayout();
+          this.menuMain.SuspendLayout();
+          this.toolStrip1.SuspendLayout();
           this.SuspendLayout();
           // 
-          // button1
+          // profileTreeView
           // 
-          this.button1.BackColor = System.Drawing.Color.Lime;
-          this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.button1.Location = new System.Drawing.Point(26, 32);
-          this.button1.Name = "button1";
-          this.button1.Size = new System.Drawing.Size(132, 53);
-          this.button1.TabIndex = 0;
-          this.button1.Text = "Rilevazione";
-          this.button1.UseVisualStyleBackColor = false;
-          this.button1.Click += new System.EventHandler(this.button1_Click);
-          // 
-          // treeView1
-          // 
-          this.treeView1.Location = new System.Drawing.Point(17, 31);
-          this.treeView1.Name = "treeView1";
-          this.treeView1.Size = new System.Drawing.Size(266, 363);
-          this.treeView1.TabIndex = 1;
+          this.profileTreeView.Location = new System.Drawing.Point(17, 31);
+          this.profileTreeView.Name = "profileTreeView";
+          this.profileTreeView.Size = new System.Drawing.Size(266, 363);
+          this.profileTreeView.TabIndex = 1;
           // 
           // dataGridView1
           // 
           this.dataGridView1.AllowUserToAddRows = false;
           this.dataGridView1.AllowUserToDeleteRows = false;
+          dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
           this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+          dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+          dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+          dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+          this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle14;
           this.dataGridView1.Location = new System.Drawing.Point(356, 122);
           this.dataGridView1.Name = "dataGridView1";
           this.dataGridView1.ReadOnly = true;
+          dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
           this.dataGridView1.Size = new System.Drawing.Size(266, 363);
           this.dataGridView1.TabIndex = 2;
           // 
@@ -100,7 +117,7 @@
           // 
           // grpLocal
           // 
-          this.grpLocal.Controls.Add(this.treeView1);
+          this.grpLocal.Controls.Add(this.profileTreeView);
           this.grpLocal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpLocal.Location = new System.Drawing.Point(9, 91);
           this.grpLocal.Name = "grpLocal";
@@ -108,18 +125,6 @@
           this.grpLocal.TabIndex = 4;
           this.grpLocal.TabStop = false;
           this.grpLocal.Text = "Risorse locali rilevate";
-          // 
-          // button2
-          // 
-          this.button2.BackColor = System.Drawing.Color.Yellow;
-          this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.button2.Location = new System.Drawing.Point(182, 32);
-          this.button2.Name = "button2";
-          this.button2.Size = new System.Drawing.Size(132, 53);
-          this.button2.TabIndex = 5;
-          this.button2.Text = "Crea XML";
-          this.button2.UseVisualStyleBackColor = false;
-          this.button2.Click += new System.EventHandler(this.button2_Click);
           // 
           // ststatus
           // 
@@ -169,98 +174,68 @@
           this.comboBox1.Size = new System.Drawing.Size(138, 24);
           this.comboBox1.TabIndex = 9;
           // 
-          // menuStrip1
+          // menuMain
           // 
-          this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.optionsToolStripMenuItem1,
+          this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileMenuItem,
+            this.optionsMenuItem,
             this.helpToolStripMenuItem});
-          this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-          this.menuStrip1.Name = "menuStrip1";
-          this.menuStrip1.Size = new System.Drawing.Size(999, 24);
-          this.menuStrip1.TabIndex = 9;
-          this.menuStrip1.Text = "menuStrip1";
+          this.menuMain.Location = new System.Drawing.Point(0, 0);
+          this.menuMain.Name = "menuMain";
+          this.menuMain.Size = new System.Drawing.Size(999, 24);
+          this.menuMain.TabIndex = 9;
           // 
-          // fileToolStripMenuItem
+          // fileMenuItem
           // 
-          this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.exitToolStripMenuItem1});
-          this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-          this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-          this.fileToolStripMenuItem.Text = "File";
+          this.fileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openMenuItem,
+            this.exportMenuItem,
+            this.exitMenuItem});
+          this.fileMenuItem.Name = "fileMenuItem";
+          this.fileMenuItem.Size = new System.Drawing.Size(37, 20);
+          this.fileMenuItem.Text = "File";
           // 
-          // openToolStripMenuItem
+          // openMenuItem
           // 
-          this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-          this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.openToolStripMenuItem.Text = "Open";
+          this.openMenuItem.Enabled = false;
+          this.openMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openMenuItem.Image")));
+          this.openMenuItem.Name = "openMenuItem";
+          this.openMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.openMenuItem.Text = "Open...";
+          this.openMenuItem.Click += new System.EventHandler(this.OpenFile_Command);
           // 
-          // exitToolStripMenuItem
+          // exportMenuItem
           // 
-          this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-          this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.exitToolStripMenuItem.Text = "Save";
+          this.exportMenuItem.Enabled = false;
+          this.exportMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportMenuItem.Image")));
+          this.exportMenuItem.Name = "exportMenuItem";
+          this.exportMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exportMenuItem.Text = "Export...";
+          this.exportMenuItem.Click += new System.EventHandler(this.ExportFile_Command);
           // 
-          // saveAsToolStripMenuItem
+          // exitMenuItem
           // 
-          this.saveAsToolStripMenuItem.Enabled = false;
-          this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-          this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.saveAsToolStripMenuItem.Text = "Save As";
-          this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+          this.exitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitMenuItem.Image")));
+          this.exitMenuItem.Name = "exitMenuItem";
+          this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exitMenuItem.Text = "Exit";
+          this.exitMenuItem.Click += new System.EventHandler(this.Exit_Command);
           // 
-          // exitToolStripMenuItem1
+          // optionsMenuItem
           // 
-          this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-          this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-          this.exitToolStripMenuItem1.Text = "Exit";
-          this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
+          this.optionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMenuItem});
+          this.optionsMenuItem.Name = "optionsMenuItem";
+          this.optionsMenuItem.Size = new System.Drawing.Size(48, 20);
+          this.optionsMenuItem.Text = "Tools";
           // 
-          // optionsToolStripMenuItem
+          // refreshMenuItem
           // 
-          this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.option1ToolStripMenuItem,
-            this.option2ToolStripMenuItem});
-          this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-          this.optionsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-          this.optionsToolStripMenuItem.Text = "Tools";
-          // 
-          // option1ToolStripMenuItem
-          // 
-          this.option1ToolStripMenuItem.Name = "option1ToolStripMenuItem";
-          this.option1ToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-          this.option1ToolStripMenuItem.Text = "Rileva";
-          // 
-          // option2ToolStripMenuItem
-          // 
-          this.option2ToolStripMenuItem.Name = "option2ToolStripMenuItem";
-          this.option2ToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-          this.option2ToolStripMenuItem.Text = "Crea XML";
-          // 
-          // optionsToolStripMenuItem1
-          // 
-          this.optionsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.opzione1ToolStripMenuItem,
-            this.opzione2ToolStripMenuItem});
-          this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-          this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
-          this.optionsToolStripMenuItem1.Text = "Options";
-          // 
-          // opzione1ToolStripMenuItem
-          // 
-          this.opzione1ToolStripMenuItem.Name = "opzione1ToolStripMenuItem";
-          this.opzione1ToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-          this.opzione1ToolStripMenuItem.Text = "Opzione 1";
-          // 
-          // opzione2ToolStripMenuItem
-          // 
-          this.opzione2ToolStripMenuItem.Name = "opzione2ToolStripMenuItem";
-          this.opzione2ToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-          this.opzione2ToolStripMenuItem.Text = "Opzione2";
+          this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
+          this.refreshMenuItem.Name = "refreshMenuItem";
+          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.refreshMenuItem.Text = "Refresh";
+          this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
           // helpToolStripMenuItem
           // 
@@ -273,33 +248,106 @@
           // aboutToolStripMenuItem
           // 
           this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
           this.aboutToolStripMenuItem.Text = "About";
+          // 
+          // toolStrip1
+          // 
+          this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+          this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+          this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openButton,
+            this.exportButton,
+            this.toolStripSeparator,
+            this.pasteButton,
+            this.toolStripSeparator1,
+            this.exitButton});
+          this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+          this.toolStrip1.Name = "toolStrip1";
+          this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+          this.toolStrip1.Size = new System.Drawing.Size(999, 39);
+          this.toolStrip1.TabIndex = 10;
+          this.toolStrip1.Text = "toolStrip1";
+          // 
+          // openButton
+          // 
+          this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.openButton.Enabled = false;
+          this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
+          this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.openButton.Name = "openButton";
+          this.openButton.Size = new System.Drawing.Size(36, 36);
+          this.openButton.Text = "&Open";
+          this.openButton.Click += new System.EventHandler(this.OpenFile_Command);
+          // 
+          // exportButton
+          // 
+          this.exportButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.exportButton.Enabled = false;
+          this.exportButton.Image = ((System.Drawing.Image)(resources.GetObject("exportButton.Image")));
+          this.exportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.exportButton.Name = "exportButton";
+          this.exportButton.Size = new System.Drawing.Size(36, 36);
+          this.exportButton.Text = "&Save";
+          this.exportButton.Click += new System.EventHandler(this.ExportFile_Command);
+          // 
+          // toolStripSeparator
+          // 
+          this.toolStripSeparator.Name = "toolStripSeparator";
+          this.toolStripSeparator.Size = new System.Drawing.Size(6, 39);
+          // 
+          // pasteButton
+          // 
+          this.pasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.pasteButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteButton.Image")));
+          this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.pasteButton.Name = "pasteButton";
+          this.pasteButton.Size = new System.Drawing.Size(36, 36);
+          this.pasteButton.Text = "&Paste";
+          this.pasteButton.Click += new System.EventHandler(this.Refresh_Command);
+          // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
+          // 
+          // exitButton
+          // 
+          this.exitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.exitButton.Image = ((System.Drawing.Image)(resources.GetObject("exitButton.Image")));
+          this.exitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.exitButton.Name = "exitButton";
+          this.exitButton.Size = new System.Drawing.Size(36, 36);
+          this.exitButton.Text = "Exit";
+          this.exitButton.Click += new System.EventHandler(this.Exit_Command);
           // 
           // Form1
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(999, 540);
+          this.Controls.Add(this.toolStrip1);
           this.Controls.Add(this.ststatus);
-          this.Controls.Add(this.menuStrip1);
-          this.Controls.Add(this.button2);
+          this.Controls.Add(this.menuMain);
           this.Controls.Add(this.grpLocal);
           this.Controls.Add(this.treeView2);
           this.Controls.Add(this.dataGridView1);
-          this.Controls.Add(this.button1);
           this.Controls.Add(this.grpmatch);
           this.Controls.Add(this.grpAppl);
-          this.MainMenuStrip = this.menuStrip1;
+          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+          this.MainMenuStrip = this.menuMain;
           this.Name = "Form1";
-          this.Text = "Gestione Requisiti Hw & Sw";
+          this.Text = "System Profiler";
+          this.Load += new System.EventHandler(this.Refresh_Command);
           ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
           this.grpLocal.ResumeLayout(false);
           this.ststatus.ResumeLayout(false);
           this.ststatus.PerformLayout();
           this.grpAppl.ResumeLayout(false);
-          this.menuStrip1.ResumeLayout(false);
-          this.menuStrip1.PerformLayout();
+          this.menuMain.ResumeLayout(false);
+          this.menuMain.PerformLayout();
+          this.toolStrip1.ResumeLayout(false);
+          this.toolStrip1.PerformLayout();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -307,32 +355,32 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView profileTreeView;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TreeView treeView2;
         private System.Windows.Forms.GroupBox grpLocal;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.StatusStrip ststatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.GroupBox grpmatch;
         private System.Windows.Forms.GroupBox grpAppl;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem option1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem option2ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem opzione1ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem opzione2ToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuMain;
+        private System.Windows.Forms.ToolStripMenuItem fileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exportMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton openButton;
+        private System.Windows.Forms.ToolStripButton exportButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton pasteButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton exitButton;
     }
 }
 

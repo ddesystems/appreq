@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Management;
 using System.Net.NetworkInformation;
@@ -8,22 +9,41 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 
-namespace Appreq {
+namespace Appreq { 
   public partial class Form1 : Form {
     private XDocument doc;
     private Profile _currentProfile;
 
     public Form1() {
-        InitializeComponent();
+      InitializeComponent();
     }
 
-    private void button1_Click(object sender, EventArgs e) {
-      populateTreeView();
+    private void Refresh() {
+      var worker = new BackgroundWorker();
+      worker.RunWorkerCompleted += (o, e) => {
+        var msg = "";
+        if (e.Cancelled) {
+          msg = "Cancelled";
+        } else if (null != e.Error) {
+          msg = e.Error.Message;
+        } else {
+          _currentProfile = (Profile)e.Result;
+          populateTreeView();
+          exportMenuItem.Enabled = true;
+          exportButton.Enabled = true;
+          msg = "Done";
+        }
+        toolStripStatusLabel1.Text = msg;
+      };
+      worker.DoWork += new DoWorkEventHandler((o, e) => {
+        toolStripStatusLabel1.Text = "Loading, please wait...";
+        var profiler = new SystemProfiler();
+        e.Result = profiler.GetData();
+      });
+      worker.RunWorkerAsync();
     }
 
     private void populateTreeView() {
-      var profiler = new SystemProfiler();
-      _currentProfile = profiler.GetData();
       var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
       var xs = new XmlSerializer(typeof(Profile));
       //var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
@@ -35,13 +55,12 @@ namespace Appreq {
           ms.Seek(0, SeekOrigin.Begin);
           xmldoc.Load(ms);
           var xmlnode = xmldoc.ChildNodes[0];
-          treeView1.Nodes.Clear();
-          treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-          var tNode = treeView1.Nodes[0];
+          profileTreeView.Nodes.Clear();
+          profileTreeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
+          var tNode = profileTreeView.Nodes[0];
           AddNode(xmldoc, tNode);
         }
       }
-      saveAsToolStripMenuItem.Enabled = true;
     }
 
     [Obsolete]
@@ -140,72 +159,70 @@ namespace Appreq {
 
 
     [Obsolete]
-        private void XmlGather()
+    private void XmlGather()
+    {
+        // SqlTestInfo(); --> See it can work better to gather SQL SERVER information... (lack of SP info..mmm)
+        // Create Document
+        doc = new XDocument(new XDeclaration("1.0", "utf-8", ""),
+          // Add Root document (Don't complete at moment)
+          new XElement("Appl",/*
+            new XElement("Id", "01"),
+            new XElement("IdDesc", "SM"),
+            new XElement("LongDesc", "Saldi e Movimenti"),
+            new XElement("Versions",
+                  new XElement("Version",
+                      new XElement("ApplVersion", "V. 3.0.1"),
+                      new XElement("PatchVersion", "V. 1.0.0.1"),
+                      new XElement("FrameworkVersion", "V. 7.3.2.0"),
+                      new XElement("DLLVersion", "V. 4")),
+                  new XElement("Version",
+                      new XElement("ApplVersion", "V. 3.0.1"),
+                      new XElement("PatchVersion", "V. 1.0.0.1"),
+                      new XElement("FrameworkVersion", "V. 7.3.2.0"),
+                      new XElement("DLLVersion", "V. 4"))),
+            */
+            new XElement("Environment",
+                  new XElement("SW",
+                      new XElement("OSs",                                    
+                          //Get_OS(),
+                          Get_NetFramework(),
+                          Get_IIS(),
+                          Get_current_javaJVM(),
+                          Get_Browsers(),
+                          Get_DataBases())),
+                  //new XElement("HW",
+                      //Get_Processor(),
+                      //Get_Disks(),
+                      //Get_RAM()),
+                  new XElement("Network",                          
+                      Get_Network(),
+                      Get_Ports()
+            ))));
+
+        // Load in a TreeView (before Load a XmlDataDocument object from Xdocument Object)
+        XmlDataDocument xmldoc = new XmlDataDocument();
+        TreeNode tNode;
+        XmlNode xmlnode;
+
+        using (var xmlReader = doc.CreateReader())
         {
-            // SqlTestInfo(); --> See it can work better to gather SQL SERVER information... (lack of SP info..mmm)
-
-            // Create Document
-
-            doc = new XDocument(new XDeclaration("1.0", "utf-8", ""),
-              // Add Root document (Don't complete at moment)
-              new XElement("Appl",
-                new XElement("Id", "01"),
-                new XElement("IdDesc", "SM"),
-                new XElement("LongDesc", "Saldi e Movimenti"),
-                new XElement("Versions",
-                     new XElement("Version",
-                         new XElement("ApplVersion", "V. 3.0.1"),
-                         new XElement("PatchVersion", "V. 1.0.0.1"),
-                         new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                         new XElement("DLLVersion", "V. 4")),
-                     new XElement("Version",
-                         new XElement("ApplVersion", "V. 3.0.1"),
-                         new XElement("PatchVersion", "V. 1.0.0.1"),
-                         new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                         new XElement("DLLVersion", "V. 4"))),
-
-                new XElement("Environment",
-                     new XElement("SW",
-                         new XElement("OSs",                                    
-                             //Get_OS(),
-                             Get_NetFramework(),
-                             Get_IIS(),
-                             Get_current_javaJVM(),
-                             Get_Browsers(),
-                             Get_DataBases())),
-                     //new XElement("HW",
-                          //Get_Processor(),
-                          //Get_Disks(),
-                          //Get_RAM()),
-                     new XElement("Network",                          
-                          Get_Network(),
-                          Get_Ports()
-                ))));
-
-            // Load in a TreeView (before Load a XmlDataDocument object from Xdocument Object)
-            XmlDataDocument xmldoc = new XmlDataDocument();
-            TreeNode tNode;
-            XmlNode xmlnode;
-
-            using (var xmlReader = doc.CreateReader())
-            {
-                xmldoc.Load(xmlReader);
-            }
-
-            xmlnode = xmldoc.ChildNodes[0];
-
-            treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));           
-
-            tNode = treeView1.Nodes[0];
-            AddNode(xmlnode, tNode);
-
-            // Expand Treeview
-            treeView1.Nodes[0].Expand();
-
-            // Update Status Bar
-            ststatus.Text = "Caricamento Effettuato";
+            xmldoc.Load(xmlReader);
         }
+
+        xmlnode = xmldoc.ChildNodes[0];
+
+        profileTreeView.Nodes.Clear();
+        profileTreeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));           
+
+        tNode = profileTreeView.Nodes[0];
+        AddNode(xmlnode, tNode);
+
+        // Expand Treeview
+        profileTreeView.Nodes[0].Expand();
+
+        // Update Status Bar
+        ststatus.Text = "Caricamento Effettuato";
+    }
 
         private XElement Get_NetFramework()
         {
@@ -802,26 +819,14 @@ namespace Appreq {
         //        }
         //        Console.WriteLine();
         //    }
-        //}
+        //}       
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // Show the dialog and get result.
-            saveFileDialog1.Filter = "Document Xml | *.xml";
-            saveFileDialog1.FileName = "rilevazione.xml";
-            DialogResult result = saveFileDialog1.ShowDialog();
-            if (result == DialogResult.OK)              // Test result.
-            {
-                //doc.Save(saveFileDialog1.FileName);     // Save to file 
-            }
-
-        }        
-
-    private void exitToolStripMenuItem1_Click(object sender, EventArgs e) {
-      Application.Exit();
+    private void OpenFile_Command(object sender, EventArgs e) {
+      //TODO: implement
+      toolStripStatusLabel1.Text = "Open XML is not implemented";
     }
 
-    private void saveAsToolStripMenuItem_Click(object sender, EventArgs e) {
+    private void ExportFile_Command(object sender, EventArgs e) {
       if (null == _currentProfile) return;
       saveFileDialog1.Filter = "XML Document | *.xml";
       saveFileDialog1.FileName = string.Format("system.profile_{0}.xml", System.Environment.MachineName);
@@ -836,6 +841,13 @@ namespace Appreq {
       }
     }
 
-    
+    private void Refresh_Command(object sender, EventArgs e) {
+      //TODO: refresh compare and app info windows
+      Refresh();
+    }
+
+    private void Exit_Command(object sender, EventArgs e) {
+      Application.Exit();
+    }    
   }
 }
