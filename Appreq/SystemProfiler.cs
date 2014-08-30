@@ -109,7 +109,7 @@ namespace Appreq {
             FreePhysicalMemory,
             TotalVirtualMemorySize,
             FreeVirtualMemory
-          from 
+          from
             Win32_OperatingSystem");
       var searcher = new ManagementObjectSearcher(scope, query);
       var ret = new RAMInfo();
@@ -124,8 +124,26 @@ namespace Appreq {
       return ret;
     }
 
+    public App[] GetApps() {
+      //TODO: pull the info from the registry
+      return new[] { 
+        new App {
+          Id = NA,
+          IdDesc = NA,
+          LongDesc = NA,
+          Version = new AppVersion {
+            DLLVersion = NA,
+            FrameworkVersion = NA,
+            PatchVersion = NA,
+            Version = NA
+          }
+        }
+      };
+    }
+
     public Profile GetData() {
       var app = new Profile {
+        Apps = GetApps(),
         Environment = new Env {
           Hardware = new Hardware(),
           Software = new Software()
