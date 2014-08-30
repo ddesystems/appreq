@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Appreq;
-using NUnit.Framework;
-using System.Xml;
+﻿using System.IO;
 using System.Xml.Serialization;
-using System.IO;
+using NUnit.Framework;
 
 namespace Appreq.Test {
   [TestFixture]
@@ -25,21 +20,21 @@ namespace Appreq.Test {
     [Test]
     public void SerializeTest() {
       var profiler = new SystemProfiler();
-      var app = profiler.GetData();
-      var xs = new XmlSerializer(typeof(App));
+      var profile = profiler.GetData();
+      var xs = new XmlSerializer(typeof(Profile));
       var sw = new StringWriter();
-      xs.Serialize(sw, app);
+      xs.Serialize(sw, profile);
       using(var sr = new StringReader(sw.ToString())) {
-        var app2 = (App) xs.Deserialize(sr);
-        Assert.IsNotNull(app2);
-        Assert.IsNotNull(app2.Environment);
-        Assert.IsNotNull(app2.Environment.Software);
-        Assert.IsNotNull(app2.Environment.Hardware);
-        Assert.IsNotEmpty(app2.Environment.Hardware.Disks);
-        Assert.IsNotEmpty(app2.Environment.Software.OS);
-        Assert.AreEqual(app.Environment.Software.OS.Length, app2.Environment.Software.OS.Length);
-        Assert.AreEqual(app.Environment.Software.OS[0].Name, app2.Environment.Software.OS[0].Name);
-        Assert.AreEqual(app.Environment.Hardware.Disks.Length, app2.Environment.Hardware.Disks.Length);
+        var profile2 = (Profile) xs.Deserialize(sr);
+        Assert.IsNotNull(profile2);
+        Assert.IsNotNull(profile2.Environment);
+        Assert.IsNotNull(profile2.Environment.Software);
+        Assert.IsNotNull(profile2.Environment.Hardware);
+        Assert.IsNotEmpty(profile2.Environment.Hardware.Disks);
+        Assert.IsNotEmpty(profile2.Environment.Software.OS);
+        Assert.AreEqual(profile.Environment.Software.OS.Length, profile2.Environment.Software.OS.Length);
+        Assert.AreEqual(profile.Environment.Software.OS[0].Name, profile2.Environment.Software.OS[0].Name);
+        Assert.AreEqual(profile.Environment.Hardware.Disks.Length, profile2.Environment.Hardware.Disks.Length);
       }
     }
   }

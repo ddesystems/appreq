@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Appls>
+     <Appl>
+        <Id>null</Id>
+        <IdDesc>SM</IdDesc>
+        <LongDesc>Saldi e Movimenti</LongDesc>
+        <Version>
+           <ApplVersion>null</ApplVersion>
+           <PatchVersion>null</PatchVersion>
+           <FrameworkVersion>null</FrameworkVersion>
+           <DLLVersion>null</DLLVersion>
+        </Version>
+     </Appl>
+     <Appl>
+        <Id>null</Id>
+        <IdDesc>SM</IdDesc>
+        <LongDesc>Gant</LongDesc>
+        <Version>
+           <ApplVersion>null</ApplVersion>
+           <PatchVersion>null</PatchVersion>
+           <FrameworkVersion>null</FrameworkVersion>
+           <DLLVersion>null</DLLVersion>
+         </Version>
+       </Appl>
+  </Appls>
+  <Environment>
+    <SW>
+      <OSs>
+        <OS>
+          <name>Microsoft Windows 8.1 Pro</name>
+          <Releases>
+            <Release>
+              <name>6.3.9600</name>
+              <ServicePack>0</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+        <NetFramework>
+          <Versions>
+            <Version>
+              <Name>2.0.50727.4927</Name>
+              <versionKeyName>v2.0.50727</versionKeyName>
+              <sp>2</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+            <Version>
+              <Name>3.0.30729.4926</Name>
+              <versionKeyName>v3.0</versionKeyName>
+              <sp>2</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+            <Version>
+              <Name>3.5.30729.4926</Name>
+              <versionKeyName>v3.5</versionKeyName>
+              <sp>1</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+            <Version>
+              <Name>4.5.51641</Name>
+              <versionKeyName>Client</versionKeyName>
+              <sp>null</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+            <Version>
+              <Name>4.5.51641</Name>
+              <versionKeyName>Full</versionKeyName>
+              <sp>null</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+            <Version>
+              <Name>4.0.0.0</Name>
+              <versionKeyName>Client</versionKeyName>
+              <sp>null</sp>
+              <WCFEnable>yes</WCFEnable>
+            </Version>
+          </Versions>
+        </NetFramework>
+        <IIS>
+          <Version>
+            <MajorVersion>8</MajorVersion>
+            <MinorVersion>5</MinorVersion>
+          </Version>
+        </IIS>
+        <JavaFramework>
+          <Version>
+            <CurrentVersion>1.7</CurrentVersion>
+            <Security>yes</Security>
+          </Version>
+        </JavaFramework>
+        <Browsers>
+          <Browser>
+            <Name>Mozilla Firefox</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+          </Browser>
+          <Browser>
+            <Name>Google Chrome</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+          </Browser>
+          <Browser>
+            <Name>Internet Explorer</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+          </Browser>
+        </Browsers>
+        <Database>
+          <Name>null</Name>
+          <Release>null</Release>
+          <ServicePack>null</ServicePack>
+        </Database>
+      </OSs>
+    </SW>
+    <HW>
+      <Processor>
+        <Manufacturer>GenuineIntel</Manufacturer>
+        <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+        <Datawidth>64</Datawidth>
+        <Maxclockspeed>2594</Maxclockspeed>
+      </Processor>
+      <Disks>
+        <Disk>
+          <Name>C:\</Name>
+          <VolumeLabel>C:\</VolumeLabel>
+          <TotalSize>718747463680</TotalSize>
+          <AvailableFreeSpace>527256969216</AvailableFreeSpace>
+          <PercentFreeSpace>73.35775</PercentFreeSpace>
+          <DriveType>Fixed</DriveType>
+        </Disk>
+      </Disks>
+      <RAM>
+        <TotalVisibleMemorySize>8264984</TotalVisibleMemorySize>
+        <FreePhysicalMemory>5105376</FreePhysicalMemory>
+        <TotalVirtualMemorySize>9575704</TotalVirtualMemorySize>
+        <FreeVirtualMemory>5742788</FreeVirtualMemory>
+      </RAM>
+    </HW>
+    <Network>
+      <NICs>
+        <NIC>Controller Realtek PCIe GBE Family<AdapterType><Value>Ethernet 802.3</Value></AdapterType><AdapterTypeId><Value>0</Value></AdapterTypeId><AutoSense><Value /></AutoSense><Availability><Value>3</Value></Availability><Caption><Value>[00000000] Controller Realtek PCIe GBE Family</Value></Caption><ConfigManagerErrorCode><Value>0</Value></ConfigManagerErrorCode><ConfigManagerUserConfig><Value>false</Value></ConfigManagerUserConfig><CreationClassName><Value>Win32_NetworkAdapter</Value></CreationClassName><Description><Value>Controller Realtek PCIe GBE Family</Value></Description><DeviceID><Value>0</Value></DeviceID><ErrorCleared><Value /></ErrorCleared><ErrorDescription><Value /></ErrorDescription><GUID><Value>{9CBEDE76-2F1C-428F-B117-570E5D197C4D}</Value></GUID><Index><Value>0</Value></Index><InstallDate><Value /></InstallDate><Installed><Value>true</Value></Installed><InterfaceIndex><Value>3</Value></InterfaceIndex><LastErrorCode><Value /></LastErrorCode><MACAddress><Value>30:F9:ED:D5:9C:0A</Value></MACAddress><Manufacturer><Value>Realtek</Value></Manufacturer><MaxNumberControlled><Value>0</Value></MaxNumberControlled><MaxSpeed><Value /></MaxSpeed><Name><Value>Controller Realtek PCIe GBE Family</Value></Name><NetConnectionID><Value>Ethernet</Value></NetConnectionID><NetConnectionStatus><Value>7</Value></NetConnectionStatus><NetEnabled><Value>false</Value></NetEnabled><NetworkAddresses><Value /></NetworkAddresses><PermanentAddress><Value /></PermanentAddress><PhysicalAdapter><Value>true</Value></PhysicalAdapter><PNPDeviceID><Value>PCI\VEN_10EC&amp;DEV_8168&amp;SUBSYS_90AB104D&amp;REV_07\4&amp;7E59F49&amp;0&amp;00E2</Value></PNPDeviceID><PowerManagementCapabilities><Value /></PowerManagementCapabilities><PowerManagementSupported><Value>false</Value></PowerManagementSupported><ProductName><Value>Controller Realtek PCIe GBE Family</Value></ProductName><ServiceName><Value>RTL8168</Value></ServiceName><Speed><Value /></Speed><Status><Value /></Status><StatusInfo><Value /></StatusInfo><SystemCreationClassName><Value>Win32_ComputerSystem</Value></SystemCreationClassName><SystemName><Value>SP-WIN8-12</Value></SystemName><TimeOfLastReset><Value>20140818230959.496625+120</Value></TimeOfLastReset><AdapterType><Value>Ethernet 802.3</Value></AdapterType><AdapterTypeId><Value>0</Value></AdapterTypeId><AutoSense><Value /></AutoSense><Availability><Value>3</Value></Availability><Caption><Value>[00000002] Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</Value></Caption><ConfigManagerErrorCode><Value>0</Value></ConfigManagerErrorCode><ConfigManagerUserConfig><Value>false</Value></ConfigManagerUserConfig><CreationClassName><Value>Win32_NetworkAdapter</Value></CreationClassName><Description><Value>Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</Value></Description><DeviceID><Value>2</Value></DeviceID><ErrorCleared><Value /></ErrorCleared><ErrorDescription><Value /></ErrorDescription><GUID><Value>{E2585379-1CFF-4798-83DF-0BD1B336AC4E}</Value></GUID><Index><Value>2</Value></Index><InstallDate><Value /></InstallDate><Installed><Value>true</Value></Installed><InterfaceIndex><Value>4</Value></InterfaceIndex><LastErrorCode><Value /></LastErrorCode><MACAddress><Value>B8:76:3F:E5:E3:0F</Value></MACAddress><Manufacturer><Value>Qualcomm Atheros Communications Inc.</Value></Manufacturer><MaxNumberControlled><Value>0</Value></MaxNumberControlled><MaxSpeed><Value /></MaxSpeed><Name><Value>Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</Value></Name><NetConnectionID><Value>Wi-Fi</Value></NetConnectionID><NetConnectionStatus><Value>2</Value></NetConnectionStatus><NetEnabled><Value>true</Value></NetEnabled><NetworkAddresses><Value /></NetworkAddresses><PermanentAddress><Value /></PermanentAddress><PhysicalAdapter><Value>true</Value></PhysicalAdapter><PNPDeviceID><Value>PCI\VEN_168C&amp;DEV_0032&amp;SUBSYS_E044105B&amp;REV_01\4&amp;17492177&amp;0&amp;00E0</Value></PNPDeviceID><PowerManagementCapabilities><Value /></PowerManagementCapabilities><PowerManagementSupported><Value>false</Value></PowerManagementSupported><ProductName><Value>Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</Value></ProductName><ServiceName><Value>athr</Value></ServiceName><Speed><Value /></Speed><Status><Value /></Status><StatusInfo><Value /></StatusInfo><SystemCreationClassName><Value>Win32_ComputerSystem</Value></SystemCreationClassName><SystemName><Value>SP-WIN8-12</Value></SystemName><TimeOfLastReset><Value>20140818230959.496625+120</Value></TimeOfLastReset></NIC>
+        <NIC>Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</NIC>
+      </NICs>
+      <Ports>
+        <Port />
+        <Number>2900</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>2901</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>2902</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>2922</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3123</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3153</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3156</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3157</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3159</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>2895</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>2896</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3165</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3165</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3166</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3166</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3167</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3168</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3169</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3170</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>52001</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>52001</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>3171</Number>
+        <Status>Ready</Status>
+      </Ports>
+    </Network>
+  </Environment>
+</Root>

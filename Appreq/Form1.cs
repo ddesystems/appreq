@@ -11,7 +11,7 @@ using Microsoft.Win32;
 namespace Appreq {
   public partial class Form1 : Form {
     private XDocument doc;
-    private App _currentProfile;
+    private Profile _currentProfile;
 
     public Form1() {
         InitializeComponent();
@@ -25,7 +25,7 @@ namespace Appreq {
       var profiler = new SystemProfiler();
       _currentProfile = profiler.GetData();
       var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
-      var xs = new XmlSerializer(typeof(App));
+      var xs = new XmlSerializer(typeof(Profile));
       //var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
       var settings = new XmlWriterSettings { OmitXmlDeclaration = false, Indent = true };
       using (var ms = new MemoryStream()) {
@@ -828,7 +828,7 @@ namespace Appreq {
       DialogResult result = saveFileDialog1.ShowDialog();
       if (result == DialogResult.OK) {
         try {
-          ApplicationSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
+          ProfileSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
           toolStripStatusLabel1.Text = string.Format("Saved to: {0}", saveFileDialog1.FileName);
         } catch (Exception ex) {
           toolStripStatusLabel1.Text = ex.Message;

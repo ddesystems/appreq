@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Appl>
+     <Id>null</Id>
+     <IdDesc>SM</IdDesc>
+     <LongDesc>Saldi e Movimenti</LongDesc>
+     <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+     </Version>
+  </Appl>
+  <Environment>
+    <SW>
+      <OS>
+        <name>Microsoft Windows Server 2003</name>
+        <Release>
+          <name>6.3.9600</name>
+          <ServicePack>0</ServicePack>
+        </Release>
+        <Check>Passed</Check>
+      </OS>
+      <NetFramework>
+        <Version>
+          <Name>4.5.51641</Name>
+           <versionKeyName>Client</versionKeyName>
+           <sp>null</sp>
+           <WCFEnable>yes</WCFEnable>
+         </Version>
+        <Check>Failed</Check>
+      </NetFramework>
+      <IIS>
+        <Version>
+          <MajorVersion>8</MajorVersion>
+          <MinorVersion>5</MinorVersion>
+        </Version>
+        <Check>Failed</Check>
+      </IIS>
+      <JavaFramework>
+        <Version>
+          <CurrentVersion>1.7</CurrentVersion>
+          <Security>yes</Security>
+        </Version>
+        <Check>Passed</Check>
+      </JavaFramework>
+      <Browsers>
+        <!-- Match if browser installed match listed in "appl.xml" -->
+        <Browser>
+            <Name>Mozilla Firefox</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+            <Check>Passed</Check>
+          </Browser>
+          <Browser>
+            <Name>Google Chrome</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+            <Check>Passed</Check>
+          </Browser>
+          <Browser>
+            <Name>Internet Explorer</Name>
+            <Version>null</Version>
+            <CompatibilityMode>null</CompatibilityMode>
+            <Check>Passed</Check>
+          </Browser>
+      </Browsers>
+      <Database>
+        <!-- Watch only for SQL Server DB -->  
+        <Name>null</Name>
+          <Release>null</Release>
+          <ServicePack>null</ServicePack> 
+          <Check>Passed</Check>
+      </Database>
+    </SW>
+    <HW>
+      <Processor>
+        <Manufacturer>GenuineIntel</Manufacturer>
+        <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+        <Datawidth>64</Datawidth>
+        <Maxclockspeed>2594</Maxclockspeed>
+        <!-- At moment enforce ever "Passed" -->
+        <Check>Passed</Check>
+      </Processor>
+      <Disks>
+        <Disk>
+          <Name>C:\</Name>
+          <VolumeLabel>C:\</VolumeLabel>
+          <TotalSize>718747463680</TotalSize>
+          <AvailableFreeSpace>527256969216</AvailableFreeSpace>
+          <PercentFreeSpace>73.35775</PercentFreeSpace>
+          <DriveType>Fixed</DriveType>
+          <Check>Passed</Check>
+        </Disk>
+      </Disks>
+      <RAM>
+        <!-- Check against REAL memory NO virtual -->
+        <TotalVisibleMemorySize>8264984</TotalVisibleMemorySize>
+        <FreePhysicalMemory>5105376</FreePhysicalMemory>
+        <TotalVirtualMemorySize>9575704</TotalVirtualMemorySize>
+        <FreeVirtualMemory>5742788</FreeVirtualMemory>
+        <Check>Passed</Check>
+      </RAM>
+    </HW>
+    <Network>
+      <NICs>
+        <NIC>Controller Realtek PCIe GBE Family
+          <AdapterType>
+            <Value>Ethernet 802.3</Value>
+          </AdapterType>
+            <AdapterTypeId>
+              <Value>0</Value>
+            </AdapterTypeId>
+            <AutoSense>
+              <Value />
+            </AutoSense>
+            <Availability>
+              <Value>3</Value>
+            </Availability>
+            <Caption>
+              <Value>[00000000] Controller Realtek PCIe GBE Family</Value>
+            </Caption><ConfigManagerErrorCode>
+              <Value>0</Value>
+            </ConfigManagerErrorCode>
+            <ConfigManagerUserConfig>
+              <Value>false</Value>
+            </ConfigManagerUserConfig>
+            <!-- ......................................... -->
+              <!-- ......................................... -->
+              <!-- ......................................... -->
+
+           <!-- ......................................... -->
+           <!-- At moment enforce ever "Passed" -->
+           <!-- ......................................... -->
+           <Check>Passed</Check>
+        </NIC>
+        <NIC>Qualcomm Atheros AR9485WB-EG Wireless Network Adapter</NIC>
+      </NICs>
+      <Ports>
+        <Port>
+           <Number>80</Number>
+           <Check>Passed</Check>
+        </Port>
+        <Port>
+          <Number>443</Number>
+          <Check>Passed</Check>
+        </Port>
+        <Port>
+          <Number>8081</Number>
+          <Check>Passed</Check>
+        </Port>
+      </Ports>
+    </Network>
+  </Environment>
+  <Dependencies>
+    <Appl>
+      <Id>null</Id>
+      <IdDesc>Gant</IdDesc>
+      <LongDesc>Gestione Anagrafe Tributaria</LongDesc>
+      <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+      </Version>
+      <Check>Passed</Check>
+    </Appl>
+    <Appl>
+      <!-- ........................................................... -->
+      <!-- That can be a real case. DB2 Connect by IBM may be required -->
+      <!-- ........................................................... -->
+      <Id>null</Id>
+      <IdDesc>DB2 Connect</IdDesc>
+      <LongDesc>IBM DB2 Connect</LongDesc>
+      <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+      </Version>
+    </Appl>
+    <Check>Failed</Check>
+  </Dependencies>
+</Root>

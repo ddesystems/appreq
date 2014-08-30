@@ -43,6 +43,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComparerTest.cs" />
     <Compile Include="SPTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,6 +52,11 @@
       <Project>{D2EED0B1-D5A3-461D-871E-43662797E758}</Project>
       <Name>Appreq</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\app_saldimov.xml" />
+    <Content Include="data\match.xml" />
+    <Content Include="data\rilevazione.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

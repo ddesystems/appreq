@@ -102,8 +102,8 @@ namespace Appreq {
       };      
     }
 
-    public App GetData() {
-      var app = new App {
+    public Profile GetData() {
+      var app = new Profile {
         Environment = new Env {
           Hardware = new Hardware(),
           Software = new Software()
