@@ -90,7 +90,7 @@ namespace Appreq {
         foreach (var p in cpu.Properties) {
                if (p.Name == "Manufacturer")  { cpuInfo.Manufacturer = p.Value.ToString(); }
           else if (p.Name == "Name")          { cpuInfo.Name = p.Value.ToString(); }
-          else if (p.Name == "DataWidth")     { cpuInfo.Datawidth = p.Value.ToString(); }
+          else if (p.Name == "DataWidth")     { cpuInfo.Datawidth = (UInt16) p.Value; }
           else if (p.Name == "MaxClockSpeed") { cpuInfo.Maxclockspeed = p.Value.ToString(); }
         }
         ret.Add(cpuInfo);

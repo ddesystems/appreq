@@ -3,20 +3,20 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
-  public class RAMInfo {
-    [XmlElement(IsNullable = true)]
+  public class RAMInfo: IDiff<RAMInfo> {
     public UInt64? TotalVisibleMemorySize { get; set; }
-    [XmlElement(IsNullable = true)]
+    public bool ShouldSerializeTotalVisibleMemorySize() { return TotalVisibleMemorySize.HasValue; }
     public UInt64? FreePhysicalMemory { get; set; }
-    [XmlElement(IsNullable = true)]
+    public bool ShouldSerializeFreePhysicalMemory() { return FreePhysicalMemory.HasValue; }
     public UInt64? TotalVirtualMemorySize { get; set; }
-    [XmlElement(IsNullable = true)]
+    public bool ShouldSerializeTotalVirtualMemorySize() { return TotalVirtualMemorySize.HasValue; }
     public UInt64? FreeVirtualMemory { get; set; }
+    public bool ShouldSerializeFreeVirtualMemory() { return FreeVirtualMemory.HasValue; }
 
     public RAMInfo Diff(RAMInfo other) {
       return new RAMInfo {
-        TotalVirtualMemorySize = TotalVirtualMemorySize >= other.TotalVirtualMemorySize ? other.TotalVirtualMemorySize : null,
-        TotalVisibleMemorySize = TotalVisibleMemorySize >= other.TotalVisibleMemorySize ? other.TotalVisibleMemorySize : null
+        TotalVirtualMemorySize = TotalVirtualMemorySize > other.TotalVirtualMemorySize ? other.TotalVirtualMemorySize : null,
+        TotalVisibleMemorySize = TotalVisibleMemorySize > other.TotalVisibleMemorySize ? other.TotalVisibleMemorySize : null
       };
     }
   }

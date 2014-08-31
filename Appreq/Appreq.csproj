@@ -58,6 +58,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Hardware.cs" />
+    <Compile Include="IDiff.cs" />
     <Compile Include="JavaInfo.cs" />
     <Compile Include="OSInfo.cs" />
     <Compile Include="OsRelease.cs" />
@@ -87,9 +88,7 @@
   <ItemGroup>
     <EmbeddedResource Include="SalMov.xml" />
     <Content Include="Custom-Icon-Design-Mini-Wheels.ico" />
-    <Content Include="XMLFile1.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <EmbeddedResource Include="test-app.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

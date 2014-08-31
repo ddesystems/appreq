@@ -28,20 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
           this.profileTreeView = new System.Windows.Forms.TreeView();
-          this.dataGridView1 = new System.Windows.Forms.DataGridView();
-          this.treeView2 = new System.Windows.Forms.TreeView();
+          this.appTreeView = new System.Windows.Forms.TreeView();
           this.grpLocal = new System.Windows.Forms.GroupBox();
           this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
           this.ststatus = new System.Windows.Forms.StatusStrip();
           this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
           this.grpmatch = new System.Windows.Forms.GroupBox();
+          this.diffTreeView = new System.Windows.Forms.TreeView();
           this.grpAppl = new System.Windows.Forms.GroupBox();
-          this.comboBox1 = new System.Windows.Forms.ComboBox();
+          this.appComboBox = new System.Windows.Forms.ComboBox();
           this.menuMain = new System.Windows.Forms.MenuStrip();
           this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,12 +52,12 @@
           this.openButton = new System.Windows.Forms.ToolStripButton();
           this.exportButton = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-          this.pasteButton = new System.Windows.Forms.ToolStripButton();
+          this.refreshButton = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           this.exitButton = new System.Windows.Forms.ToolStripButton();
-          ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
+          this.grpmatch.SuspendLayout();
           this.grpAppl.SuspendLayout();
           this.menuMain.SuspendLayout();
           this.toolStrip1.SuspendLayout();
@@ -68,52 +65,17 @@
           // 
           // profileTreeView
           // 
-          this.profileTreeView.Location = new System.Drawing.Point(17, 31);
+          this.profileTreeView.Location = new System.Drawing.Point(6, 21);
           this.profileTreeView.Name = "profileTreeView";
-          this.profileTreeView.Size = new System.Drawing.Size(266, 363);
+          this.profileTreeView.Size = new System.Drawing.Size(293, 386);
           this.profileTreeView.TabIndex = 1;
           // 
-          // dataGridView1
+          // appTreeView
           // 
-          this.dataGridView1.AllowUserToAddRows = false;
-          this.dataGridView1.AllowUserToDeleteRows = false;
-          dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
-          this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-          dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-          dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-          dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-          this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle14;
-          this.dataGridView1.Location = new System.Drawing.Point(356, 122);
-          this.dataGridView1.Name = "dataGridView1";
-          this.dataGridView1.ReadOnly = true;
-          dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
-          this.dataGridView1.Size = new System.Drawing.Size(266, 363);
-          this.dataGridView1.TabIndex = 2;
-          // 
-          // treeView2
-          // 
-          this.treeView2.Location = new System.Drawing.Point(692, 161);
-          this.treeView2.Name = "treeView2";
-          this.treeView2.Size = new System.Drawing.Size(266, 324);
-          this.treeView2.TabIndex = 3;
+          this.appTreeView.Location = new System.Drawing.Point(679, 161);
+          this.appTreeView.Name = "appTreeView";
+          this.appTreeView.Size = new System.Drawing.Size(293, 343);
+          this.appTreeView.TabIndex = 3;
           // 
           // grpLocal
           // 
@@ -142,6 +104,7 @@
           // 
           // grpmatch
           // 
+          this.grpmatch.Controls.Add(this.diffTreeView);
           this.grpmatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpmatch.Location = new System.Drawing.Point(338, 91);
           this.grpmatch.Name = "grpmatch";
@@ -150,9 +113,16 @@
           this.grpmatch.TabStop = false;
           this.grpmatch.Text = "Raffronto";
           // 
+          // diffTreeView
+          // 
+          this.diffTreeView.Location = new System.Drawing.Point(7, 22);
+          this.diffTreeView.Name = "diffTreeView";
+          this.diffTreeView.Size = new System.Drawing.Size(293, 385);
+          this.diffTreeView.TabIndex = 0;
+          // 
           // grpAppl
           // 
-          this.grpAppl.Controls.Add(this.comboBox1);
+          this.grpAppl.Controls.Add(this.appComboBox);
           this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpAppl.Location = new System.Drawing.Point(673, 91);
           this.grpAppl.Name = "grpAppl";
@@ -161,18 +131,21 @@
           this.grpAppl.TabStop = false;
           this.grpAppl.Text = "Applicazioni";
           // 
-          // comboBox1
+          // appComboBox
           // 
-          this.comboBox1.FormattingEnabled = true;
-          this.comboBox1.Items.AddRange(new object[] {
+          this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+          this.appComboBox.FormattingEnabled = true;
+          this.appComboBox.Items.AddRange(new object[] {
+            "test-app",
             "Gant",
             "Saldi e Movimenti",
             "Checkin",
             "Comma"});
-          this.comboBox1.Location = new System.Drawing.Point(19, 31);
-          this.comboBox1.Name = "comboBox1";
-          this.comboBox1.Size = new System.Drawing.Size(138, 24);
-          this.comboBox1.TabIndex = 9;
+          this.appComboBox.Location = new System.Drawing.Point(6, 31);
+          this.appComboBox.Name = "appComboBox";
+          this.appComboBox.Size = new System.Drawing.Size(293, 24);
+          this.appComboBox.TabIndex = 9;
+          this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
           // menuMain
           // 
@@ -200,7 +173,7 @@
           this.openMenuItem.Enabled = false;
           this.openMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openMenuItem.Image")));
           this.openMenuItem.Name = "openMenuItem";
-          this.openMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.openMenuItem.Size = new System.Drawing.Size(116, 22);
           this.openMenuItem.Text = "Open...";
           this.openMenuItem.Click += new System.EventHandler(this.OpenFile_Command);
           // 
@@ -209,7 +182,7 @@
           this.exportMenuItem.Enabled = false;
           this.exportMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportMenuItem.Image")));
           this.exportMenuItem.Name = "exportMenuItem";
-          this.exportMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exportMenuItem.Size = new System.Drawing.Size(116, 22);
           this.exportMenuItem.Text = "Export...";
           this.exportMenuItem.Click += new System.EventHandler(this.ExportFile_Command);
           // 
@@ -217,7 +190,7 @@
           // 
           this.exitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitMenuItem.Image")));
           this.exitMenuItem.Name = "exitMenuItem";
-          this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exitMenuItem.Size = new System.Drawing.Size(116, 22);
           this.exitMenuItem.Text = "Exit";
           this.exitMenuItem.Click += new System.EventHandler(this.Exit_Command);
           // 
@@ -233,7 +206,7 @@
           // 
           this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
           this.refreshMenuItem.Name = "refreshMenuItem";
-          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.refreshMenuItem.Size = new System.Drawing.Size(113, 22);
           this.refreshMenuItem.Text = "Refresh";
           this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
@@ -248,7 +221,7 @@
           // aboutToolStripMenuItem
           // 
           this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
           this.aboutToolStripMenuItem.Text = "About";
           // 
           // toolStrip1
@@ -259,7 +232,7 @@
             this.openButton,
             this.exportButton,
             this.toolStripSeparator,
-            this.pasteButton,
+            this.refreshButton,
             this.toolStripSeparator1,
             this.exitButton});
           this.toolStrip1.Location = new System.Drawing.Point(0, 24);
@@ -296,15 +269,15 @@
           this.toolStripSeparator.Name = "toolStripSeparator";
           this.toolStripSeparator.Size = new System.Drawing.Size(6, 39);
           // 
-          // pasteButton
+          // refreshButton
           // 
-          this.pasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.pasteButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteButton.Image")));
-          this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.pasteButton.Name = "pasteButton";
-          this.pasteButton.Size = new System.Drawing.Size(36, 36);
-          this.pasteButton.Text = "&Paste";
-          this.pasteButton.Click += new System.EventHandler(this.Refresh_Command);
+          this.refreshButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.refreshButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshButton.Image")));
+          this.refreshButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.refreshButton.Name = "refreshButton";
+          this.refreshButton.Size = new System.Drawing.Size(36, 36);
+          this.refreshButton.Text = "Refresh";
+          this.refreshButton.Click += new System.EventHandler(this.Refresh_Command);
           // 
           // toolStripSeparator1
           // 
@@ -330,8 +303,7 @@
           this.Controls.Add(this.ststatus);
           this.Controls.Add(this.menuMain);
           this.Controls.Add(this.grpLocal);
-          this.Controls.Add(this.treeView2);
-          this.Controls.Add(this.dataGridView1);
+          this.Controls.Add(this.appTreeView);
           this.Controls.Add(this.grpmatch);
           this.Controls.Add(this.grpAppl);
           this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -339,10 +311,10 @@
           this.Name = "Form1";
           this.Text = "System Profiler";
           this.Load += new System.EventHandler(this.Refresh_Command);
-          ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
           this.grpLocal.ResumeLayout(false);
           this.ststatus.ResumeLayout(false);
           this.ststatus.PerformLayout();
+          this.grpmatch.ResumeLayout(false);
           this.grpAppl.ResumeLayout(false);
           this.menuMain.ResumeLayout(false);
           this.menuMain.PerformLayout();
@@ -356,15 +328,14 @@
         #endregion
 
         private System.Windows.Forms.TreeView profileTreeView;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TreeView treeView2;
+        private System.Windows.Forms.TreeView appTreeView;
         private System.Windows.Forms.GroupBox grpLocal;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.StatusStrip ststatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.GroupBox grpmatch;
         private System.Windows.Forms.GroupBox grpAppl;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox appComboBox;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem fileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openMenuItem;
@@ -378,9 +349,10 @@
         private System.Windows.Forms.ToolStripButton openButton;
         private System.Windows.Forms.ToolStripButton exportButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton pasteButton;
+        private System.Windows.Forms.ToolStripButton refreshButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton exitButton;
+        private System.Windows.Forms.TreeView diffTreeView;
     }
 }
 

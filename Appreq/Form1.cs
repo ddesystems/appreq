@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace Appreq { 
   public partial class Form1 : Form {
@@ -18,7 +19,7 @@ namespace Appreq {
       InitializeComponent();
     }
 
-    private void Refresh() {
+    private void RefreshForm() {
       var worker = new BackgroundWorker();
       worker.RunWorkerCompleted += (o, e) => {
         var msg = "";
@@ -28,9 +29,11 @@ namespace Appreq {
           msg = e.Error.Message;
         } else {
           _currentProfile = (Profile)e.Result;
-          populateTreeView();
+          populateTreeView(_currentProfile, profileTreeView);
           exportMenuItem.Enabled = true;
           exportButton.Enabled = true;
+          refreshMenuItem.Enabled = true;
+          refreshButton.Enabled = true;
           msg = "Done";
         }
         toolStripStatusLabel1.Text = msg;
@@ -40,24 +43,31 @@ namespace Appreq {
         var profiler = new SystemProfiler();
         e.Result = profiler.GetData();
       });
+      exportMenuItem.Enabled = false;
+      exportButton.Enabled = false;
+      refreshMenuItem.Enabled = false;
+      refreshButton.Enabled = false;
       worker.RunWorkerAsync();
     }
 
-    private void populateTreeView() {
+    private void populateTreeView(Profile profile, TreeView treeView) {
+      if (null == profile || null == treeView) {
+        return;
+      }
       var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
       var xs = new XmlSerializer(typeof(Profile));
       //var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
       var settings = new XmlWriterSettings { OmitXmlDeclaration = false, Indent = true };
       using (var ms = new MemoryStream()) {
         using (var xw = XmlWriter.Create(ms, settings)) {
-          xs.Serialize(xw, _currentProfile, emptyNs);
+          xs.Serialize(xw, profile, emptyNs);
           var xmldoc = new XmlDocument();
           ms.Seek(0, SeekOrigin.Begin);
           xmldoc.Load(ms);
           var xmlnode = xmldoc.ChildNodes[0];
-          profileTreeView.Nodes.Clear();
-          profileTreeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-          var tNode = profileTreeView.Nodes[0];
+          treeView.Nodes.Clear();
+          treeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
+          var tNode = treeView.Nodes[0];
           AddNode(xmldoc, tNode);
         }
       }
@@ -702,27 +712,22 @@ namespace Appreq {
 
         }
 
-        private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode)
-        {
-            XmlNode xNode ;
-            TreeNode tNode ;
-            XmlNodeList nodeList ;
-            int i = 0;
-            if (inXmlNode.HasChildNodes)
-            {
-                nodeList = inXmlNode.ChildNodes;
-                for (i = 0; i <= nodeList.Count - 1; i++)
-                {
-                    xNode = inXmlNode.ChildNodes[i];
-                    inTreeNode.Nodes.Add(new TreeNode(xNode.Name));
-                    tNode = inTreeNode.Nodes[i];
-                    AddNode(xNode, tNode);
-                }
+        private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode) {
+          XmlNode xNode ;
+          TreeNode tNode ;
+          XmlNodeList nodeList ;
+          var i = 0;
+          if (inXmlNode.HasChildNodes) {
+            nodeList = inXmlNode.ChildNodes;
+            for (i = 0; i <= nodeList.Count - 1; i++) {
+              xNode = inXmlNode.ChildNodes[i];
+              inTreeNode.Nodes.Add(new TreeNode(xNode.Name));
+              tNode = inTreeNode.Nodes[i];
+              AddNode(xNode, tNode);
             }
-            else
-            {
-                inTreeNode.Text = inXmlNode.InnerText.ToString();
-            }
+          } else {
+            inTreeNode.Text = inXmlNode.InnerText.ToString();
+          }
         }
 
         // ---------------------------------------------
@@ -843,11 +848,25 @@ namespace Appreq {
 
     private void Refresh_Command(object sender, EventArgs e) {
       //TODO: refresh compare and app info windows
-      Refresh();
+      RefreshForm();
     }
 
     private void Exit_Command(object sender, EventArgs e) {
       Application.Exit();
-    }    
+    }
+
+    private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+      var assembly = Assembly.GetExecutingAssembly();
+      var resourceName = string.Format("Appreq.{0}.xml", "test-app");
+      using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
+        var xs = new XmlSerializer(typeof(Profile));
+        using (StreamReader reader = new StreamReader(stream)) {
+          var app = (Profile) xs.Deserialize(reader);
+          populateTreeView(app, appTreeView);
+          var diff = app.Diff(_currentProfile);
+          populateTreeView(diff, diffTreeView);
+        }
+      }
+    }
   }
 }
