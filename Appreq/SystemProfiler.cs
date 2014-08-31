@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Management;
+using Microsoft.Win32;
 
 namespace Appreq {
   public class SystemProfiler {
@@ -141,6 +142,102 @@ namespace Appreq {
       };
     }
 
+    private static string GetIEVersion() {
+      var key = Registry.LocalMachine;
+      var ieKey = key.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer");
+      if (null == ieKey) {
+        return string.Empty;
+      }
+      return (string) (ieKey.GetValue("svcVersion") ?? ieKey.GetValue("Version"));
+    }
+
+    private static string GetFirefoxVersion() {
+      string wowNode = string.Empty;
+      if (Is64BitOperatingSystem()) wowNode = @"Wow6432Node\";
+      RegistryKey regKey = Registry.LocalMachine;
+      var ffKey = regKey.OpenSubKey(string.Format(@"Software\{0}Mozilla\Mozilla Firefox", wowNode));
+      if(null == ffKey) {
+        return string.Empty;
+      }
+      return (string) ffKey.GetValue("CurrentVersion");
+    }
+
+    public static bool Is64BitOperatingSystem() {
+      return !Environment.GetFolderPath(Environment.SpecialFolder.System).ToUpper().Contains("SYSTEM32");       
+    }
+
+    private static string GetChromeVersion() {
+      var wowNode = string.Empty;
+      if(Is64BitOperatingSystem()) wowNode = @"Wow6432Node\";
+
+      var regKey = Registry.LocalMachine;
+      var keyPath = regKey.OpenSubKey(@"Software\" + wowNode + @"Google\Update\Clients");
+
+      if (keyPath == null) {
+        regKey = Registry.CurrentUser;
+        keyPath = regKey.OpenSubKey(@"Software\" + wowNode + @"Google\Update\Clients");
+      }
+
+      if (keyPath == null) {
+        regKey = Registry.LocalMachine;
+        keyPath = regKey.OpenSubKey(@"Software\Google\Update\Clients");
+      }
+
+      if (keyPath == null) {
+        regKey = Registry.CurrentUser;
+        keyPath = regKey.OpenSubKey(@"Software\Google\Update\Clients");
+      }
+
+      if (keyPath != null) {
+        string[] subKeys = keyPath.GetSubKeyNames();
+        foreach (string subKey in subKeys) {
+          object value = keyPath.OpenSubKey(subKey).GetValue("name");
+          bool found = false;
+          if (value != null)
+            found = value.ToString().Equals("Google Chrome", StringComparison.InvariantCultureIgnoreCase);
+          if (found) {
+            return (string) keyPath.OpenSubKey(subKey).GetValue("pv");
+          }
+        }
+      }
+      return string.Empty;
+    }
+
+    public List<Browser> GetBrowser() {
+      // Check if your using x64 system first if return is null your on a x86 system.
+      var wowNode = string.Empty;
+      if (Is64BitOperatingSystem()) wowNode = @"Wow6432Node\";
+      var browserKeys = Registry.LocalMachine.OpenSubKey(string.Format(@"SOFTWARE\{0}Clients\StartMenuInternet", wowNode));
+
+      // Loop through all the subkeys for the information you want then display it on the console.
+      var ret = new List<Browser>();
+      foreach (var browser in browserKeys.GetSubKeyNames()) {
+        var b = new Browser {
+          Name = (string) browserKeys.OpenSubKey(browser).GetValue(null)          
+        };
+        if (b.Name.Contains("Internet Explorer")) {
+          b.Version = GetIEVersion();
+        } else if (b.Name.Contains("Firefox")) {
+          b.Version = GetFirefoxVersion();
+        } else if (b.Name.Contains("Chrome")) {
+          b.Version = GetChromeVersion();
+        }
+        ret.Add(b);
+      }
+      /*
+      for (int i = 0; i < browsers.Length; i++) {
+        RegistryKey browserKey = browserKeys.OpenSubKey(browserNames[i]);
+        //xelem.Add(new XElement("Browser", new XElement("Name", (string)browserKey.GetValue(null)), new XElement("Version", "null"), new XElement("CompatibilityMode", "null")));
+
+        // RegistryKey browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
+        // browser.Path = (string)browserKeyPath.GetValue(null);
+      }
+
+
+      */
+      return ret;
+    }
+
     public Profile GetData() {
       var app = new Profile {
         Apps = GetApps(),
@@ -168,6 +265,11 @@ namespace Appreq {
         app.Environment.Software.OS = GetOS().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve OS info", e);
+      }
+      try {
+        app.Environment.Software.Browser = GetBrowser().ToArray();
+      } catch (Exception e) {
+        throw new Exception("Failed to retrieve Browser info", e);
       }
       return app;
     }

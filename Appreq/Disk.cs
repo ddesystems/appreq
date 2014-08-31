@@ -17,8 +17,8 @@ namespace Appreq {
     public Disk Diff(Disk other) {
       return new Disk {
         DriveType = DriveType != other.DriveType ? other.DriveType : null,
-        AvailableFreeSpace = AvailableFreeSpace > other.AvailableFreeSpace ? other.AvailableFreeSpace : null,
-        PercentFreeSpace = PercentFreeSpace > other.PercentFreeSpace ? other.PercentFreeSpace : null
+        AvailableFreeSpace = AvailableFreeSpace.GetValueOrDefault() > other.AvailableFreeSpace.GetValueOrDefault() ? other.AvailableFreeSpace : null,
+        PercentFreeSpace = PercentFreeSpace.GetValueOrDefault() > other.PercentFreeSpace.GetValueOrDefault() ? other.PercentFreeSpace : null
       };
     }
   }

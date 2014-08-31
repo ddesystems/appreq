@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppVersion.cs" />
+    <Compile Include="Browser.cs" />
     <Compile Include="CPUInfo.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="Env.cs" />
@@ -88,7 +89,9 @@
   <ItemGroup>
     <EmbeddedResource Include="SalMov.xml" />
     <Content Include="Custom-Icon-Design-Mini-Wheels.ico" />
-    <EmbeddedResource Include="test-app.xml" />
+    <EmbeddedResource Include="test-app.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

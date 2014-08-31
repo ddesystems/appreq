@@ -198,7 +198,7 @@ namespace Appreq {
                           Get_NetFramework(),
                           Get_IIS(),
                           Get_current_javaJVM(),
-                          Get_Browsers(),
+                          //Get_Browsers(),
                           Get_DataBases())),
                   //new XElement("HW",
                       //Get_Processor(),
@@ -435,47 +435,6 @@ namespace Appreq {
 
             return xelem;
         }
-
-        private XElement Get_Browsers()
-        {
-
-            XElement xelem;
-
-            // What to obtain:             
-            //    new XElement("Browsers",                                    
-            //        new XElement("Browser",                          
-            //            new XElement("Name", "Internet Explorer"),
-            //            new XElement("Version", "11"),
-            //            new XElement("CompatibilityMode", "yes"),
-            //        new XElement("Browser",                          
-            //            new XElement("Name", "Chrome"),
-            //            new XElement("Version", "7"),
-            //            new XElement("CompatibilityMode", "yes"),
-
-            xelem = new XElement("Browsers", "");
-
-            //Check if your using x64 system first if return is null your on a x86 system.
-            RegistryKey browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet");
-            if (browserKeys == null)
-                browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
-
-            // Lets get our keys!
-            string[] browserNames = browserKeys.GetSubKeyNames();
-        
-            // Loop through all the subkeys for the information you want then display it on the console.
-            for (int i = 0; i < browserNames.Length; i++)
-            {
-                RegistryKey browserKey = browserKeys.OpenSubKey(browserNames[i]);
-                //xelem.Add(new XElement("Browser", new XElement("Name", (string)browserKey.GetValue(null)), new XElement("Version", "null"), new XElement("CompatibilityMode", "null")));
-
-                // RegistryKey browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
-                // browser.Path = (string)browserKeyPath.GetValue(null);
-            }
-
-
-            return xelem;
-        }
-
 
         private XElement Get_DataBases()
         {
@@ -726,7 +685,7 @@ namespace Appreq {
               AddNode(xNode, tNode);
             }
           } else {
-            inTreeNode.Text = inXmlNode.InnerText.ToString();
+            inTreeNode.Text = inXmlNode.Value;
           }
         }
 
@@ -863,7 +822,8 @@ namespace Appreq {
         using (StreamReader reader = new StreamReader(stream)) {
           var app = (Profile) xs.Deserialize(reader);
           populateTreeView(app, appTreeView);
-          var diff = app.Diff(_currentProfile);
+          //var diff = app.Diff(_currentProfile);
+          var diff = _currentProfile.Diff(app);
           populateTreeView(diff, diffTreeView);
         }
       }

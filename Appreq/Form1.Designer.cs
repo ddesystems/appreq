@@ -55,46 +55,63 @@
           this.refreshButton = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           this.exitButton = new System.Windows.Forms.ToolStripButton();
+          this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+          this.splitContainer2 = new System.Windows.Forms.SplitContainer();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
           this.grpmatch.SuspendLayout();
           this.grpAppl.SuspendLayout();
           this.menuMain.SuspendLayout();
           this.toolStrip1.SuspendLayout();
+          this.splitContainer1.Panel1.SuspendLayout();
+          this.splitContainer1.Panel2.SuspendLayout();
+          this.splitContainer1.SuspendLayout();
+          this.splitContainer2.Panel1.SuspendLayout();
+          this.splitContainer2.Panel2.SuspendLayout();
+          this.splitContainer2.SuspendLayout();
           this.SuspendLayout();
           // 
           // profileTreeView
           // 
+          this.profileTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.profileTreeView.Location = new System.Drawing.Point(6, 21);
           this.profileTreeView.Name = "profileTreeView";
-          this.profileTreeView.Size = new System.Drawing.Size(293, 386);
+          this.profileTreeView.Size = new System.Drawing.Size(290, 587);
           this.profileTreeView.TabIndex = 1;
           // 
           // appTreeView
           // 
-          this.appTreeView.Location = new System.Drawing.Point(679, 161);
+          this.appTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.appTreeView.Location = new System.Drawing.Point(6, 51);
           this.appTreeView.Name = "appTreeView";
-          this.appTreeView.Size = new System.Drawing.Size(293, 343);
+          this.appTreeView.Size = new System.Drawing.Size(382, 560);
           this.appTreeView.TabIndex = 3;
           // 
           // grpLocal
           // 
+          this.grpLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.grpLocal.Controls.Add(this.profileTreeView);
           this.grpLocal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.grpLocal.Location = new System.Drawing.Point(9, 91);
+          this.grpLocal.Location = new System.Drawing.Point(3, 3);
           this.grpLocal.Name = "grpLocal";
-          this.grpLocal.Size = new System.Drawing.Size(305, 413);
+          this.grpLocal.Size = new System.Drawing.Size(302, 614);
           this.grpLocal.TabIndex = 4;
           this.grpLocal.TabStop = false;
-          this.grpLocal.Text = "Risorse locali rilevate";
+          this.grpLocal.Text = "System Profile";
           // 
           // ststatus
           // 
           this.ststatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-          this.ststatus.Location = new System.Drawing.Point(0, 518);
+          this.ststatus.Location = new System.Drawing.Point(0, 689);
           this.ststatus.Name = "ststatus";
-          this.ststatus.Size = new System.Drawing.Size(999, 22);
+          this.ststatus.Size = new System.Drawing.Size(1072, 22);
           this.ststatus.TabIndex = 6;
           // 
           // toolStripStatusLabel1
@@ -104,35 +121,47 @@
           // 
           // grpmatch
           // 
+          this.grpmatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.grpmatch.Controls.Add(this.diffTreeView);
           this.grpmatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.grpmatch.Location = new System.Drawing.Point(338, 91);
+          this.grpmatch.Location = new System.Drawing.Point(3, 3);
           this.grpmatch.Name = "grpmatch";
-          this.grpmatch.Size = new System.Drawing.Size(306, 413);
+          this.grpmatch.Size = new System.Drawing.Size(326, 617);
           this.grpmatch.TabIndex = 7;
           this.grpmatch.TabStop = false;
-          this.grpmatch.Text = "Raffronto";
+          this.grpmatch.Text = "Difference";
           // 
           // diffTreeView
           // 
-          this.diffTreeView.Location = new System.Drawing.Point(7, 22);
+          this.diffTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.diffTreeView.Location = new System.Drawing.Point(7, 21);
           this.diffTreeView.Name = "diffTreeView";
-          this.diffTreeView.Size = new System.Drawing.Size(293, 385);
+          this.diffTreeView.Size = new System.Drawing.Size(313, 590);
           this.diffTreeView.TabIndex = 0;
           // 
           // grpAppl
           // 
+          this.grpAppl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.grpAppl.Controls.Add(this.appComboBox);
+          this.grpAppl.Controls.Add(this.appTreeView);
           this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.grpAppl.Location = new System.Drawing.Point(673, 91);
+          this.grpAppl.Location = new System.Drawing.Point(3, 3);
           this.grpAppl.Name = "grpAppl";
-          this.grpAppl.Size = new System.Drawing.Size(305, 413);
+          this.grpAppl.Size = new System.Drawing.Size(394, 617);
           this.grpAppl.TabIndex = 8;
           this.grpAppl.TabStop = false;
-          this.grpAppl.Text = "Applicazioni";
+          this.grpAppl.Text = "Applications";
           // 
           // appComboBox
           // 
+          this.appComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
           this.appComboBox.FormattingEnabled = true;
           this.appComboBox.Items.AddRange(new object[] {
@@ -141,9 +170,9 @@
             "Saldi e Movimenti",
             "Checkin",
             "Comma"});
-          this.appComboBox.Location = new System.Drawing.Point(6, 31);
+          this.appComboBox.Location = new System.Drawing.Point(6, 21);
           this.appComboBox.Name = "appComboBox";
-          this.appComboBox.Size = new System.Drawing.Size(293, 24);
+          this.appComboBox.Size = new System.Drawing.Size(382, 24);
           this.appComboBox.TabIndex = 9;
           this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
@@ -155,7 +184,7 @@
             this.helpToolStripMenuItem});
           this.menuMain.Location = new System.Drawing.Point(0, 0);
           this.menuMain.Name = "menuMain";
-          this.menuMain.Size = new System.Drawing.Size(999, 24);
+          this.menuMain.Size = new System.Drawing.Size(1072, 24);
           this.menuMain.TabIndex = 9;
           // 
           // fileMenuItem
@@ -238,7 +267,7 @@
           this.toolStrip1.Location = new System.Drawing.Point(0, 24);
           this.toolStrip1.Name = "toolStrip1";
           this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-          this.toolStrip1.Size = new System.Drawing.Size(999, 39);
+          this.toolStrip1.Size = new System.Drawing.Size(1072, 39);
           this.toolStrip1.TabIndex = 10;
           this.toolStrip1.Text = "toolStrip1";
           // 
@@ -294,18 +323,51 @@
           this.exitButton.Text = "Exit";
           this.exitButton.Click += new System.EventHandler(this.Exit_Command);
           // 
+          // splitContainer1
+          // 
+          this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.splitContainer1.Location = new System.Drawing.Point(12, 66);
+          this.splitContainer1.Name = "splitContainer1";
+          // 
+          // splitContainer1.Panel1
+          // 
+          this.splitContainer1.Panel1.Controls.Add(this.grpLocal);
+          // 
+          // splitContainer1.Panel2
+          // 
+          this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+          this.splitContainer1.Size = new System.Drawing.Size(1048, 620);
+          this.splitContainer1.SplitterDistance = 308;
+          this.splitContainer1.TabIndex = 11;
+          // 
+          // splitContainer2
+          // 
+          this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+          this.splitContainer2.Name = "splitContainer2";
+          // 
+          // splitContainer2.Panel1
+          // 
+          this.splitContainer2.Panel1.Controls.Add(this.grpmatch);
+          // 
+          // splitContainer2.Panel2
+          // 
+          this.splitContainer2.Panel2.Controls.Add(this.grpAppl);
+          this.splitContainer2.Size = new System.Drawing.Size(736, 620);
+          this.splitContainer2.SplitterDistance = 332;
+          this.splitContainer2.TabIndex = 0;
+          // 
           // Form1
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-          this.ClientSize = new System.Drawing.Size(999, 540);
+          this.ClientSize = new System.Drawing.Size(1072, 711);
+          this.Controls.Add(this.splitContainer1);
           this.Controls.Add(this.toolStrip1);
           this.Controls.Add(this.ststatus);
           this.Controls.Add(this.menuMain);
-          this.Controls.Add(this.grpLocal);
-          this.Controls.Add(this.appTreeView);
-          this.Controls.Add(this.grpmatch);
-          this.Controls.Add(this.grpAppl);
           this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
           this.MainMenuStrip = this.menuMain;
           this.Name = "Form1";
@@ -320,6 +382,12 @@
           this.menuMain.PerformLayout();
           this.toolStrip1.ResumeLayout(false);
           this.toolStrip1.PerformLayout();
+          this.splitContainer1.Panel1.ResumeLayout(false);
+          this.splitContainer1.Panel2.ResumeLayout(false);
+          this.splitContainer1.ResumeLayout(false);
+          this.splitContainer2.Panel1.ResumeLayout(false);
+          this.splitContainer2.Panel2.ResumeLayout(false);
+          this.splitContainer2.ResumeLayout(false);
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -353,6 +421,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton exitButton;
         private System.Windows.Forms.TreeView diffTreeView;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
     }
 }
 

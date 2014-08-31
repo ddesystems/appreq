@@ -36,6 +36,9 @@
           -->
           <DriveType>Fixed</DriveType>
         </Disk>
+        <Disk>
+          <DriveType>Removable</DriveType>
+        </Disk>
       </Disks>
       <CPU>
         <CPUInfo>
@@ -50,7 +53,7 @@
         <TotalVirtualMemorySize>5061924</TotalVirtualMemorySize>
         <!--
         <FreePhysicalMemory>1334288</FreePhysicalMemory>
-        <FreeVirtualMemory>3931244</FreeVirtualMemory>        
+        <FreeVirtualMemory>3931244</FreeVirtualMemory>
         -->
       </RAM>
     </HW>

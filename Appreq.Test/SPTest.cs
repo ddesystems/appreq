@@ -1,6 +1,9 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Microsoft.Win32;
+using System;
 
 namespace Appreq.Test {
   [TestFixture]
@@ -36,6 +39,6 @@ namespace Appreq.Test {
         Assert.AreEqual(profile.Environment.Software.OS[0].Name, profile2.Environment.Software.OS[0].Name);
         Assert.AreEqual(profile.Environment.Hardware.Disks.Length, profile2.Environment.Hardware.Disks.Length);
       }
-    }
+    }    
   }
 }
