@@ -156,7 +156,7 @@
           this.grpAppl.Size = new System.Drawing.Size(394, 617);
           this.grpAppl.TabIndex = 8;
           this.grpAppl.TabStop = false;
-          this.grpAppl.Text = "Applications";
+          this.grpAppl.Text = "Application Profile";
           // 
           // appComboBox
           // 
@@ -166,8 +166,8 @@
           this.appComboBox.FormattingEnabled = true;
           this.appComboBox.Items.AddRange(new object[] {
             "test-app",
-            "Gant",
             "Saldi e Movimenti",
+            "Gant",
             "Checkin",
             "Comma"});
           this.appComboBox.Location = new System.Drawing.Point(6, 21);
@@ -280,6 +280,7 @@
           this.openButton.Name = "openButton";
           this.openButton.Size = new System.Drawing.Size(36, 36);
           this.openButton.Text = "&Open";
+          this.openButton.ToolTipText = "Open...";
           this.openButton.Click += new System.EventHandler(this.OpenFile_Command);
           // 
           // exportButton
@@ -291,6 +292,7 @@
           this.exportButton.Name = "exportButton";
           this.exportButton.Size = new System.Drawing.Size(36, 36);
           this.exportButton.Text = "&Save";
+          this.exportButton.ToolTipText = "Save...";
           this.exportButton.Click += new System.EventHandler(this.ExportFile_Command);
           // 
           // toolStripSeparator

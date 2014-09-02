@@ -56,7 +56,9 @@
   <ItemGroup>
     <Content Include="data\app_saldimov.xml" />
     <Content Include="data\match.xml" />
-    <Content Include="data\rilevazione.xml" />
+    <Content Include="data\rilevazione.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

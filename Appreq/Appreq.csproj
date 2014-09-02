@@ -61,6 +61,8 @@
     <Compile Include="Hardware.cs" />
     <Compile Include="IDiff.cs" />
     <Compile Include="JavaInfo.cs" />
+    <Compile Include="NetFramework.cs" />
+    <Compile Include="NetFrameworkVersion.cs" />
     <Compile Include="OSInfo.cs" />
     <Compile Include="OsRelease.cs" />
     <Compile Include="Profile.cs" />
@@ -88,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SalMov.xml" />
+    <EmbeddedResource Include="Saldi e Movimenti.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="Custom-Icon-Design-Mini-Wheels.ico" />
     <EmbeddedResource Include="test-app.xml">
       <SubType>Designer</SubType>

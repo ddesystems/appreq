@@ -5,12 +5,11 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   public class Hardware: IDiff<Hardware> {
-    [XmlArray("Disks", IsNullable=true)]
+    [XmlArray("Disks")]
     public Disk[] Disks { get; set; }
-    [XmlArray("CPUs", IsNullable = true)]
+    [XmlArray("CPUs")]
     [XmlArrayItem("CPU", typeof(CPUInfo))]
     public CPUInfo[] CPU { get; set; }
-    [XmlElement(IsNullable=true)]
     public RAMInfo RAM { get; set; }
 
     public Hardware Diff(Hardware other) {

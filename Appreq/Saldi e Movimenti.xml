@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Profile>
+  <App>
+     <Id>null</Id>
+     <IdDesc>SM</IdDesc>
+     <LongDesc>Saldi e Movimenti</LongDesc>
+     <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+     </Version>
+  </App>
+  <Environment>
+    <SW>
+      <OSs>
+        <OS>
+          <Name>Microsoft Windows Server 2008</Name>
+          <Releases>
+            <Release>
+              <!-- Please insert correct number about R1 release in place of 6.3.9600-->
+              <Name>6.3.9600</Name>
+            </Release>
+            <Release>
+              <!-- Please insert correct number about R2 release in place of 6.3.9600-->
+              <Name>6.3.9600</Name>
+            </Release>
+          </Releases>
+        </OS>
+        <OS>
+          <Name>Microsoft Windows 7 Ultimate </Name>
+          <Architecture>32-bit</Architecture>
+          <Releases>
+            <Release>
+              <Name>6.1.7601</Name>
+              <ServicePack>1</ServicePack>
+            </Release>
+          </Releases>
+        </OS>
+        <OS>
+          <Name>Microsoft Windows Server 2012</Name>
+          <Releases>
+            <Release>
+              <!-- Please insert correct number about R1 release in place of 6.3.9600 -->
+              <Name>6.3.9600</Name>
+            </Release>
+            <Release>
+              <Name>6.3.9600</Name>
+            </Release>
+          </Releases>
+        </OS>
+      </OSs>
+      <NetFramework>
+        <Versions>
+          <Version>
+            <Name>4.0.0.0</Name>
+            <versionKeyName>Client</versionKeyName>
+            <sp>null</sp>
+            <WCFEnable>yes</WCFEnable>
+          </Version>
+          <Version>
+            <Name>4.5.51641</Name>
+            <versionKeyName>Full</versionKeyName>
+            <sp>null</sp>
+            <WCFEnable>yes</WCFEnable>
+          </Version>
+        </Versions>
+      </NetFramework>
+      <IIS>
+        <AppServer>
+          <Version>
+            <MajorVersion>7</MajorVersion>
+            <MinorVersion>5</MinorVersion>
+          </Version>
+          <Version>
+            <MajorVersion>8</MajorVersion>
+            <MinorVersion>0</MinorVersion>
+          </Version>
+          <Version>
+            <MajorVersion>8</MajorVersion>
+            <MinorVersion>5</MinorVersion>
+          </Version>
+        </AppServer>
+      </IIS>
+      <JavaFramework>
+        <Version>
+          <CurrentVersion>1.6</CurrentVersion>
+          <Security>no</Security>
+        </Version>
+        <Version>
+          <CurrentVersion>1.7</CurrentVersion>
+          <Security>yes</Security>
+        </Version>
+      </JavaFramework>
+      <Browsers>
+        <Browser>
+          <Name>Internet Explorer</Name>
+          <Version>10</Version>
+          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+        </Browser>
+        <Browser>
+          <Name>Internet Explorer</Name>
+          <Version>11</Version>
+          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+        </Browser>
+      </Browsers>
+      <Databases>
+        <!-- If is Server contains Application Server -->
+        <AppServer>
+          <Database>
+            <Name>SQL SERVER 2005</Name>
+            <!-- Please insert correct number about R2 release in place of R2 -->
+            <Release>null</Release>
+            <ServicePack>sp2</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2005</Name>
+            <!-- Please insert correct number about R2 release in place of R1 -->
+            <Release>null</Release>
+            <ServicePack>SP3</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2008</Name>
+            <!-- Please insert correct number about R2 release in place of R2 -->
+            <Release>R1</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2008</Name>
+            <!-- Please insert correct number about R2 release in place of R2 -->
+            <Release>R2</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2012</Name>
+            <!-- Please insert correct number about R2 release in place of R1 -->
+            <Release>R1</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2012</Name>
+            <!-- Please insert correct number about R2 release in place of R1 -->
+            <Release>R2</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+        </AppServer>
+        <!-- If is Server contains batch part (most heavy) -->
+        <Batch>
+          <Database>
+            <Name>SQL SERVER 2008</Name>
+            <!-- Please insert correct number about R2 release in place of R2 -->
+            <Release>R2</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+          <Database>
+            <Name>SQL SERVER 2012</Name>
+            <!-- Please insert correct number about R2 release in place of R1 -->
+            <Release>R1</Release>
+            <ServicePack>null</ServicePack>
+          </Database>
+        </Batch>
+      </Databases>
+    </SW>
+    <HW>
+      <CPU>
+        <CPUInfo>
+          <Manufacturer>GenuineIntel</Manufacturer>
+          <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+          <Datawidth>64</Datawidth>
+          <Maxclockspeed>2.594</Maxclockspeed>
+        </CPUInfo>
+      </CPU>
+      <Disks>
+        <Disk>
+          <AvailableFreeSpace>30000000</AvailableFreeSpace>
+          <DriveType>Fixed</DriveType>
+        </Disk>
+      </Disks>
+      <RAM>
+        <AppServer>
+          <Min>4000000</Min>
+          <Best>8000000</Best>
+          <!-- That Element will be developed in future, because an algorithm have to be thougth -->
+          <FreePhysicalMemory>null</FreePhysicalMemory>
+        </AppServer>
+        <Batch>
+          <Min>4000000</Min>
+          <Best>8000000</Best>
+          <!-- That Element will be developed in future, because an algorithm have to be thougth -->
+          <FreePhysicalMemory>null</FreePhysicalMemory>
+        </Batch>
+      </RAM>
+    </HW>
+    <Network>
+      <Ports>
+        <Port />
+        <Number>80</Number>
+        <Status>Ready</Status>
+        <Port />
+        <Number>8080</Number>
+        <Status>Ready</Status>
+        <Port />
+      </Ports>
+    </Network>
+  </Environment>
+  <Dependencies>
+    <Appl>
+      <Id>null</Id>
+      <IdDesc>Gant</IdDesc>
+      <LongDesc>Gestione Anagrafe Tributaria</LongDesc>
+      <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+      </Version>
+    </Appl>
+    <Appl>
+      <Id>null</Id>
+      <IdDesc>AE</IdDesc>
+      <LongDesc>Software di agenzia entrate per diagnostica, compattamento e cifratura flusso</LongDesc>
+      <Version>
+        <ApplVersion>null</ApplVersion>
+        <PatchVersion>null</PatchVersion>
+        <FrameworkVersion>null</FrameworkVersion>
+        <DLLVersion>null</DLLVersion>
+      </Version>
+    </Appl>
+  </Dependencies>
+</Profile>

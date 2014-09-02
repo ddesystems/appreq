@@ -224,26 +224,45 @@ namespace Appreq {
         }
         ret.Add(b);
       }
-      /*
-      for (int i = 0; i < browsers.Length; i++) {
-        RegistryKey browserKey = browserKeys.OpenSubKey(browserNames[i]);
-        //xelem.Add(new XElement("Browser", new XElement("Name", (string)browserKey.GetValue(null)), new XElement("Version", "null"), new XElement("CompatibilityMode", "null")));
-
-        // RegistryKey browserKeyPath = browserKey.OpenSubKey(@"shell\open\command");
-        // browser.Path = (string)browserKeyPath.GetValue(null);
-      }
-
-
-      */
       return ret;
     }
 
+    public List<NetFrameworkVersion> GetNetFramework() {
+      RegistryKey ndpKey = null;
+      List<NetFrameworkVersion> ret = null;
+      try {
+        ret = new List<NetFrameworkVersion>();
+        ndpKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\");
+        foreach (var versionKeyName in ndpKey.GetSubKeyNames()) {
+          if (!versionKeyName.StartsWith("v")) continue;
+          var versionKey = ndpKey.OpenSubKey(versionKeyName);
+          if(versionKey.ValueCount == 0) {
+            versionKey = versionKey.OpenSubKey("Client");
+          }
+          ret.Add(new NetFrameworkVersion {
+            Name = versionKey.GetValue("Version", "").ToString(),
+            SP = versionKey.GetValue("SP", "").ToString(),
+            Install = versionKey.GetValue("Install", "").ToString()
+          });
+          versionKey.Close();
+        }
+      } finally {
+        if (null != ndpKey) {
+          ndpKey.Close();
+        }
+      }
+      return ret.Count > 0 ? ret : null;
+    }
     public Profile GetData() {
+      
+
+      //foreach (ManagementObject mo in mos.Get()
       var app = new Profile {
-        Apps = GetApps(),
+        App = new App(),
+        Dependencies = GetApps(),
         Environment = new Env {
           Hardware = new Hardware(),
-          Software = new Software()
+          Software = new Software(),          
         }
       };
       try {
@@ -270,6 +289,12 @@ namespace Appreq {
         app.Environment.Software.Browser = GetBrowser().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve Browser info", e);
+      }
+      try {
+        app.Environment.Software.NetFramework = new NetFramework();
+        app.Environment.Software.NetFramework.Versions = GetNetFramework().ToArray();
+      } catch (Exception e) {
+        throw new Exception("Failed to retrieve NetFramework info", e);
       }
       return app;
     }

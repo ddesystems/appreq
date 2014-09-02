@@ -71,6 +71,7 @@ namespace Appreq {
           AddNode(xmldoc, tNode);
         }
       }
+      treeView.ExpandAll();
     }
 
     [Obsolete]
@@ -815,17 +816,23 @@ namespace Appreq {
     }
 
     private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-      var assembly = Assembly.GetExecutingAssembly();
-      var resourceName = string.Format("Appreq.{0}.xml", "test-app");
-      using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
-        var xs = new XmlSerializer(typeof(Profile));
-        using (StreamReader reader = new StreamReader(stream)) {
-          var app = (Profile) xs.Deserialize(reader);
-          populateTreeView(app, appTreeView);
-          //var diff = app.Diff(_currentProfile);
-          var diff = _currentProfile.Diff(app);
-          populateTreeView(diff, diffTreeView);
+      try {
+        appTreeView.Nodes.Clear();
+        diffTreeView.Nodes.Clear();
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = string.Format("{0}.{1}.xml", Assembly.GetExecutingAssembly().GetName().Name, (string)((ComboBox)sender).SelectedItem);
+        using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
+          var xs = new XmlSerializer(typeof(Profile));
+          using (StreamReader reader = new StreamReader(stream)) {
+            var app = (Profile)xs.Deserialize(reader);
+            populateTreeView(app, appTreeView);
+            var diff = _currentProfile.Diff(app);
+            populateTreeView(diff, diffTreeView);
+            toolStripStatusLabel1.Text = "Ready";
+          }
         }
+      } catch (Exception) {
+        toolStripStatusLabel1.Text = "Unable to load embedded resource";
       }
     }
   }

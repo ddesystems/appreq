@@ -4,15 +4,20 @@ using System.Xml.Serialization;
 namespace Appreq {
   [Serializable]
   public class OsRelease: IDiff<OsRelease> {
-    [XmlElement(IsNullable = true)]
     public string Name { get; set; }
-    [XmlElement(IsNullable = true)]
     public string ServicePack { get; set; }
 
     public OsRelease Diff(OsRelease other) {
-      //TODO: implement
-      return new OsRelease {
+      if (null == other) return null;
+      var release = new OsRelease {
+        Name = Name != other.Name ? other.Name : null,
+        ServicePack = ServicePack != other.ServicePack ? other.ServicePack : null
       };
+      if (null == release.Name && null == release.ServicePack) {
+        return null;
+      } else {
+        return release;
+      }
     }
   }
 }
