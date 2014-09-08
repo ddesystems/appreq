@@ -36,7 +36,7 @@
           this.ststatus = new System.Windows.Forms.StatusStrip();
           this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
           this.grpmatch = new System.Windows.Forms.GroupBox();
-          this.diffTreeView = new System.Windows.Forms.TreeView();
+          this.checkTreeView = new System.Windows.Forms.TreeView();
           this.grpAppl = new System.Windows.Forms.GroupBox();
           this.appComboBox = new System.Windows.Forms.ComboBox();
           this.menuMain = new System.Windows.Forms.MenuStrip();
@@ -124,24 +124,26 @@
           this.grpmatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
-          this.grpmatch.Controls.Add(this.diffTreeView);
+          this.grpmatch.Controls.Add(this.checkTreeView);
           this.grpmatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpmatch.Location = new System.Drawing.Point(3, 3);
           this.grpmatch.Name = "grpmatch";
           this.grpmatch.Size = new System.Drawing.Size(326, 617);
           this.grpmatch.TabIndex = 7;
           this.grpmatch.TabStop = false;
-          this.grpmatch.Text = "Difference";
+          this.grpmatch.Text = "Check";
           // 
-          // diffTreeView
+          // checkTreeView
           // 
-          this.diffTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+          this.checkTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
-          this.diffTreeView.Location = new System.Drawing.Point(7, 21);
-          this.diffTreeView.Name = "diffTreeView";
-          this.diffTreeView.Size = new System.Drawing.Size(313, 590);
-          this.diffTreeView.TabIndex = 0;
+          this.checkTreeView.Location = new System.Drawing.Point(7, 21);
+          this.checkTreeView.Name = "checkTreeView";
+          this.checkTreeView.Size = new System.Drawing.Size(313, 590);
+          this.checkTreeView.TabIndex = 0;
+          this.checkTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.diffTreeView_AfterSelect);
+          this.checkTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.diffTreeView_MouseUp);
           // 
           // grpAppl
           // 
@@ -422,7 +424,7 @@
         private System.Windows.Forms.ToolStripButton refreshButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton exitButton;
-        private System.Windows.Forms.TreeView diffTreeView;
+        private System.Windows.Forms.TreeView checkTreeView;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
     }

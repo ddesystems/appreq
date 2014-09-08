@@ -9,6 +9,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using System.Reflection;
+using System.Drawing;
 
 namespace Appreq { 
   public partial class Form1 : Form {
@@ -56,8 +57,7 @@ namespace Appreq {
       }
       var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
       var xs = new XmlSerializer(typeof(Profile));
-      //var settings = new XmlWriterSettings { OmitXmlDeclaration = true };
-      var settings = new XmlWriterSettings { OmitXmlDeclaration = false, Indent = true };
+      var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true };
       using (var ms = new MemoryStream()) {
         using (var xw = XmlWriter.Create(ms, settings)) {
           xs.Serialize(xw, profile, emptyNs);
@@ -818,7 +818,7 @@ namespace Appreq {
     private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
       try {
         appTreeView.Nodes.Clear();
-        diffTreeView.Nodes.Clear();
+        checkTreeView.Nodes.Clear();
         var assembly = Assembly.GetExecutingAssembly();
         var resourceName = string.Format("{0}.{1}.xml", Assembly.GetExecutingAssembly().GetName().Name, (string)((ComboBox)sender).SelectedItem);
         using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
@@ -827,12 +827,57 @@ namespace Appreq {
             var app = (Profile)xs.Deserialize(reader);
             populateTreeView(app, appTreeView);
             var diff = _currentProfile.Diff(app);
-            populateTreeView(diff, diffTreeView);
+            populateTreeView(diff, checkTreeView);
             toolStripStatusLabel1.Text = "Ready";
           }
         }
       } catch (Exception) {
         toolStripStatusLabel1.Text = "Unable to load embedded resource";
+      }
+    }
+
+    private TreeNode FindNode(TreeNode tnc, string path) {
+      if (path == tnc.FullPath) {
+        return tnc;
+      }
+      foreach (TreeNode tn in tnc.Nodes) {
+        var find = FindNode(tn, path);
+        if (null != find) {
+          return find;
+        }
+      }
+      return null;
+    }
+
+    private void SelectNodes(TreeView tv, string path) {
+      foreach (TreeNode tn in tv.Nodes) {
+        var findNode = FindNode(tn, path);
+        if (null != findNode) {
+          tv.CollapseAll();
+          tv.SelectedNode = findNode;
+          tv.SelectedNode.BackColor = Color.Yellow;
+          tv.SelectedNode.Toggle();
+          break;
+        }
+      }
+    }
+
+    private void diffTreeView_AfterSelect(object sender, TreeViewEventArgs e) {
+      var path = ((TreeView)sender).SelectedNode.FullPath;
+      SelectNodes(appTreeView, path);
+      SelectNodes(profileTreeView, path);
+    }
+
+    private void diffTreeView_MouseUp(object sender, MouseEventArgs e) {
+      var tv = ((TreeView)sender);
+      if (null != tv.SelectedNode) {
+        tv.SelectedNode.ForeColor = SystemColors.ControlText;
+      }
+      if (null != appTreeView.SelectedNode) {
+        appTreeView.SelectedNode.ForeColor = SystemColors.ControlText;
+      }
+      if (null != profileTreeView.SelectedNode) {
+        profileTreeView.SelectedNode.ForeColor = SystemColors.ControlText;
       }
     }
   }
