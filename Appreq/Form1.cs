@@ -681,7 +681,20 @@ namespace Appreq {
             nodeList = inXmlNode.ChildNodes;
             for (i = 0; i <= nodeList.Count - 1; i++) {
               xNode = inXmlNode.ChildNodes[i];
-              inTreeNode.Nodes.Add(new TreeNode(xNode.Name));
+              var newTreeNode = new TreeNode(xNode.Name);
+              // Set icon
+              var check = xNode["CheckPassed"];
+              if (null != check) {
+                if(check.InnerText == "true") {
+                  newTreeNode.ImageKey = "accept";
+                  newTreeNode.SelectedImageKey = "accept";
+                }
+                if (check.InnerText == "false") {
+                  newTreeNode.ImageKey = "alert";
+                  newTreeNode.SelectedImageKey = "alert";
+                }
+              }
+              inTreeNode.Nodes.Add(newTreeNode);
               tNode = inTreeNode.Nodes[i];
               AddNode(xNode, tNode);
             }
@@ -818,17 +831,18 @@ namespace Appreq {
     private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
       try {
         appTreeView.Nodes.Clear();
-        checkTreeView.Nodes.Clear();
         var assembly = Assembly.GetExecutingAssembly();
         var resourceName = string.Format("{0}.{1}.xml", Assembly.GetExecutingAssembly().GetName().Name, (string)((ComboBox)sender).SelectedItem);
         using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
           var xs = new XmlSerializer(typeof(Profile));
           using (StreamReader reader = new StreamReader(stream)) {
             var app = (Profile)xs.Deserialize(reader);
+            app.IsDiffMode = true;
+            _currentProfile.Diff(app);
             populateTreeView(app, appTreeView);
-            var diff = _currentProfile.Diff(app);
-            populateTreeView(diff, checkTreeView);
             toolStripStatusLabel1.Text = "Ready";
+            appTreeView.Focus();
+            appTreeView.SelectedNode = null;
           }
         }
       } catch (Exception) {
@@ -862,22 +876,18 @@ namespace Appreq {
       }
     }
 
-    private void diffTreeView_AfterSelect(object sender, TreeViewEventArgs e) {
+    private void appTreeView_AfterSelect(object sender, TreeViewEventArgs e) {
       var path = ((TreeView)sender).SelectedNode.FullPath;
-      SelectNodes(appTreeView, path);
       SelectNodes(profileTreeView, path);
     }
 
-    private void diffTreeView_MouseUp(object sender, MouseEventArgs e) {
+    private void appTreeView_MouseUp(object sender, MouseEventArgs e) {
       var tv = ((TreeView)sender);
       if (null != tv.SelectedNode) {
-        tv.SelectedNode.ForeColor = SystemColors.ControlText;
-      }
-      if (null != appTreeView.SelectedNode) {
-        appTreeView.SelectedNode.ForeColor = SystemColors.ControlText;
+        tv.SelectedNode.BackColor = Color.White;
       }
       if (null != profileTreeView.SelectedNode) {
-        profileTreeView.SelectedNode.ForeColor = SystemColors.ControlText;
+        profileTreeView.SelectedNode.BackColor = Color.White;
       }
     }
   }

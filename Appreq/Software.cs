@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Appreq {
   [Serializable]
-  public class Software: IDiff<Software> {
+  public class Software {
     [XmlArray("OSs")]
     [XmlArrayItem("OS", typeof(OSInfo))]
     public OSInfo[] OS { get; set; }
@@ -13,9 +13,7 @@ namespace Appreq {
     public bool ShouldSerializeOS() {
       return OS != null && OS.Length > 0;
     }
-
     public NetFramework NetFramework { get; set; }
-
     [XmlArray("Browsers")]
     [XmlArrayItem("Browser", typeof(Browser))]
     public Browser[] Browser { get; set; }
@@ -23,42 +21,33 @@ namespace Appreq {
     public bool ShouldSerializeBrowser() {
       return Browser != null && Browser.Length > 0;
     }
+    public bool CheckPassed { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+    public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    [XmlIgnore]
+    public bool IsDiffMode { get; set; }
 
-    public Software Diff(Software other) {
-      if (null == other) return null;
-      var sw = new Software();
+    public void Diff(Software other) {
+      if (null == other) {
+        return;
+      }
+      other.IsDiffMode = true;
       if (OS != null && other.OS != null) {
-        var osDiff = new List<OSInfo>();
-        var osMatchFound = false;
         foreach (var os in OS) {
-          if (osMatchFound) break;
           foreach (var osOther in other.OS) {
-            var diff = os.Diff(osOther);
-            if (null != diff) {
-              osDiff.Add(diff);
-            } else {
-              osMatchFound = true;
-              break;
-            }
+            os.Diff(osOther);
+            other.CheckPassed = other.CheckPassed && osOther.CheckPassed;
           }
-        }
-        if(osMatchFound) {
-          sw.OS = null;
-        } else {
-          sw.OS = osDiff.ToArray();
         }
       }
       if (other.Browser != null) {
-        var brwsrDiff = new List<Browser>();
-        foreach (var brwsr in Browser) {
-          foreach (var brwsrOther in other.Browser) {
-            var diff = brwsr.Diff(brwsrOther);
-            if (null != diff) { brwsrDiff.Add(diff); }
+        foreach (var browser in Browser) {
+          foreach (var browserOther in other.Browser) {
+            browser.Diff(browserOther);
+            other.CheckPassed = other.CheckPassed && browserOther.CheckPassed;
           }
         }
-        sw.Browser = brwsrDiff.ToArray();
       }
-      return sw;
     }
   }
 }

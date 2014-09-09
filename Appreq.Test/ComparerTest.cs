@@ -18,9 +18,9 @@ namespace Appreq.Test {
         TotalVirtualMemorySize = 12,
         TotalVisibleMemorySize = 14
       };
-      var diff = expected.Diff(actual);
-      Console.WriteLine(string.Format("expected={0},actual={1}", expected.TotalVisibleMemorySize, diff.TotalVisibleMemorySize));
-      Assert.Greater(expected.TotalVisibleMemorySize, diff.TotalVisibleMemorySize);
+      actual.Diff(expected);
+      Assert.IsTrue(expected.IsDiffMode);
+      Assert.IsFalse(actual.CheckPassed);
     }
   }
 }

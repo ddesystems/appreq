@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
-  public class Disk: IDiff<Disk> {
+  public class Disk {
     public string Name { get; set; }
     public string VolumeLabel { get; set; }
     public double? TotalSize { get; set; }
@@ -13,13 +13,26 @@ namespace Appreq {
     public float? PercentFreeSpace { get; set; }
     public bool ShouldSerializePercentFreeSpace() { return PercentFreeSpace.HasValue; }
     public string DriveType { get; set; }
+    public bool CheckPassed { get; set; }
+    public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    [XmlIgnore]
+    public bool IsDiffMode { get; set; }
 
-    public Disk Diff(Disk other) {
-      return new Disk {
-        DriveType = DriveType != other.DriveType ? other.DriveType : null,
-        AvailableFreeSpace = AvailableFreeSpace.GetValueOrDefault() > other.AvailableFreeSpace.GetValueOrDefault() ? other.AvailableFreeSpace : null,
-        PercentFreeSpace = PercentFreeSpace.GetValueOrDefault() > other.PercentFreeSpace.GetValueOrDefault() ? other.PercentFreeSpace : null
-      };
+    public void Diff(Disk other) {
+      other.IsDiffMode = true;
+      other.CheckPassed = DriveType == other.DriveType;
+      if (!other.CheckPassed) {
+        return;
+      }
+      if(other.AvailableFreeSpace.HasValue && AvailableFreeSpace.HasValue) {
+        other.CheckPassed = other.CheckPassed && AvailableFreeSpace.Value >= other.AvailableFreeSpace.Value;
+      }
+      if (!other.CheckPassed) {
+        return;
+      }
+      if(other.PercentFreeSpace.HasValue && PercentFreeSpace.HasValue) {
+        other.CheckPassed = other.CheckPassed && PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+      }
     }
   }
 }

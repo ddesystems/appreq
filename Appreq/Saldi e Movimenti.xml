@@ -172,7 +172,7 @@
       </CPU>
       <Disks>
         <Disk>
-          <AvailableFreeSpace>30000000</AvailableFreeSpace>
+          <AvailableFreeSpace>3000000</AvailableFreeSpace>
           <DriveType>Fixed</DriveType>
         </Disk>
       </Disks>
@@ -189,6 +189,7 @@
           <!-- That Element will be developed in future, because an algorithm have to be thougth -->
           <FreePhysicalMemory>null</FreePhysicalMemory>
         </Batch>
+        <TotalVisibleMemorySize>4000000</TotalVisibleMemorySize>
       </RAM>
     </HW>
     <Network>

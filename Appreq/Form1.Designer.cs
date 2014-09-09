@@ -28,17 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+          this.components = new System.ComponentModel.Container();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
           this.profileTreeView = new System.Windows.Forms.TreeView();
-          this.appTreeView = new System.Windows.Forms.TreeView();
+          this.imageList1 = new System.Windows.Forms.ImageList(this.components);
           this.grpLocal = new System.Windows.Forms.GroupBox();
           this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
           this.ststatus = new System.Windows.Forms.StatusStrip();
           this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-          this.grpmatch = new System.Windows.Forms.GroupBox();
-          this.checkTreeView = new System.Windows.Forms.TreeView();
-          this.grpAppl = new System.Windows.Forms.GroupBox();
-          this.appComboBox = new System.Windows.Forms.ComboBox();
           this.menuMain = new System.Windows.Forms.MenuStrip();
           this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,19 +53,17 @@
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           this.exitButton = new System.Windows.Forms.ToolStripButton();
           this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-          this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+          this.grpAppl = new System.Windows.Forms.GroupBox();
+          this.appComboBox = new System.Windows.Forms.ComboBox();
+          this.appTreeView = new System.Windows.Forms.TreeView();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
-          this.grpmatch.SuspendLayout();
-          this.grpAppl.SuspendLayout();
           this.menuMain.SuspendLayout();
           this.toolStrip1.SuspendLayout();
           this.splitContainer1.Panel1.SuspendLayout();
           this.splitContainer1.Panel2.SuspendLayout();
           this.splitContainer1.SuspendLayout();
-          this.splitContainer2.Panel1.SuspendLayout();
-          this.splitContainer2.Panel2.SuspendLayout();
-          this.splitContainer2.SuspendLayout();
+          this.grpAppl.SuspendLayout();
           this.SuspendLayout();
           // 
           // profileTreeView
@@ -76,20 +71,21 @@
           this.profileTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
+          this.profileTreeView.ImageKey = "wheel";
+          this.profileTreeView.ImageList = this.imageList1;
           this.profileTreeView.Location = new System.Drawing.Point(6, 21);
           this.profileTreeView.Name = "profileTreeView";
-          this.profileTreeView.Size = new System.Drawing.Size(290, 587);
+          this.profileTreeView.SelectedImageIndex = 0;
+          this.profileTreeView.Size = new System.Drawing.Size(495, 587);
           this.profileTreeView.TabIndex = 1;
           // 
-          // appTreeView
+          // imageList1
           // 
-          this.appTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                      | System.Windows.Forms.AnchorStyles.Left)
-                      | System.Windows.Forms.AnchorStyles.Right)));
-          this.appTreeView.Location = new System.Drawing.Point(6, 51);
-          this.appTreeView.Name = "appTreeView";
-          this.appTreeView.Size = new System.Drawing.Size(382, 560);
-          this.appTreeView.TabIndex = 3;
+          this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+          this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+          this.imageList1.Images.SetKeyName(0, "wheel");
+          this.imageList1.Images.SetKeyName(1, "alert");
+          this.imageList1.Images.SetKeyName(2, "accept");
           // 
           // grpLocal
           // 
@@ -100,7 +96,7 @@
           this.grpLocal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpLocal.Location = new System.Drawing.Point(3, 3);
           this.grpLocal.Name = "grpLocal";
-          this.grpLocal.Size = new System.Drawing.Size(302, 614);
+          this.grpLocal.Size = new System.Drawing.Size(507, 614);
           this.grpLocal.TabIndex = 4;
           this.grpLocal.TabStop = false;
           this.grpLocal.Text = "System Profile";
@@ -118,65 +114,6 @@
           // 
           this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
           this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
-          // 
-          // grpmatch
-          // 
-          this.grpmatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                      | System.Windows.Forms.AnchorStyles.Left)
-                      | System.Windows.Forms.AnchorStyles.Right)));
-          this.grpmatch.Controls.Add(this.checkTreeView);
-          this.grpmatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.grpmatch.Location = new System.Drawing.Point(3, 3);
-          this.grpmatch.Name = "grpmatch";
-          this.grpmatch.Size = new System.Drawing.Size(326, 617);
-          this.grpmatch.TabIndex = 7;
-          this.grpmatch.TabStop = false;
-          this.grpmatch.Text = "Check";
-          // 
-          // checkTreeView
-          // 
-          this.checkTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                      | System.Windows.Forms.AnchorStyles.Left)
-                      | System.Windows.Forms.AnchorStyles.Right)));
-          this.checkTreeView.Location = new System.Drawing.Point(7, 21);
-          this.checkTreeView.Name = "checkTreeView";
-          this.checkTreeView.Size = new System.Drawing.Size(313, 590);
-          this.checkTreeView.TabIndex = 0;
-          this.checkTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.diffTreeView_AfterSelect);
-          this.checkTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.diffTreeView_MouseUp);
-          // 
-          // grpAppl
-          // 
-          this.grpAppl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                      | System.Windows.Forms.AnchorStyles.Left)
-                      | System.Windows.Forms.AnchorStyles.Right)));
-          this.grpAppl.Controls.Add(this.appComboBox);
-          this.grpAppl.Controls.Add(this.appTreeView);
-          this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          this.grpAppl.Location = new System.Drawing.Point(3, 3);
-          this.grpAppl.Name = "grpAppl";
-          this.grpAppl.Size = new System.Drawing.Size(394, 617);
-          this.grpAppl.TabIndex = 8;
-          this.grpAppl.TabStop = false;
-          this.grpAppl.Text = "Application Profile";
-          // 
-          // appComboBox
-          // 
-          this.appComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                      | System.Windows.Forms.AnchorStyles.Right)));
-          this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-          this.appComboBox.FormattingEnabled = true;
-          this.appComboBox.Items.AddRange(new object[] {
-            "test-app",
-            "Saldi e Movimenti",
-            "Gant",
-            "Checkin",
-            "Comma"});
-          this.appComboBox.Location = new System.Drawing.Point(6, 21);
-          this.appComboBox.Name = "appComboBox";
-          this.appComboBox.Size = new System.Drawing.Size(382, 24);
-          this.appComboBox.TabIndex = 9;
-          this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
           // menuMain
           // 
@@ -204,7 +141,7 @@
           this.openMenuItem.Enabled = false;
           this.openMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openMenuItem.Image")));
           this.openMenuItem.Name = "openMenuItem";
-          this.openMenuItem.Size = new System.Drawing.Size(116, 22);
+          this.openMenuItem.Size = new System.Drawing.Size(152, 22);
           this.openMenuItem.Text = "Open...";
           this.openMenuItem.Click += new System.EventHandler(this.OpenFile_Command);
           // 
@@ -213,7 +150,7 @@
           this.exportMenuItem.Enabled = false;
           this.exportMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportMenuItem.Image")));
           this.exportMenuItem.Name = "exportMenuItem";
-          this.exportMenuItem.Size = new System.Drawing.Size(116, 22);
+          this.exportMenuItem.Size = new System.Drawing.Size(152, 22);
           this.exportMenuItem.Text = "Export...";
           this.exportMenuItem.Click += new System.EventHandler(this.ExportFile_Command);
           // 
@@ -221,7 +158,7 @@
           // 
           this.exitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitMenuItem.Image")));
           this.exitMenuItem.Name = "exitMenuItem";
-          this.exitMenuItem.Size = new System.Drawing.Size(116, 22);
+          this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
           this.exitMenuItem.Text = "Exit";
           this.exitMenuItem.Click += new System.EventHandler(this.Exit_Command);
           // 
@@ -237,7 +174,7 @@
           // 
           this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
           this.refreshMenuItem.Name = "refreshMenuItem";
-          this.refreshMenuItem.Size = new System.Drawing.Size(113, 22);
+          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
           this.refreshMenuItem.Text = "Refresh";
           this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
@@ -341,27 +278,58 @@
           // 
           // splitContainer1.Panel2
           // 
-          this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+          this.splitContainer1.Panel2.Controls.Add(this.grpAppl);
           this.splitContainer1.Size = new System.Drawing.Size(1048, 620);
-          this.splitContainer1.SplitterDistance = 308;
+          this.splitContainer1.SplitterDistance = 513;
           this.splitContainer1.TabIndex = 11;
           // 
-          // splitContainer2
+          // grpAppl
           // 
-          this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-          this.splitContainer2.Name = "splitContainer2";
+          this.grpAppl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.grpAppl.Controls.Add(this.appComboBox);
+          this.grpAppl.Controls.Add(this.appTreeView);
+          this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          this.grpAppl.Location = new System.Drawing.Point(3, 6);
+          this.grpAppl.Name = "grpAppl";
+          this.grpAppl.Size = new System.Drawing.Size(525, 611);
+          this.grpAppl.TabIndex = 8;
+          this.grpAppl.TabStop = false;
+          this.grpAppl.Text = "Application Profile";
           // 
-          // splitContainer2.Panel1
+          // appComboBox
           // 
-          this.splitContainer2.Panel1.Controls.Add(this.grpmatch);
+          this.appComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+          this.appComboBox.FormattingEnabled = true;
+          this.appComboBox.Items.AddRange(new object[] {
+            "test-app",
+            "Saldi e Movimenti",
+            "Gant",
+            "Checkin",
+            "Comma"});
+          this.appComboBox.Location = new System.Drawing.Point(6, 21);
+          this.appComboBox.Name = "appComboBox";
+          this.appComboBox.Size = new System.Drawing.Size(513, 24);
+          this.appComboBox.TabIndex = 9;
+          this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
-          // splitContainer2.Panel2
+          // appTreeView
           // 
-          this.splitContainer2.Panel2.Controls.Add(this.grpAppl);
-          this.splitContainer2.Size = new System.Drawing.Size(736, 620);
-          this.splitContainer2.SplitterDistance = 332;
-          this.splitContainer2.TabIndex = 0;
+          this.appTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
+          this.appTreeView.ImageIndex = 0;
+          this.appTreeView.ImageList = this.imageList1;
+          this.appTreeView.Location = new System.Drawing.Point(6, 51);
+          this.appTreeView.Name = "appTreeView";
+          this.appTreeView.SelectedImageIndex = 0;
+          this.appTreeView.Size = new System.Drawing.Size(513, 554);
+          this.appTreeView.TabIndex = 3;
+          this.appTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTreeView_AfterSelect);
+          this.appTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.appTreeView_MouseUp);
           // 
           // Form1
           // 
@@ -380,8 +348,6 @@
           this.grpLocal.ResumeLayout(false);
           this.ststatus.ResumeLayout(false);
           this.ststatus.PerformLayout();
-          this.grpmatch.ResumeLayout(false);
-          this.grpAppl.ResumeLayout(false);
           this.menuMain.ResumeLayout(false);
           this.menuMain.PerformLayout();
           this.toolStrip1.ResumeLayout(false);
@@ -389,9 +355,7 @@
           this.splitContainer1.Panel1.ResumeLayout(false);
           this.splitContainer1.Panel2.ResumeLayout(false);
           this.splitContainer1.ResumeLayout(false);
-          this.splitContainer2.Panel1.ResumeLayout(false);
-          this.splitContainer2.Panel2.ResumeLayout(false);
-          this.splitContainer2.ResumeLayout(false);
+          this.grpAppl.ResumeLayout(false);
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -400,14 +364,10 @@
         #endregion
 
         private System.Windows.Forms.TreeView profileTreeView;
-        private System.Windows.Forms.TreeView appTreeView;
         private System.Windows.Forms.GroupBox grpLocal;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.StatusStrip ststatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.GroupBox grpmatch;
-        private System.Windows.Forms.GroupBox grpAppl;
-        private System.Windows.Forms.ComboBox appComboBox;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem fileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openMenuItem;
@@ -424,9 +384,11 @@
         private System.Windows.Forms.ToolStripButton refreshButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton exitButton;
-        private System.Windows.Forms.TreeView checkTreeView;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.GroupBox grpAppl;
+        private System.Windows.Forms.ComboBox appComboBox;
+        private System.Windows.Forms.TreeView appTreeView;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
