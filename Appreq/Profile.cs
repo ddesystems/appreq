@@ -7,6 +7,7 @@ namespace Appreq {
     public App App { get; set; }
     public Env Environment { get; set; }
     [XmlArray("Dependencies")]
+    [XmlArrayItem("App", typeof(App))]
     public App[] Dependencies { get; set; }
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }

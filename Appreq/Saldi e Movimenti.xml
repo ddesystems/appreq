@@ -205,7 +205,7 @@
     </Network>
   </Environment>
   <Dependencies>
-    <Appl>
+    <App>
       <Id>null</Id>
       <IdDesc>Gant</IdDesc>
       <LongDesc>Gestione Anagrafe Tributaria</LongDesc>
@@ -215,8 +215,8 @@
         <FrameworkVersion>null</FrameworkVersion>
         <DLLVersion>null</DLLVersion>
       </Version>
-    </Appl>
-    <Appl>
+    </App>
+    <App>
       <Id>null</Id>
       <IdDesc>AE</IdDesc>
       <LongDesc>Software di agenzia entrate per diagnostica, compattamento e cifratura flusso</LongDesc>
@@ -226,6 +226,6 @@
         <FrameworkVersion>null</FrameworkVersion>
         <DLLVersion>null</DLLVersion>
       </Version>
-    </Appl>
+    </App>
   </Dependencies>
 </Profile>
