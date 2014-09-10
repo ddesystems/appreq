@@ -7,7 +7,7 @@ namespace Appreq {
   public class OsRelease {
     public string Name { get; set; }
     public string ServicePack { get; set; }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]

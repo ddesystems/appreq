@@ -55,25 +55,20 @@ namespace Appreq {
       return ret.Count > 0 ? ret : null;
     }
 
-    public JavaInfo GetJava() {
-      var java = new JavaInfo {
-        JavaHome = GetJavaHome()
-      };
-      return java;
-    }
-
-    public string GetJavaHome() {
-      var environmentPath = System.Environment.GetEnvironmentVariable("JAVA_HOME");
-      if (!string.IsNullOrEmpty(environmentPath)) {
-        return environmentPath;
+    public List<JavaInfo> GetJava() {
+      var ret = new List<JavaInfo>();
+      var hklm = Registry.LocalMachine;
+      var javaKey = hklm.OpenSubKey("SOFTWARE\\JavaSoft\\Java Runtime Environment");
+      foreach (var key in javaKey.GetSubKeyNames()) {
+        var sk = javaKey.OpenSubKey(key);
+        var ji = new JavaInfo();
+        ji.CurrentVersion = key;
+        ji.Security = "yes";
+        ji.JavaHome = (string) sk.GetValue("JavaHome") ?? sk.GetValue("JavaHome").ToString();
+        ret.Add(ji);
       }
-      var javaKey = "SOFTWARE\\JavaSoft\\Java Runtime Environment\\";
-      using (var rk = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(javaKey)) {
-        var currentVersion = rk.GetValue("CurrentVersion").ToString();
-        using (var key = rk.OpenSubKey(currentVersion)) {
-          return key.GetValue("JavaHome").ToString();
-        }
-      }
+      
+      return ret.Count > 0 ? ret : null;
     }
 
     public List<CPUInfo> GetCPU() {
@@ -189,7 +184,7 @@ namespace Appreq {
       }
 
       if (keyPath != null) {
-        string[] subKeys = keyPath.GetSubKeyNames();
+        var subKeys = keyPath.GetSubKeyNames();
         foreach (string subKey in subKeys) {
           object value = keyPath.OpenSubKey(subKey).GetValue("name");
           bool found = false;
@@ -292,6 +287,11 @@ namespace Appreq {
         app.Environment.Software.NetFramework.Versions = GetNetFramework().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve NetFramework info", e);
+      }
+      try {
+        app.Environment.Software.Java = GetJava().ToArray();
+      } catch (Exception e) {
+        throw new Exception("Failed to retrieve Java info", e);
       }
       return app;
     }

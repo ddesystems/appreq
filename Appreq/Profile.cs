@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
-  public class Profile {    
+  public class Profile {
     public App App { get; set; }
     public Env Environment { get; set; }
     [XmlArray("Dependencies")]

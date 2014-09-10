@@ -38,7 +38,7 @@ namespace Appreq {
           foreach (var relOther in other.Release) {
             rel.Diff(relOther);
             if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && relOther.CheckPassed;
+              other.CheckPassed = other.CheckPassed.Value && relOther.CheckPassed.GetValueOrDefault();
             } else {
               other.CheckPassed = relOther.CheckPassed;
             }

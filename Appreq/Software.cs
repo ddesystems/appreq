@@ -21,6 +21,9 @@ namespace Appreq {
     public bool ShouldSerializeBrowser() {
       return Browser != null && Browser.Length > 0;
     }
+    [XmlArray("JavaFramework")]
+    [XmlArrayItem("Version", typeof(JavaInfo))]
+    public JavaInfo[] Java { get; set; }
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
@@ -41,15 +44,17 @@ namespace Appreq {
         }
       }
       if (other.Browser != null) {
+        var checkPassed = false;
         foreach (var browser in Browser) {
           foreach (var browserOther in other.Browser) {
             browser.Diff(browserOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && browserOther.CheckPassed;
-            } else {
-              other.CheckPassed = browserOther.CheckPassed;
-            }
+            checkPassed = browserOther.CheckPassed.GetValueOrDefault();
           }
+        }
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && checkPassed;
+        } else {
+          other.CheckPassed = checkPassed;
         }
       }
       if(null != other.NetFramework) {
@@ -58,6 +63,26 @@ namespace Appreq {
           other.CheckPassed = other.CheckPassed.Value && other.NetFramework.CheckPassed.GetValueOrDefault();
         } else {
           other.CheckPassed = other.NetFramework.CheckPassed.GetValueOrDefault();
+        }
+      }
+      if (null != other.Java) {
+        var checkPassed = false;
+        foreach (var javaOther in other.Java) {
+          foreach (var java in Java) {
+            java.Diff(javaOther);
+            if (!checkPassed) {
+              checkPassed = javaOther.CheckPassed.GetValueOrDefault();
+              if (checkPassed) {
+                break;
+              }
+            }
+            //System.Diagnostics.Debug.WriteLine(checkPassed.ToString());
+            if (other.CheckPassed.HasValue) {
+              other.CheckPassed = other.CheckPassed.Value && checkPassed;
+            } else {
+              other.CheckPassed = checkPassed;
+            }
+          }
         }
       }
     }
