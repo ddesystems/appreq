@@ -7,7 +7,7 @@ namespace Appreq {
     public Software Software { get; set; }
     [XmlElement("HW")]
     public Hardware Hardware { get; set; }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
@@ -23,7 +23,11 @@ namespace Appreq {
       }
       if (null != Software && null != other.Software) {
         Software.Diff(other.Software);
-        other.CheckPassed = other.CheckPassed && other.Software.CheckPassed;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && other.Software.CheckPassed.GetValueOrDefault();
+        } else {
+          other.CheckPassed = other.Software.CheckPassed;
+        }
       }
     }
   }

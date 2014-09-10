@@ -15,6 +15,7 @@ namespace Appreq {
   public partial class Form1 : Form {
     private XDocument doc;
     private Profile _currentProfile;
+    private Profile _appProfile;
 
     public Form1() {
       InitializeComponent();
@@ -667,9 +668,7 @@ namespace Appreq {
                 // tcpi.LocalEndPoint.Port.GetType
 
              }
-
             return xelem;
-
         }
 
         private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode) {
@@ -693,6 +692,9 @@ namespace Appreq {
                   newTreeNode.ImageKey = "alert";
                   newTreeNode.SelectedImageKey = "alert";
                 }
+              }
+              if (xNode.Name == "CheckPassed") {
+                continue;
               }
               inTreeNode.Nodes.Add(newTreeNode);
               tNode = inTreeNode.Nodes[i];
@@ -804,7 +806,7 @@ namespace Appreq {
       toolStripStatusLabel1.Text = "Open XML is not implemented";
     }
 
-    private void ExportFile_Command(object sender, EventArgs e) {
+    private void ExportSystemProfile_Command(object sender, EventArgs e) {
       if (null == _currentProfile) return;
       saveFileDialog1.Filter = "XML Document | *.xml";
       saveFileDialog1.FileName = string.Format("system.profile_{0}.xml", System.Environment.MachineName);
@@ -839,13 +841,18 @@ namespace Appreq {
             var app = (Profile)xs.Deserialize(reader);
             app.IsDiffMode = true;
             _currentProfile.Diff(app);
+            _appProfile = app;
             populateTreeView(app, appTreeView);
             toolStripStatusLabel1.Text = "Ready";
-            appTreeView.Focus();
+            appTreeView.Focus();        
             appTreeView.SelectedNode = null;
+            exportCheckButton.Enabled = null != _appProfile;
+            exportReportMenuItem.Enabled = null != _appProfile;
           }
         }
       } catch (Exception) {
+        exportCheckButton.Enabled = false;
+        exportReportMenuItem.Enabled = false;
         toolStripStatusLabel1.Text = "Unable to load embedded resource";
       }
     }
@@ -888,6 +895,31 @@ namespace Appreq {
       }
       if (null != profileTreeView.SelectedNode) {
         profileTreeView.SelectedNode.BackColor = Color.White;
+      }
+    }
+
+    private void appTreeView_KeyDown(object sender, KeyEventArgs e) {
+      var tv = ((TreeView)sender);
+      if (null != tv.SelectedNode) {
+        tv.SelectedNode.BackColor = Color.White;
+      }
+      if (null != profileTreeView.SelectedNode) {
+        profileTreeView.SelectedNode.BackColor = Color.White;
+      }
+    }
+
+    private void ExportReport_Command(object sender, EventArgs e) {
+      if (null == _appProfile) return;
+      saveFileDialog1.Filter = "XML Document | *.xml";
+      saveFileDialog1.FileName = string.Format("{0}.report_{1}.xml", (string)appComboBox.SelectedItem, System.Environment.MachineName);
+      DialogResult result = saveFileDialog1.ShowDialog();
+      if (result == DialogResult.OK) {
+        try {
+          ProfileSerializer.SerializeToFile(_appProfile, saveFileDialog1.FileName);
+          toolStripStatusLabel1.Text = string.Format("Saved to: {0}", saveFileDialog1.FileName);
+        } catch (Exception ex) {
+          toolStripStatusLabel1.Text = ex.Message;
+        }
       }
     }
   }

@@ -8,7 +8,7 @@ namespace Appreq {
     public string Name { get; set; }
     public UInt64? Datawidth { get; set; }
     public string Maxclockspeed { get; set; }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
@@ -19,13 +19,21 @@ namespace Appreq {
       }
       other.IsDiffMode = true;
       if(Datawidth.HasValue && other.Datawidth.HasValue) {
-        other.CheckPassed = other.CheckPassed && Datawidth >= other.Datawidth;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && Datawidth >= other.Datawidth;
+        } else {
+          other.CheckPassed = Datawidth >= other.Datawidth;
+        }
       }
-      if (!other.CheckPassed) {
+      if (!other.CheckPassed.GetValueOrDefault()) {
         return;
       }
       if(!string.IsNullOrEmpty(Manufacturer) && !string.IsNullOrEmpty(other.Manufacturer)) {
-        other.CheckPassed = other.CheckPassed && Manufacturer == other.Manufacturer;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && Manufacturer == other.Manufacturer;
+        } else {
+          other.CheckPassed = Manufacturer == other.Manufacturer;
+        }
       }
     }
   }

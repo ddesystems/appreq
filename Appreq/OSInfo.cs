@@ -11,10 +11,11 @@ namespace Appreq {
     [XmlArray("Releases")]
     [XmlArrayItem("Release", typeof(OsRelease))]    
     public OsRelease[] Release { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeRelease() {
       return Release != null && Release.Length > 0;
     }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
@@ -24,6 +25,7 @@ namespace Appreq {
       if (null == other) {
         return;
       }
+      other.IsDiffMode = true;
       other.CheckPassed = !string.IsNullOrEmpty(Name) && 
         !string.IsNullOrEmpty(other.Name) && 
         Name == other.Name && 
@@ -35,9 +37,13 @@ namespace Appreq {
         foreach (var rel in Release) {
           foreach (var relOther in other.Release) {
             rel.Diff(relOther);
-            other.CheckPassed = relOther.CheckPassed;
+            if (other.CheckPassed.HasValue) {
+              other.CheckPassed = other.CheckPassed.Value && relOther.CheckPassed;
+            } else {
+              other.CheckPassed = relOther.CheckPassed;
+            }
           }
-        }        
+        }
       }
     }    
   }

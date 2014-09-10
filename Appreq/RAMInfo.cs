@@ -12,7 +12,7 @@ namespace Appreq {
     public bool ShouldSerializeTotalVirtualMemorySize() { return TotalVirtualMemorySize.HasValue; }
     public UInt64? FreeVirtualMemory { get; set; }
     public bool ShouldSerializeFreeVirtualMemory() { return FreeVirtualMemory.HasValue; }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
@@ -20,10 +20,18 @@ namespace Appreq {
     public void Diff(RAMInfo other) {
       other.IsDiffMode = true;
       if(TotalVirtualMemorySize.HasValue && other.TotalVirtualMemorySize.HasValue) {
-        other.CheckPassed = TotalVirtualMemorySize.Value >= other.TotalVirtualMemorySize;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && TotalVirtualMemorySize.Value >= other.TotalVirtualMemorySize.Value;
+        } else {
+          other.CheckPassed = TotalVirtualMemorySize.Value >= other.TotalVirtualMemorySize;
+        }
       }
       if(TotalVisibleMemorySize.HasValue && other.TotalVisibleMemorySize.HasValue) {
-        other.CheckPassed = other.CheckPassed && TotalVisibleMemorySize >= other.TotalVisibleMemorySize;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && TotalVisibleMemorySize.Value >= other.TotalVisibleMemorySize.Value;
+        } else {
+          other.CheckPassed = TotalVisibleMemorySize.Value >= other.TotalVisibleMemorySize.Value;
+        }
       }
     }
   }

@@ -13,7 +13,7 @@ namespace Appreq {
     public float? PercentFreeSpace { get; set; }
     public bool ShouldSerializePercentFreeSpace() { return PercentFreeSpace.HasValue; }
     public string DriveType { get; set; }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
@@ -21,17 +21,25 @@ namespace Appreq {
     public void Diff(Disk other) {
       other.IsDiffMode = true;
       other.CheckPassed = DriveType == other.DriveType;
-      if (!other.CheckPassed) {
+      if (!other.CheckPassed.GetValueOrDefault()) {
         return;
       }
       if(other.AvailableFreeSpace.HasValue && AvailableFreeSpace.HasValue) {
-        other.CheckPassed = other.CheckPassed && AvailableFreeSpace.Value >= other.AvailableFreeSpace.Value;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && AvailableFreeSpace >= other.AvailableFreeSpace;
+        } else {
+          other.CheckPassed = AvailableFreeSpace.Value >= other.AvailableFreeSpace.Value;
+        }
       }
-      if (!other.CheckPassed) {
+      if (!other.CheckPassed.GetValueOrDefault()) {
         return;
       }
       if(other.PercentFreeSpace.HasValue && PercentFreeSpace.HasValue) {
-        other.CheckPassed = other.CheckPassed && PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+        } else {
+          other.CheckPassed = PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+        }
       }
     }
   }

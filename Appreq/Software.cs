@@ -21,7 +21,7 @@ namespace Appreq {
     public bool ShouldSerializeBrowser() {
       return Browser != null && Browser.Length > 0;
     }
-    public bool CheckPassed { get; set; }
+    public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
@@ -36,7 +36,7 @@ namespace Appreq {
         foreach (var os in OS) {
           foreach (var osOther in other.OS) {
             os.Diff(osOther);
-            other.CheckPassed = other.CheckPassed && osOther.CheckPassed;
+            other.CheckPassed = osOther.CheckPassed;
           }
         }
       }
@@ -44,8 +44,20 @@ namespace Appreq {
         foreach (var browser in Browser) {
           foreach (var browserOther in other.Browser) {
             browser.Diff(browserOther);
-            other.CheckPassed = other.CheckPassed && browserOther.CheckPassed;
+            if (other.CheckPassed.HasValue) {
+              other.CheckPassed = other.CheckPassed.Value && browserOther.CheckPassed;
+            } else {
+              other.CheckPassed = browserOther.CheckPassed;
+            }
           }
+        }
+      }
+      if(null != other.NetFramework) {
+        NetFramework.Diff(other.NetFramework);
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && other.NetFramework.CheckPassed.GetValueOrDefault();
+        } else {
+          other.CheckPassed = other.NetFramework.CheckPassed.GetValueOrDefault();
         }
       }
     }

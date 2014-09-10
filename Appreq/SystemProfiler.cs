@@ -254,11 +254,8 @@ namespace Appreq {
       return ret.Count > 0 ? ret : null;
     }
     public Profile GetData() {
-      
-
-      //foreach (ManagementObject mo in mos.Get()
       var app = new Profile {
-        App = new App(),
+        App = GetApps()[0],
         Dependencies = GetApps(),
         Environment = new Env {
           Hardware = new Hardware(),

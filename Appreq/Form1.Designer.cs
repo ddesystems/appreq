@@ -40,6 +40,7 @@
           this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.exportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.exportReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.optionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.refreshMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,8 +55,10 @@
           this.exitButton = new System.Windows.Forms.ToolStripButton();
           this.splitContainer1 = new System.Windows.Forms.SplitContainer();
           this.grpAppl = new System.Windows.Forms.GroupBox();
+          this.exportCheckButton = new System.Windows.Forms.Button();
           this.appComboBox = new System.Windows.Forms.ComboBox();
           this.appTreeView = new System.Windows.Forms.TreeView();
+          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
           this.menuMain.SuspendLayout();
@@ -86,6 +89,7 @@
           this.imageList1.Images.SetKeyName(0, "wheel");
           this.imageList1.Images.SetKeyName(1, "alert");
           this.imageList1.Images.SetKeyName(2, "accept");
+          this.imageList1.Images.SetKeyName(3, "save");
           // 
           // grpLocal
           // 
@@ -131,6 +135,7 @@
           this.fileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openMenuItem,
             this.exportMenuItem,
+            this.exportReportMenuItem,
             this.exitMenuItem});
           this.fileMenuItem.Name = "fileMenuItem";
           this.fileMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -141,24 +146,33 @@
           this.openMenuItem.Enabled = false;
           this.openMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openMenuItem.Image")));
           this.openMenuItem.Name = "openMenuItem";
-          this.openMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.openMenuItem.Size = new System.Drawing.Size(194, 22);
           this.openMenuItem.Text = "Open...";
           this.openMenuItem.Click += new System.EventHandler(this.OpenFile_Command);
           // 
           // exportMenuItem
           // 
           this.exportMenuItem.Enabled = false;
-          this.exportMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exportMenuItem.Image")));
+          this.exportMenuItem.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
           this.exportMenuItem.Name = "exportMenuItem";
-          this.exportMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.exportMenuItem.Text = "Export...";
-          this.exportMenuItem.Click += new System.EventHandler(this.ExportFile_Command);
+          this.exportMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.exportMenuItem.Text = "Export System Profile...";
+          this.exportMenuItem.Click += new System.EventHandler(this.ExportSystemProfile_Command);
+          // 
+          // exportReportMenuItem
+          // 
+          this.exportReportMenuItem.Enabled = false;
+          this.exportReportMenuItem.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
+          this.exportReportMenuItem.Name = "exportReportMenuItem";
+          this.exportReportMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.exportReportMenuItem.Text = "Export Report...";
+          this.exportReportMenuItem.Click += new System.EventHandler(this.ExportReport_Command);
           // 
           // exitMenuItem
           // 
           this.exitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitMenuItem.Image")));
           this.exitMenuItem.Name = "exitMenuItem";
-          this.exitMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exitMenuItem.Size = new System.Drawing.Size(194, 22);
           this.exitMenuItem.Text = "Exit";
           this.exitMenuItem.Click += new System.EventHandler(this.Exit_Command);
           // 
@@ -174,7 +188,7 @@
           // 
           this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
           this.refreshMenuItem.Name = "refreshMenuItem";
-          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.refreshMenuItem.Size = new System.Drawing.Size(113, 22);
           this.refreshMenuItem.Text = "Refresh";
           this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
@@ -230,9 +244,9 @@
           this.exportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
           this.exportButton.Name = "exportButton";
           this.exportButton.Size = new System.Drawing.Size(36, 36);
-          this.exportButton.Text = "&Save";
+          this.exportButton.Text = "&Export System Profile...";
           this.exportButton.ToolTipText = "Save...";
-          this.exportButton.Click += new System.EventHandler(this.ExportFile_Command);
+          this.exportButton.Click += new System.EventHandler(this.ExportSystemProfile_Command);
           // 
           // toolStripSeparator
           // 
@@ -288,6 +302,7 @@
           this.grpAppl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
+          this.grpAppl.Controls.Add(this.exportCheckButton);
           this.grpAppl.Controls.Add(this.appComboBox);
           this.grpAppl.Controls.Add(this.appTreeView);
           this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -297,6 +312,19 @@
           this.grpAppl.TabIndex = 8;
           this.grpAppl.TabStop = false;
           this.grpAppl.Text = "Application Profile";
+          // 
+          // exportCheckButton
+          // 
+          this.exportCheckButton.Enabled = false;
+          this.exportCheckButton.ImageKey = "save";
+          this.exportCheckButton.ImageList = this.imageList1;
+          this.exportCheckButton.Location = new System.Drawing.Point(6, 18);
+          this.exportCheckButton.Name = "exportCheckButton";
+          this.exportCheckButton.Size = new System.Drawing.Size(33, 27);
+          this.exportCheckButton.TabIndex = 10;
+          this.toolTip1.SetToolTip(this.exportCheckButton, "Export Report...");
+          this.exportCheckButton.UseVisualStyleBackColor = true;
+          this.exportCheckButton.Click += new System.EventHandler(this.ExportReport_Command);
           // 
           // appComboBox
           // 
@@ -310,9 +338,9 @@
             "Gant",
             "Checkin",
             "Comma"});
-          this.appComboBox.Location = new System.Drawing.Point(6, 21);
+          this.appComboBox.Location = new System.Drawing.Point(45, 21);
           this.appComboBox.Name = "appComboBox";
-          this.appComboBox.Size = new System.Drawing.Size(513, 24);
+          this.appComboBox.Size = new System.Drawing.Size(474, 24);
           this.appComboBox.TabIndex = 9;
           this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
@@ -329,6 +357,7 @@
           this.appTreeView.Size = new System.Drawing.Size(513, 554);
           this.appTreeView.TabIndex = 3;
           this.appTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTreeView_AfterSelect);
+          this.appTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.appTreeView_KeyDown);
           this.appTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.appTreeView_MouseUp);
           // 
           // Form1
@@ -389,6 +418,9 @@
         private System.Windows.Forms.ComboBox appComboBox;
         private System.Windows.Forms.TreeView appTreeView;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Button exportCheckButton;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem exportReportMenuItem;
     }
 }
 

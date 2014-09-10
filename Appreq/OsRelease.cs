@@ -18,11 +18,10 @@ namespace Appreq {
         return;
       } 
       other.IsDiffMode = true;
-      other.CheckPassed = true;
       other.CheckPassed = !string.IsNullOrEmpty(Name) && 
          !string.IsNullOrEmpty(other.Name) && 
          Name == other.Name &&
-         !string.IsNullOrEmpty(Name) && 
+         !string.IsNullOrEmpty(ServicePack) && 
          !string.IsNullOrEmpty(other.ServicePack) &&
          ServicePack == other.ServicePack;
     }

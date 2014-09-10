@@ -20,7 +20,7 @@ namespace Appreq.Test {
       };
       actual.Diff(expected);
       Assert.IsTrue(expected.IsDiffMode);
-      Assert.IsFalse(actual.CheckPassed);
+      Assert.IsFalse(actual.CheckPassed.GetValueOrDefault());
     }
   }
 }
