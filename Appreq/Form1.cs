@@ -883,28 +883,28 @@ namespace Appreq {
       }
     }
 
-    private void appTreeView_AfterSelect(object sender, TreeViewEventArgs e) {
+    private void profileTreeView_AfterSelect(object sender, TreeViewEventArgs e) {
       var path = ((TreeView)sender).SelectedNode.FullPath;
-      SelectNodes(profileTreeView, path);
+      SelectNodes(appTreeView, path);
     }
 
-    private void appTreeView_MouseUp(object sender, MouseEventArgs e) {
+    private void profileTreeView_MouseUp(object sender, MouseEventArgs e) {
+      var tv = ((TreeView)sender);
+      if (null != tv.SelectedNode) {
+        tv.SelectedNode.BackColor = Color.White;
+      }
+      if (null != appTreeView.SelectedNode) {
+        appTreeView.SelectedNode.BackColor = Color.White;
+      }
+    }
+
+    private void profileTreeView_KeyDown(object sender, KeyEventArgs e) {
       var tv = ((TreeView)sender);
       if (null != tv.SelectedNode) {
         tv.SelectedNode.BackColor = Color.White;
       }
       if (null != profileTreeView.SelectedNode) {
-        profileTreeView.SelectedNode.BackColor = Color.White;
-      }
-    }
-
-    private void appTreeView_KeyDown(object sender, KeyEventArgs e) {
-      var tv = ((TreeView)sender);
-      if (null != tv.SelectedNode) {
-        tv.SelectedNode.BackColor = Color.White;
-      }
-      if (null != profileTreeView.SelectedNode) {
-        profileTreeView.SelectedNode.BackColor = Color.White;
+        appTreeView.SelectedNode.BackColor = Color.White;
       }
     }
 

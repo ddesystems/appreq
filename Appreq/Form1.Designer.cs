@@ -81,6 +81,9 @@
           this.profileTreeView.SelectedImageIndex = 0;
           this.profileTreeView.Size = new System.Drawing.Size(495, 587);
           this.profileTreeView.TabIndex = 1;
+          this.profileTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.profileTreeView_AfterSelect);
+          this.profileTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.profileTreeView_KeyDown);
+          this.profileTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profileTreeView_MouseUp);
           // 
           // imageList1
           // 
@@ -356,9 +359,7 @@
           this.appTreeView.SelectedImageIndex = 0;
           this.appTreeView.Size = new System.Drawing.Size(513, 554);
           this.appTreeView.TabIndex = 3;
-          this.appTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.appTreeView_AfterSelect);
-          this.appTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.appTreeView_KeyDown);
-          this.appTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.appTreeView_MouseUp);
+          this.appTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profileTreeView_MouseUp);
           // 
           // Form1
           // 
