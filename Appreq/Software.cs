@@ -67,21 +67,16 @@ namespace Appreq {
       }
       if (null != Java && null != other.Java) {
         var checkPassed = false;
-        foreach (var javaOther in other.Java) {
-          foreach (var java in Java) {
+        foreach (var java in Java) {
+          foreach (var javaOther in other.Java) {
             java.Diff(javaOther);
-            if (!checkPassed) {
-              checkPassed = javaOther.CheckPassed.GetValueOrDefault();
-              if (checkPassed) {
-                break;
-              }
-            }
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && checkPassed;
-            } else {
-              other.CheckPassed = checkPassed;
-            }
+            checkPassed = javaOther.CheckPassed.GetValueOrDefault();
           }
+        }
+        if (other.CheckPassed.HasValue) {
+          other.CheckPassed = other.CheckPassed.Value && checkPassed;
+        } else {
+          other.CheckPassed = checkPassed;
         }
       }
     }

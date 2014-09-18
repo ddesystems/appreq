@@ -231,9 +231,10 @@ namespace Appreq {
         foreach (var versionKeyName in ndpKey.GetSubKeyNames()) {
           if (!versionKeyName.StartsWith("v")) continue;
           var versionKey = ndpKey.OpenSubKey(versionKeyName);
-          if(versionKey.ValueCount == 0) {
+          if(versionKey.ValueCount <= 1) {
             versionKey = versionKey.OpenSubKey("Client");
           }
+          System.Diagnostics.Debug.WriteLine(versionKey.ToString());
           ret.Add(new NetFrameworkVersion {
             Name = versionKey.GetValue("Version", "").ToString(),
             SP = versionKey.GetValue("SP", "").ToString(),

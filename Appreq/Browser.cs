@@ -35,9 +35,9 @@ namespace Appreq {
         int verOther;
         if (int.TryParse(split[0], out ver) && int.TryParse(otherSplit[0], out verOther)) {
           if (other.CheckPassed.HasValue) {
-            other.CheckPassed = other.CheckPassed.Value && ver >= verOther;
+            other.CheckPassed = other.CheckPassed.Value && verOther >= ver;
           } else {
-            other.CheckPassed = ver >= verOther;
+            other.CheckPassed = verOther >= ver;
           }
         }
       }

@@ -21,16 +21,16 @@ namespace Appreq {
       other.IsDiffMode = true;
       if(TotalVirtualMemorySize.HasValue && other.TotalVirtualMemorySize.HasValue) {
         if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && TotalVirtualMemorySize.Value >= other.TotalVirtualMemorySize.Value;
+          other.CheckPassed = other.CheckPassed.Value && other.TotalVirtualMemorySize.Value >= TotalVirtualMemorySize.Value;
         } else {
-          other.CheckPassed = TotalVirtualMemorySize.Value >= other.TotalVirtualMemorySize;
+          other.CheckPassed = other.TotalVirtualMemorySize.Value >= TotalVirtualMemorySize.Value;
         }
       }
       if(TotalVisibleMemorySize.HasValue && other.TotalVisibleMemorySize.HasValue) {
         if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && TotalVisibleMemorySize.Value >= other.TotalVisibleMemorySize.Value;
+          other.CheckPassed = other.CheckPassed.Value && other.TotalVisibleMemorySize.Value >= TotalVisibleMemorySize.Value;
         } else {
-          other.CheckPassed = TotalVisibleMemorySize.Value >= other.TotalVisibleMemorySize.Value;
+          other.CheckPassed = other.TotalVisibleMemorySize.Value >= TotalVisibleMemorySize.Value;
         }
       }
     }

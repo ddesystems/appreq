@@ -34,6 +34,18 @@ namespace Appreq {
           }
         }
       }
+      if (null != Versions && null != other.Versions) {
+        foreach (var ver in Versions) {
+          foreach (var verOther in other.Versions) {
+            ver.Diff(verOther);
+            if (other.CheckPassed.HasValue) {
+              other.CheckPassed = other.CheckPassed.Value && verOther.CheckPassed.GetValueOrDefault();
+            } else {
+              other.CheckPassed = verOther.CheckPassed.GetValueOrDefault();
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -20,9 +20,9 @@ namespace Appreq {
       other.IsDiffMode = true;
       if(Datawidth.HasValue && other.Datawidth.HasValue) {
         if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && Datawidth >= other.Datawidth;
+          other.CheckPassed = other.CheckPassed.Value && other.Datawidth >= Datawidth;
         } else {
-          other.CheckPassed = Datawidth >= other.Datawidth;
+          other.CheckPassed = other.Datawidth >= Datawidth;
         }
       }
       if (!other.CheckPassed.GetValueOrDefault()) {

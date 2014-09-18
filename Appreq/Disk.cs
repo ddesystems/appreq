@@ -26,9 +26,9 @@ namespace Appreq {
       }
       if(other.AvailableFreeSpace.HasValue && AvailableFreeSpace.HasValue) {
         if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && AvailableFreeSpace >= other.AvailableFreeSpace;
+          other.CheckPassed = other.CheckPassed.Value && other.AvailableFreeSpace.Value >= AvailableFreeSpace.Value;
         } else {
-          other.CheckPassed = AvailableFreeSpace.Value >= other.AvailableFreeSpace.Value;
+          other.CheckPassed = other.AvailableFreeSpace.Value >= AvailableFreeSpace.Value;
         }
       }
       if (!other.CheckPassed.GetValueOrDefault()) {
@@ -36,9 +36,9 @@ namespace Appreq {
       }
       if(other.PercentFreeSpace.HasValue && PercentFreeSpace.HasValue) {
         if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+          other.CheckPassed = other.CheckPassed.Value && other.PercentFreeSpace.Value >= PercentFreeSpace.Value;
         } else {
-          other.CheckPassed = PercentFreeSpace.Value >= other.PercentFreeSpace.Value;
+          other.CheckPassed = other.PercentFreeSpace.Value >= PercentFreeSpace.Value;
         }
       }
     }
