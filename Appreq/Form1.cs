@@ -830,22 +830,36 @@ namespace Appreq {
       Application.Exit();
     }
 
+    /// <summary>
+    /// Load app profile from resource
+    /// </summary>
+    /// <param name="profile">app profile name</param>
+    /// <returns>Stream, containing an app profile xml</returns>
+    private Stream GetProfileResourceStream(string profile) {
+      var assembly = Assembly.GetExecutingAssembly();
+      var resourceName = string.Format(
+        "{0}.{1}.xml",
+        assembly.GetName().Name,
+        profile);
+      return assembly.GetManifestResourceStream(resourceName);
+    }
+
     private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
       try {
-        appTreeView.Nodes.Clear();
-        var assembly = Assembly.GetExecutingAssembly();
-        var resourceName = string.Format("{0}.{1}.xml", Assembly.GetExecutingAssembly().GetName().Name, (string)((ComboBox)sender).SelectedItem);
-        using (Stream stream = assembly.GetManifestResourceStream(resourceName)) {
+        // populate the application treeview
+        var resourceStream = GetProfileResourceStream((string)((ComboBox)sender).SelectedItem);
+        using (Stream stream = resourceStream) {
           var xs = new XmlSerializer(typeof(Profile));
           using (StreamReader reader = new StreamReader(stream)) {
-            var app = (Profile)xs.Deserialize(reader);
-            app.IsDiffMode = true;
-            _currentProfile.Diff(app);
-            _appProfile = app;
-            populateTreeView(app, appTreeView);
+            var appProfile = (Profile)xs.Deserialize(reader);
+            _currentProfile.IsDiffMode = true;
+            appProfile.Diff(_currentProfile);
+            _appProfile = appProfile;
+            populateTreeView(appProfile, appTreeView);
+            populateTreeView(_currentProfile, profileTreeView);
             toolStripStatusLabel1.Text = "Ready";
-            appTreeView.Focus();        
-            appTreeView.SelectedNode = null;
+            profileTreeView.Focus();
+            profileTreeView.SelectedNode = null;
             exportCheckButton.Enabled = null != _appProfile;
             exportReportMenuItem.Enabled = null != _appProfile;
           }

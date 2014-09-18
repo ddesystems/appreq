@@ -35,7 +35,7 @@ namespace Appreq {
         return;
       }
       other.IsDiffMode = true;
-      if (OS != null && other.OS != null) {
+      if (null != OS && null != other.OS) {
         foreach (var os in OS) {
           foreach (var osOther in other.OS) {
             os.Diff(osOther);
@@ -43,7 +43,7 @@ namespace Appreq {
           }
         }
       }
-      if (other.Browser != null) {
+      if (null != Browser && null != other.Browser) {
         var checkPassed = false;
         foreach (var browser in Browser) {
           foreach (var browserOther in other.Browser) {
@@ -57,7 +57,7 @@ namespace Appreq {
           other.CheckPassed = checkPassed;
         }
       }
-      if(null != other.NetFramework) {
+      if(null != NetFramework && null != other.NetFramework) {
         NetFramework.Diff(other.NetFramework);
         if (other.CheckPassed.HasValue) {
           other.CheckPassed = other.CheckPassed.Value && other.NetFramework.CheckPassed.GetValueOrDefault();
@@ -65,7 +65,7 @@ namespace Appreq {
           other.CheckPassed = other.NetFramework.CheckPassed.GetValueOrDefault();
         }
       }
-      if (null != other.Java) {
+      if (null != Java && null != other.Java) {
         var checkPassed = false;
         foreach (var javaOther in other.Java) {
           foreach (var java in Java) {
@@ -76,7 +76,6 @@ namespace Appreq {
                 break;
               }
             }
-            //System.Diagnostics.Debug.WriteLine(checkPassed.ToString());
             if (other.CheckPassed.HasValue) {
               other.CheckPassed = other.CheckPassed.Value && checkPassed;
             } else {
