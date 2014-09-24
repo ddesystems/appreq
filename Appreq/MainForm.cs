@@ -12,12 +12,12 @@ using System.Reflection;
 using System.Drawing;
 
 namespace Appreq { 
-  public partial class Form1 : Form {
+  public partial class MainForm : Form {
     private XDocument doc;
     private Profile _currentProfile;
     private Profile _appProfile;
 
-    public Form1() {
+    public MainForm() {
       InitializeComponent();
     }
 
@@ -52,7 +52,7 @@ namespace Appreq {
       worker.RunWorkerAsync();
     }
 
-    private void populateTreeView(Profile profile, TreeView treeView) {
+    private void populateTreeView(Profile profile, TreeView treeView, bool diffOnly = false) {
       if (null == profile || null == treeView) {
         return;
       }
@@ -65,11 +65,18 @@ namespace Appreq {
           var xmldoc = new XmlDocument();
           ms.Seek(0, SeekOrigin.Begin);
           xmldoc.Load(ms);
-          var xmlnode = xmldoc.ChildNodes[0];
+          if (diffOnly) {
+            
+          }
+          //var xmlnode = xmldoc.ChildNodes[0];
           treeView.Nodes.Clear();
           treeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
           var tNode = treeView.Nodes[0];
-          AddNode(xmldoc, tNode);
+          if (diffOnly) {
+            AddNode(xmldoc.SelectNodes("/Profile/*[CheckPassed]").Item(0), tNode);
+          } else {
+            AddNode(xmldoc, tNode);
+          }
         }
       }
       treeView.ExpandAll();
@@ -684,7 +691,7 @@ namespace Appreq {
               // Set icon
               var check = xNode["CheckPassed"];
               if (null != check) {
-                if(check.InnerText == "true") {
+                if (check.InnerText == "true") {
                   newTreeNode.ImageKey = "accept";
                   newTreeNode.SelectedImageKey = "accept";
                 }
@@ -693,6 +700,7 @@ namespace Appreq {
                   newTreeNode.SelectedImageKey = "alert";
                 }
               }
+              // Don't display the check node
               if (xNode.Name == "CheckPassed") {
                 continue;
               }
@@ -857,15 +865,16 @@ namespace Appreq {
             _appProfile = appProfile;
             populateTreeView(appProfile, appTreeView);
             populateTreeView(_currentProfile, profileTreeView);
+            populateTreeView(_currentProfile, reportTreeView, true);
             toolStripStatusLabel1.Text = "Ready";
             profileTreeView.Focus();
             profileTreeView.SelectedNode = null;
-            exportCheckButton.Enabled = null != _appProfile;
+            exportReportButton.Enabled = null != _appProfile;
             exportReportMenuItem.Enabled = null != _appProfile;
           }
         }
       } catch (Exception) {
-        exportCheckButton.Enabled = false;
+        exportReportButton.Enabled = false;
         exportReportMenuItem.Enabled = false;
         toolStripStatusLabel1.Text = "Unable to load embedded resource";
       }
@@ -929,7 +938,7 @@ namespace Appreq {
       DialogResult result = saveFileDialog1.ShowDialog();
       if (result == DialogResult.OK) {
         try {
-          ProfileSerializer.SerializeToFile(_appProfile, saveFileDialog1.FileName);
+          ProfileSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
           toolStripStatusLabel1.Text = string.Format("Saved to: {0}", saveFileDialog1.FileName);
         } catch (Exception ex) {
           toolStripStatusLabel1.Text = ex.Message;

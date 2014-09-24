@@ -1,6 +1,6 @@
 ﻿namespace Appreq
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
           this.profileTreeView = new System.Windows.Forms.TreeView();
           this.imageList1 = new System.Windows.Forms.ImageList(this.components);
           this.grpLocal = new System.Windows.Forms.GroupBox();
@@ -55,10 +55,15 @@
           this.exitButton = new System.Windows.Forms.ToolStripButton();
           this.splitContainer1 = new System.Windows.Forms.SplitContainer();
           this.grpAppl = new System.Windows.Forms.GroupBox();
-          this.exportCheckButton = new System.Windows.Forms.Button();
           this.appComboBox = new System.Windows.Forms.ComboBox();
           this.appTreeView = new System.Windows.Forms.TreeView();
           this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+          this.tabMain = new System.Windows.Forms.TabControl();
+          this.tabProfile = new System.Windows.Forms.TabPage();
+          this.tabReport = new System.Windows.Forms.TabPage();
+          this.reportTreeView = new System.Windows.Forms.TreeView();
+          this.exportReportButton = new System.Windows.Forms.ToolStripButton();
+          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
           this.menuMain.SuspendLayout();
@@ -67,6 +72,9 @@
           this.splitContainer1.Panel2.SuspendLayout();
           this.splitContainer1.SuspendLayout();
           this.grpAppl.SuspendLayout();
+          this.tabMain.SuspendLayout();
+          this.tabProfile.SuspendLayout();
+          this.tabReport.SuspendLayout();
           this.SuspendLayout();
           // 
           // profileTreeView
@@ -79,7 +87,7 @@
           this.profileTreeView.Location = new System.Drawing.Point(6, 21);
           this.profileTreeView.Name = "profileTreeView";
           this.profileTreeView.SelectedImageIndex = 0;
-          this.profileTreeView.Size = new System.Drawing.Size(495, 587);
+          this.profileTreeView.Size = new System.Drawing.Size(485, 549);
           this.profileTreeView.TabIndex = 1;
           this.profileTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.profileTreeView_AfterSelect);
           this.profileTreeView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.profileTreeView_KeyDown);
@@ -103,7 +111,7 @@
           this.grpLocal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpLocal.Location = new System.Drawing.Point(3, 3);
           this.grpLocal.Name = "grpLocal";
-          this.grpLocal.Size = new System.Drawing.Size(507, 614);
+          this.grpLocal.Size = new System.Drawing.Size(497, 576);
           this.grpLocal.TabIndex = 4;
           this.grpLocal.TabStop = false;
           this.grpLocal.Text = "System Profile";
@@ -217,6 +225,8 @@
             this.openButton,
             this.exportButton,
             this.toolStripSeparator,
+            this.exportReportButton,
+            this.toolStripSeparator2,
             this.refreshButton,
             this.toolStripSeparator1,
             this.exitButton});
@@ -286,7 +296,7 @@
           this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
-          this.splitContainer1.Location = new System.Drawing.Point(12, 66);
+          this.splitContainer1.Location = new System.Drawing.Point(6, 6);
           this.splitContainer1.Name = "splitContainer1";
           // 
           // splitContainer1.Panel1
@@ -296,8 +306,8 @@
           // splitContainer1.Panel2
           // 
           this.splitContainer1.Panel2.Controls.Add(this.grpAppl);
-          this.splitContainer1.Size = new System.Drawing.Size(1048, 620);
-          this.splitContainer1.SplitterDistance = 513;
+          this.splitContainer1.Size = new System.Drawing.Size(1028, 582);
+          this.splitContainer1.SplitterDistance = 503;
           this.splitContainer1.TabIndex = 11;
           // 
           // grpAppl
@@ -305,29 +315,15 @@
           this.grpAppl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                       | System.Windows.Forms.AnchorStyles.Left)
                       | System.Windows.Forms.AnchorStyles.Right)));
-          this.grpAppl.Controls.Add(this.exportCheckButton);
           this.grpAppl.Controls.Add(this.appComboBox);
           this.grpAppl.Controls.Add(this.appTreeView);
           this.grpAppl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
           this.grpAppl.Location = new System.Drawing.Point(3, 6);
           this.grpAppl.Name = "grpAppl";
-          this.grpAppl.Size = new System.Drawing.Size(525, 611);
+          this.grpAppl.Size = new System.Drawing.Size(515, 573);
           this.grpAppl.TabIndex = 8;
           this.grpAppl.TabStop = false;
           this.grpAppl.Text = "Application Profile";
-          // 
-          // exportCheckButton
-          // 
-          this.exportCheckButton.Enabled = false;
-          this.exportCheckButton.ImageKey = "save";
-          this.exportCheckButton.ImageList = this.imageList1;
-          this.exportCheckButton.Location = new System.Drawing.Point(6, 18);
-          this.exportCheckButton.Name = "exportCheckButton";
-          this.exportCheckButton.Size = new System.Drawing.Size(33, 27);
-          this.exportCheckButton.TabIndex = 10;
-          this.toolTip1.SetToolTip(this.exportCheckButton, "Export Report...");
-          this.exportCheckButton.UseVisualStyleBackColor = true;
-          this.exportCheckButton.Click += new System.EventHandler(this.ExportReport_Command);
           // 
           // appComboBox
           // 
@@ -341,9 +337,9 @@
             "Gant",
             "Checkin",
             "Comma"});
-          this.appComboBox.Location = new System.Drawing.Point(45, 21);
+          this.appComboBox.Location = new System.Drawing.Point(6, 21);
           this.appComboBox.Name = "appComboBox";
-          this.appComboBox.Size = new System.Drawing.Size(474, 24);
+          this.appComboBox.Size = new System.Drawing.Size(503, 24);
           this.appComboBox.TabIndex = 9;
           this.appComboBox.SelectedIndexChanged += new System.EventHandler(this.appComboBox_SelectedIndexChanged);
           // 
@@ -357,22 +353,80 @@
           this.appTreeView.Location = new System.Drawing.Point(6, 51);
           this.appTreeView.Name = "appTreeView";
           this.appTreeView.SelectedImageIndex = 0;
-          this.appTreeView.Size = new System.Drawing.Size(513, 554);
+          this.appTreeView.Size = new System.Drawing.Size(503, 516);
           this.appTreeView.TabIndex = 3;
           this.appTreeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.profileTreeView_MouseUp);
           // 
-          // Form1
+          // tabMain
+          // 
+          this.tabMain.Controls.Add(this.tabProfile);
+          this.tabMain.Controls.Add(this.tabReport);
+          this.tabMain.Location = new System.Drawing.Point(12, 66);
+          this.tabMain.Name = "tabMain";
+          this.tabMain.SelectedIndex = 0;
+          this.tabMain.Size = new System.Drawing.Size(1048, 620);
+          this.tabMain.TabIndex = 12;
+          // 
+          // tabProfile
+          // 
+          this.tabProfile.Controls.Add(this.splitContainer1);
+          this.tabProfile.Location = new System.Drawing.Point(4, 22);
+          this.tabProfile.Name = "tabProfile";
+          this.tabProfile.Padding = new System.Windows.Forms.Padding(3);
+          this.tabProfile.Size = new System.Drawing.Size(1040, 594);
+          this.tabProfile.TabIndex = 0;
+          this.tabProfile.Text = "Profile";
+          this.tabProfile.UseVisualStyleBackColor = true;
+          // 
+          // tabReport
+          // 
+          this.tabReport.Controls.Add(this.reportTreeView);
+          this.tabReport.Location = new System.Drawing.Point(4, 22);
+          this.tabReport.Name = "tabReport";
+          this.tabReport.Padding = new System.Windows.Forms.Padding(3);
+          this.tabReport.Size = new System.Drawing.Size(1040, 594);
+          this.tabReport.TabIndex = 1;
+          this.tabReport.Text = "Report";
+          this.tabReport.UseVisualStyleBackColor = true;
+          // 
+          // reportTreeView
+          // 
+          this.reportTreeView.ImageIndex = 0;
+          this.reportTreeView.ImageList = this.imageList1;
+          this.reportTreeView.Location = new System.Drawing.Point(6, 6);
+          this.reportTreeView.Name = "reportTreeView";
+          this.reportTreeView.SelectedImageIndex = 0;
+          this.reportTreeView.Size = new System.Drawing.Size(1028, 582);
+          this.reportTreeView.TabIndex = 0;
+          // 
+          // exportReportButton
+          // 
+          this.exportReportButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.exportReportButton.Enabled = false;
+          this.exportReportButton.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
+          this.exportReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.exportReportButton.Name = "exportReportButton";
+          this.exportReportButton.Size = new System.Drawing.Size(36, 36);
+          this.exportReportButton.Text = "Export Report...";
+          this.exportReportButton.Click += new System.EventHandler(this.ExportReport_Command);
+          // 
+          // toolStripSeparator2
+          // 
+          this.toolStripSeparator2.Name = "toolStripSeparator2";
+          this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
+          // 
+          // MainForm
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(1072, 711);
-          this.Controls.Add(this.splitContainer1);
+          this.Controls.Add(this.tabMain);
           this.Controls.Add(this.toolStrip1);
           this.Controls.Add(this.ststatus);
           this.Controls.Add(this.menuMain);
           this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
           this.MainMenuStrip = this.menuMain;
-          this.Name = "Form1";
+          this.Name = "MainForm";
           this.Text = "System Profiler";
           this.Load += new System.EventHandler(this.Refresh_Command);
           this.grpLocal.ResumeLayout(false);
@@ -386,6 +440,9 @@
           this.splitContainer1.Panel2.ResumeLayout(false);
           this.splitContainer1.ResumeLayout(false);
           this.grpAppl.ResumeLayout(false);
+          this.tabMain.ResumeLayout(false);
+          this.tabProfile.ResumeLayout(false);
+          this.tabReport.ResumeLayout(false);
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -419,9 +476,14 @@
         private System.Windows.Forms.ComboBox appComboBox;
         private System.Windows.Forms.TreeView appTreeView;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Button exportCheckButton;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem exportReportMenuItem;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tabProfile;
+        private System.Windows.Forms.TabPage tabReport;
+        private System.Windows.Forms.TreeView reportTreeView;
+        private System.Windows.Forms.ToolStripButton exportReportButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
