@@ -13,9 +13,11 @@ using System.Drawing;
 
 namespace Appreq { 
   public partial class MainForm : Form {
-    private XDocument doc;
     private Profile _currentProfile;
     private Profile _appProfile;
+    public const string FILE_DIALOG_FILTER = "XML Document | *.xml";
+    private ProfileMode _mode;
+    private string _extProfile;
 
     public MainForm() {
       InitializeComponent();
@@ -23,6 +25,23 @@ namespace Appreq {
 
     private void RefreshForm() {
       var worker = new BackgroundWorker();
+
+      worker.DoWork += new DoWorkEventHandler((o, e) => {
+        toolStripStatusLabel1.Text = "Loading, please wait...";
+        // Load from file
+        if (ProfileMode.External == _mode) {
+          if (String.IsNullOrEmpty(_extProfile)) {
+            toolStripStatusLabel1.Text = "Please import a profile first";
+          } else {
+            e.Result = ProfileSerializer.Deserialize(_extProfile);
+          }
+          // Get system profile
+        } else {
+          var profiler = new SystemProfiler();
+          e.Result = profiler.GetData();
+        }
+      });
+
       worker.RunWorkerCompleted += (o, e) => {
         var msg = "";
         if (e.Cancelled) {
@@ -31,7 +50,14 @@ namespace Appreq {
           msg = e.Error.Message;
         } else {
           _currentProfile = (Profile)e.Result;
+          if (null != _appProfile) {
+            _currentProfile.IsDiffMode = true;
+            _appProfile.Diff(_currentProfile);
+          }
           populateTreeView(_currentProfile, profileTreeView);
+          populateTreeView(_currentProfile, reportTreeView, true);
+          openButton.Enabled = ProfileMode.External == _mode;
+          openMenuItem.Enabled = ProfileMode.External == _mode;
           exportMenuItem.Enabled = true;
           exportButton.Enabled = true;
           refreshMenuItem.Enabled = true;
@@ -39,16 +65,15 @@ namespace Appreq {
           msg = "Done";
         }
         toolStripStatusLabel1.Text = msg;
-      };
-      worker.DoWork += new DoWorkEventHandler((o, e) => {
-        toolStripStatusLabel1.Text = "Loading, please wait...";
-        var profiler = new SystemProfiler();
-        e.Result = profiler.GetData();
-      });
+      };      
+
+      openButton.Enabled = false;
+      openMenuItem.Enabled = false;
       exportMenuItem.Enabled = false;
       exportButton.Enabled = false;
       refreshMenuItem.Enabled = false;
       refreshButton.Enabled = false;
+
       worker.RunWorkerAsync();
     }
 
@@ -65,15 +90,15 @@ namespace Appreq {
           var xmldoc = new XmlDocument();
           ms.Seek(0, SeekOrigin.Begin);
           xmldoc.Load(ms);
-          if (diffOnly) {
-            
-          }
           //var xmlnode = xmldoc.ChildNodes[0];
           treeView.Nodes.Clear();
           treeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
           var tNode = treeView.Nodes[0];
           if (diffOnly) {
-            AddNode(xmldoc.SelectNodes("/Profile/*[CheckPassed]").Item(0), tNode);
+            var nodes = xmldoc.SelectNodes("/Profile/*[CheckPassed]");
+            if (null != nodes && nodes.Count > 0) {
+              AddNode(nodes.Item(0), tNode);
+            }
           } else {
             AddNode(xmldoc, tNode);
           }
@@ -129,7 +154,7 @@ namespace Appreq {
             // --------------
             //  LOGIC
             // --------------
-            XmlGather();
+            //XmlGather();
 
         }
       //TODO: mock, remove after downgrade to .net 2.0
@@ -153,219 +178,7 @@ namespace Appreq {
           this.xElement_2 = xElement_2;
         }
       }
-
-      class XDocument {
-        private XElement xElement;
-
-        public XDocument(XDeclaration d, params XElement[] e) { }
-        public XDocument(XDocument d) { }
-
-        public XDocument(XElement xElement) {
-          // TODO: Complete member initialization
-          this.xElement = xElement;
-        }
-
-        public XmlReader CreateReader() {
-          throw new NotImplementedException();
-        }
-        public XDocument Load(XmlReader r) {
-          throw new NotImplementedException();
-        }
-      }
-      class XDeclaration {
-        public XDeclaration(string s1, string s2, string s3) { }
-      }
-
-
-    [Obsolete]
-    private void XmlGather()
-    {
-        // SqlTestInfo(); --> See it can work better to gather SQL SERVER information... (lack of SP info..mmm)
-        // Create Document
-        doc = new XDocument(new XDeclaration("1.0", "utf-8", ""),
-          // Add Root document (Don't complete at moment)
-          new XElement("Appl",/*
-            new XElement("Id", "01"),
-            new XElement("IdDesc", "SM"),
-            new XElement("LongDesc", "Saldi e Movimenti"),
-            new XElement("Versions",
-                  new XElement("Version",
-                      new XElement("ApplVersion", "V. 3.0.1"),
-                      new XElement("PatchVersion", "V. 1.0.0.1"),
-                      new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                      new XElement("DLLVersion", "V. 4")),
-                  new XElement("Version",
-                      new XElement("ApplVersion", "V. 3.0.1"),
-                      new XElement("PatchVersion", "V. 1.0.0.1"),
-                      new XElement("FrameworkVersion", "V. 7.3.2.0"),
-                      new XElement("DLLVersion", "V. 4"))),
-            */
-            new XElement("Environment",
-                  new XElement("SW",
-                      new XElement("OSs",                                    
-                          //Get_OS(),
-                          Get_NetFramework(),
-                          Get_IIS(),
-                          Get_current_javaJVM(),
-                          //Get_Browsers(),
-                          Get_DataBases())),
-                  //new XElement("HW",
-                      //Get_Processor(),
-                      //Get_Disks(),
-                      //Get_RAM()),
-                  new XElement("Network",                          
-                      Get_Network(),
-                      Get_Ports()
-            ))));
-
-        // Load in a TreeView (before Load a XmlDataDocument object from Xdocument Object)
-        XmlDataDocument xmldoc = new XmlDataDocument();
-        TreeNode tNode;
-        XmlNode xmlnode;
-
-        using (var xmlReader = doc.CreateReader())
-        {
-            xmldoc.Load(xmlReader);
-        }
-
-        xmlnode = xmldoc.ChildNodes[0];
-
-        profileTreeView.Nodes.Clear();
-        profileTreeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));           
-
-        tNode = profileTreeView.Nodes[0];
-        AddNode(xmlnode, tNode);
-
-        // Expand Treeview
-        profileTreeView.Nodes[0].Expand();
-
-        // Update Status Bar
-        ststatus.Text = "Caricamento Effettuato";
-    }
-
-        private XElement Get_NetFramework()
-        {
-            // What to obtain:             
-                //new XElement("NetFramework",                                    
-                //    new XElement("Versions",                          
-                //         new XElement("Version", 
-                //             new XElement("Name", "3.5"),
-                //             new XElement("WCFEnable", "yes")),
-                //         new XElement("Version", 
-                //             new XElement("Name", "4.0"),
-                //             new XElement("WCFEnable", "yes")),
-                //         new XElement("Version", 
-                //             new XElement("Name", "4.5"),
-                //             new XElement("WCFEnable", "yes"))
-            
-            // --------->  First sample code (Using registry)  
-            //string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            //using(Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
-            //{
-            //   foreach(string subkey_name in key.GetSubKeyNames())
-            //   {
-            //       using(RegistryKey subkey = key.OpenSubKey(subkey_name))
-            //         {
-            //            Console.WriteLine(subkey.GetValue("DisplayName"));
-            //         }
-            //    }
-            //}
-
-            // ----
-            // --------->  Second sample code (using registry)  (The choice)
-            // ----
-   
-            XElement xelem =
-                    new XElement("NetFramework",
-                        new XElement("Versions"));
-
-               //using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
-            using (RegistryKey ndpKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\"))
-               {
-                foreach (string versionKeyName in ndpKey.GetSubKeyNames())
-                {
-                    if (versionKeyName.StartsWith("v"))
-                    {
-
-                        RegistryKey versionKey = ndpKey.OpenSubKey(versionKeyName);
-                        string name = (string)versionKey.GetValue("Version", "");
-                        string sp = versionKey.GetValue("SP", "").ToString();
-                        string install = versionKey.GetValue("Install", "").ToString();
-                        if (install == "") //no install info, ust be later
-                            Console.WriteLine(versionKeyName + "  " + name);
-                        else
-                        {
-                            if (sp != "" && install == "1")
-                            {
-                              /*
-                                xelem.Element("Versions").Add(new XElement("Version", 
-                                      new XElement("Name", name),
-                                      new XElement("versionKeyName", versionKeyName),
-                                      new XElement("sp", sp),
-                                      new XElement("WCFEnable", "yes")));
-                               */
-                            }
-
-                        }
-                        if (name != "")
-                        {
-                            continue;
-                        }
-                        foreach (string subKeyName in versionKey.GetSubKeyNames())
-                        {
-                            RegistryKey subKey = versionKey.OpenSubKey(subKeyName);
-                            name = (string)subKey.GetValue("Version", "");
-                            if (name != "")
-                                sp = subKey.GetValue("SP", "").ToString();
-                            install = subKey.GetValue("Install", "").ToString();
-                            if (install == "")                                   //no install info, must be later
-                                Console.WriteLine(versionKeyName + "  " + name);
-                            else
-                            {
-                              /*
-                                if (sp != "" && install == "1")
-                                {                                  
-                                    xelem.Element("Versions").Add(new XElement("Version",
-                                           new XElement("Name", name),
-                                           new XElement("versionKeyName", versionKeyName),
-                                           new XElement("sp", sp),
-                                           new XElement("WCFEnable", "yes")));
-                                   
-                                }
-                                else if (install == "1")
-                                {
-                                    xelem.Element("Versions").Add(new XElement("Version",
-                                           new XElement("Name", name),
-                                           new XElement("versionKeyName", subKeyName),
-                                           new XElement("sp", "null"),
-                                           new XElement("WCFEnable", "yes")));
-                                }
-                              */
-                            }
-
-                        }
-
-                    }
-                }
-            }
-
-            // ---------> Third sample code (using WMI)  
-
-            //string[] NetFramework;
-
-            //ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT name, version FROM Win32_Product where name like 'Microsoft .Net%'");
-            
-            //foreach (ManagementObject mo in mos.Get())
-            //{
-            //    NetFramework (index);
-            //}
-
-            //return NetFramework;
-
  
-            return xelem;
-        }
-
         private XElement Get_IIS()
         {
             int majorVersion;
@@ -807,18 +620,28 @@ namespace Appreq {
         //        }
         //        Console.WriteLine();
         //    }
-        //}       
+        //}
 
-    private void OpenFile_Command(object sender, EventArgs e) {
-      //TODO: implement
-      toolStripStatusLabel1.Text = "Open XML is not implemented";
+    private void ImportProfile_Command(object sender, EventArgs e) {
+      openFileDialog1.Filter = FILE_DIALOG_FILTER;
+      var result = openFileDialog1.ShowDialog();
+      if (DialogResult.OK == result) {
+        try {
+          _currentProfile = ProfileSerializer.Deserialize(openFileDialog1.FileName);
+          _extProfile = openFileDialog1.FileName;
+          _mode = ProfileMode.External;
+          RefreshForm();
+        } catch (Exception ex) {
+          toolStripStatusLabel1.Text = ex.Message;
+        }
+      }
     }
 
     private void ExportSystemProfile_Command(object sender, EventArgs e) {
       if (null == _currentProfile) return;
-      saveFileDialog1.Filter = "XML Document | *.xml";
+      saveFileDialog1.Filter = FILE_DIALOG_FILTER;
       saveFileDialog1.FileName = string.Format("system.profile_{0}.xml", System.Environment.MachineName);
-      DialogResult result = saveFileDialog1.ShowDialog();
+      var result = saveFileDialog1.ShowDialog();
       if (result == DialogResult.OK) {
         try {
           ProfileSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
@@ -855,6 +678,7 @@ namespace Appreq {
     private void appComboBox_SelectedIndexChanged(object sender, EventArgs e) {
       try {
         // populate the application treeview
+        _appProfile = null;
         var resourceStream = GetProfileResourceStream((string)((ComboBox)sender).SelectedItem);
         using (Stream stream = resourceStream) {
           var xs = new XmlSerializer(typeof(Profile));
@@ -943,6 +767,20 @@ namespace Appreq {
         } catch (Exception ex) {
           toolStripStatusLabel1.Text = ex.Message;
         }
+      }
+    }
+
+    private void externalModeCheck_CheckedChanged(object sender, EventArgs e) {
+      var cb = (CheckBox)sender;
+      openButton.Enabled = cb.Checked;
+      openMenuItem.Enabled = cb.Checked;
+      _mode = cb.Checked ? ProfileMode.External : ProfileMode.System;
+      if (ProfileMode.External == _mode) {
+        _currentProfile = null;
+        profileTreeView.Nodes.Clear();
+        openButton.PerformClick();
+      } else {
+        RefreshForm();
       }
     }
   }

@@ -50,6 +50,8 @@
           this.openButton = new System.Windows.Forms.ToolStripButton();
           this.exportButton = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+          this.exportReportButton = new System.Windows.Forms.ToolStripButton();
+          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.refreshButton = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           this.exitButton = new System.Windows.Forms.ToolStripButton();
@@ -62,8 +64,8 @@
           this.tabProfile = new System.Windows.Forms.TabPage();
           this.tabReport = new System.Windows.Forms.TabPage();
           this.reportTreeView = new System.Windows.Forms.TreeView();
-          this.exportReportButton = new System.Windows.Forms.ToolStripButton();
-          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+          this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+          this.externalModeCheck = new System.Windows.Forms.CheckBox();
           this.grpLocal.SuspendLayout();
           this.ststatus.SuspendLayout();
           this.menuMain.SuspendLayout();
@@ -159,7 +161,6 @@
           this.openMenuItem.Name = "openMenuItem";
           this.openMenuItem.Size = new System.Drawing.Size(194, 22);
           this.openMenuItem.Text = "Open...";
-          this.openMenuItem.Click += new System.EventHandler(this.OpenFile_Command);
           // 
           // exportMenuItem
           // 
@@ -240,14 +241,13 @@
           // openButton
           // 
           this.openButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.openButton.Enabled = false;
           this.openButton.Image = ((System.Drawing.Image)(resources.GetObject("openButton.Image")));
           this.openButton.ImageTransparentColor = System.Drawing.Color.Magenta;
           this.openButton.Name = "openButton";
           this.openButton.Size = new System.Drawing.Size(36, 36);
           this.openButton.Text = "&Open";
           this.openButton.ToolTipText = "Open...";
-          this.openButton.Click += new System.EventHandler(this.OpenFile_Command);
+          this.openButton.Click += new System.EventHandler(this.ImportProfile_Command);
           // 
           // exportButton
           // 
@@ -265,6 +265,22 @@
           // 
           this.toolStripSeparator.Name = "toolStripSeparator";
           this.toolStripSeparator.Size = new System.Drawing.Size(6, 39);
+          // 
+          // exportReportButton
+          // 
+          this.exportReportButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.exportReportButton.Enabled = false;
+          this.exportReportButton.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
+          this.exportReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.exportReportButton.Name = "exportReportButton";
+          this.exportReportButton.Size = new System.Drawing.Size(36, 36);
+          this.exportReportButton.Text = "Export Report...";
+          this.exportReportButton.Click += new System.EventHandler(this.ExportReport_Command);
+          // 
+          // toolStripSeparator2
+          // 
+          this.toolStripSeparator2.Name = "toolStripSeparator2";
+          this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
           // 
           // refreshButton
           // 
@@ -399,27 +415,28 @@
           this.reportTreeView.Size = new System.Drawing.Size(1028, 582);
           this.reportTreeView.TabIndex = 0;
           // 
-          // exportReportButton
+          // openFileDialog1
           // 
-          this.exportReportButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.exportReportButton.Enabled = false;
-          this.exportReportButton.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
-          this.exportReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.exportReportButton.Name = "exportReportButton";
-          this.exportReportButton.Size = new System.Drawing.Size(36, 36);
-          this.exportReportButton.Text = "Export Report...";
-          this.exportReportButton.Click += new System.EventHandler(this.ExportReport_Command);
+          this.openFileDialog1.FileName = "openFileDialog1";
           // 
-          // toolStripSeparator2
+          // externalModeCheck
           // 
-          this.toolStripSeparator2.Name = "toolStripSeparator2";
-          this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
+          this.externalModeCheck.AutoSize = true;
+          this.externalModeCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+          this.externalModeCheck.Location = new System.Drawing.Point(207, 24);
+          this.externalModeCheck.Name = "externalModeCheck";
+          this.externalModeCheck.Size = new System.Drawing.Size(93, 17);
+          this.externalModeCheck.TabIndex = 13;
+          this.externalModeCheck.Text = "External Profile";
+          this.externalModeCheck.UseVisualStyleBackColor = true;
+          this.externalModeCheck.CheckedChanged += new System.EventHandler(this.externalModeCheck_CheckedChanged);
           // 
           // MainForm
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(1072, 711);
+          this.Controls.Add(this.externalModeCheck);
           this.Controls.Add(this.tabMain);
           this.Controls.Add(this.toolStrip1);
           this.Controls.Add(this.ststatus);
@@ -484,6 +501,8 @@
         private System.Windows.Forms.TreeView reportTreeView;
         private System.Windows.Forms.ToolStripButton exportReportButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.CheckBox externalModeCheck;
     }
 }
 
