@@ -24,26 +24,13 @@ namespace Appreq {
       other.IsDiffMode = true;
       if (null != Versions && null != other.Versions) {
         foreach (var ver in Versions) {
+          var found = false;
           foreach (var verOther in other.Versions) {
+            if (found) { break; }
             ver.Diff(verOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && verOther.CheckPassed.GetValueOrDefault();
-            } else {
-              other.CheckPassed = verOther.CheckPassed.GetValueOrDefault();
-            }
+            found = verOther.CheckPassed.GetValueOrDefault();
           }
-        }
-      }
-      if (null != Versions && null != other.Versions) {
-        foreach (var ver in Versions) {
-          foreach (var verOther in other.Versions) {
-            ver.Diff(verOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && verOther.CheckPassed.GetValueOrDefault();
-            } else {
-              other.CheckPassed = verOther.CheckPassed.GetValueOrDefault();
-            }
-          }
+          other.CheckPassed = found;
         }
       }
     }

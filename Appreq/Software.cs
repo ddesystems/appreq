@@ -37,6 +37,7 @@ namespace Appreq {
       other.IsDiffMode = true;
       if (null != OS && null != other.OS) {
         foreach (var os in OS) {
+          var found = false;
           foreach (var osOther in other.OS) {
             os.Diff(osOther);
             other.CheckPassed = osOther.CheckPassed;
@@ -59,11 +60,7 @@ namespace Appreq {
       }
       if(null != NetFramework && null != other.NetFramework) {
         NetFramework.Diff(other.NetFramework);
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.NetFramework.CheckPassed.GetValueOrDefault();
-        } else {
-          other.CheckPassed = other.NetFramework.CheckPassed.GetValueOrDefault();
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && other.NetFramework.CheckPassed.GetValueOrDefault();
       }
       if (null != Java && null != other.Java) {
         var checkPassed = false;

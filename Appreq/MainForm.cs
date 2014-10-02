@@ -29,13 +29,12 @@ namespace Appreq {
         if (ProfileMode.External == value) {
           grpLocal.Text = "System Profile [OFFLINE]";
           grpLocal.ForeColor = Color.Red;
-          grpLocal.Font = new Font(grpLocal.Font, FontStyle.Bold);
           _currentProfile = null;
           profileTreeView.Nodes.Clear();
-          openButton.PerformClick();
+          exportButton.Enabled = false;
+          appComboBox.Enabled = false;
         } else if (ProfileMode.System == value) {
           grpLocal.Text = "System Profile";
-          grpLocal.Font = new Font(grpLocal.Font, FontStyle.Regular);          
           grpLocal.ForeColor = Color.Black;
           RefreshForm();
         }
@@ -82,7 +81,7 @@ namespace Appreq {
           msg = e.Error.Message;
         } else {
           _currentProfile = (Profile)e.Result;
-          if (null != _appProfile) {
+          if (null != _appProfile && null != _currentProfile) {
             _currentProfile.IsDiffMode = true;
             _appProfile.Diff(_currentProfile);
           }
@@ -90,14 +89,17 @@ namespace Appreq {
           TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
           openButton.Enabled = ProfileMode.External == Mode;
           openMenuItem.Enabled = ProfileMode.External == Mode;
-          exportMenuItem.Enabled = true;
-          exportButton.Enabled = true;
+          exportMenuItem.Enabled = null != _currentProfile;
+          exportButton.Enabled = null != _currentProfile;
+          exportReportButton.Enabled = null != _currentProfile;
+          exportReportMenuItem.Enabled = null != _currentProfile;
           refreshMenuItem.Enabled = true;
           refreshButton.Enabled = true;
+          appComboBox.Enabled = null != _currentProfile;
           msg = "Done";
         }
         toolStripStatusLabel1.Text = msg;
-      };      
+      };
 
       openButton.Enabled = false;
       openMenuItem.Enabled = false;
@@ -105,31 +107,31 @@ namespace Appreq {
       exportButton.Enabled = false;
       refreshMenuItem.Enabled = false;
       refreshButton.Enabled = false;
+      appComboBox.Enabled = false;
 
       worker.RunWorkerAsync();
     }
 
-      //TODO: mock, remove after downgrade to .net 2.0
-      class XElement {
-        private string p;
-        private XElement xElement;
-        private IEnumerable<Disk> iEnumerable;
-        private XElement xElement_2;
+    //TODO: mock, remove after downgrade to .net 2.0
+    class XElement {
+      private string p;
+      private XElement xElement;
+      private IEnumerable<Disk> iEnumerable;
+      private XElement xElement_2;
 
-        public XElement(string s, params XElement[] e) { }
-        public XElement(string s, string s1) { }
-        public XElement(string s, object o) { }        
-        public XElement(params XElement[] e) { }
+      public XElement(string s, params XElement[] e) { }
+      public XElement(string s, string s1) { }
+      public XElement(string s, object o) { }        
+      public XElement(params XElement[] e) { }
 
-
-        public XElement(string p, XElement xElement, IEnumerable<Disk> iEnumerable, XElement xElement_2) {
-          // TODO: Complete member initialization
-          this.p = p;
-          this.xElement = xElement;
-          this.iEnumerable = iEnumerable;
-          this.xElement_2 = xElement_2;
-        }
+      public XElement(string p, XElement xElement, IEnumerable<Disk> iEnumerable, XElement xElement_2) {
+        // TODO: Complete member initialization
+        this.p = p;
+        this.xElement = xElement;
+        this.iEnumerable = iEnumerable;
+        this.xElement_2 = xElement_2;
       }
+    }
  
         private XElement Get_IIS()
         {
@@ -546,9 +548,12 @@ namespace Appreq {
         try {
           _currentProfile = ProfileSerializer.Deserialize(openFileDialog1.FileName);
           _extProfile = openFileDialog1.FileName;
-          Mode = ProfileMode.External;
+          exportButton.Enabled = false;
+          appComboBox.Enabled = false;
           RefreshForm();
         } catch (Exception ex) {
+          _extProfile = null;
+          _currentProfile = null;
           toolStripStatusLabel1.Text = ex.Message;
         }
       }

@@ -16,16 +16,9 @@ namespace Appreq {
 
     public void Diff(NetFrameworkVersion other) {
       other.IsDiffMode = true;
-      other.CheckPassed =
-        !string.IsNullOrEmpty(Name) &&
-        !string.IsNullOrEmpty(other.Name) &&
-        Name == other.Name &&
-        !string.IsNullOrEmpty(Install) &&
-        !string.IsNullOrEmpty(other.Install) &&
-        Install == other.Install &&
-        !string.IsNullOrEmpty(SP) &&
-        !string.IsNullOrEmpty(other.SP) &&
-        SP == other.SP;
+      if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(other.Name)) {
+        other.CheckPassed = VersionComparer.CompareMinorMajor(Name, other.Name);
+      }
     }
   }
 }
