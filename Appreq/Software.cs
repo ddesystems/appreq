@@ -48,17 +48,14 @@ namespace Appreq {
         }
       }
       if (null != Browser && null != other.Browser) {
-        var checkPassed = false;
         foreach (var browser in Browser) {
+          var found = false;
           foreach (var browserOther in other.Browser) {
             browser.Diff(browserOther);
-            checkPassed = browserOther.CheckPassed.GetValueOrDefault();
+            found = browserOther.CheckPassed.GetValueOrDefault();
+            if(found) { break; }
           }
-        }
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && checkPassed;
-        } else {
-          other.CheckPassed = checkPassed;
+          other.CheckPassed = (other.CheckPassed ?? true) && found;
         }
       }
       if(null != NetFramework && null != other.NetFramework) {
@@ -66,17 +63,14 @@ namespace Appreq {
         other.CheckPassed = (other.CheckPassed ?? true) && other.NetFramework.CheckPassed.GetValueOrDefault();
       }
       if (null != Java && null != other.Java) {
-        var checkPassed = false;
         foreach (var java in Java) {
+          var found = false;
           foreach (var javaOther in other.Java) {
             java.Diff(javaOther);
-            checkPassed = javaOther.CheckPassed.GetValueOrDefault();
+            found = javaOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
-        }
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && checkPassed;
-        } else {
-          other.CheckPassed = checkPassed;
+          other.CheckPassed = (other.CheckPassed ?? true) && found;
         }
       }
     }

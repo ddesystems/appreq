@@ -19,13 +19,14 @@ namespace Appreq {
         return;
       }
       other.IsDiffMode = true;
-      other.CheckPassed = 
-        !string.IsNullOrEmpty(CurrentVersion) &&
-        !string.IsNullOrEmpty(other.CurrentVersion) &&
-        CurrentVersion == other.CurrentVersion &&
-        !string.IsNullOrEmpty(Security) &&
-        !string.IsNullOrEmpty(other.Security) &&
-        Security == other.Security;
+      other.CheckPassed = null;
+      if (!string.IsNullOrEmpty(CurrentVersion) && !string.IsNullOrEmpty(other.CurrentVersion)) {
+        other.CheckPassed = VersionComparer.CompareMinorMajor(CurrentVersion, other.CurrentVersion);
+      }
+
+      if (!string.IsNullOrEmpty(Security) && !string.IsNullOrEmpty(other.Security)) {
+        other.CheckPassed = (other.CheckPassed ?? true) && Security == other.Security;
+      }
     }
   }  
 }

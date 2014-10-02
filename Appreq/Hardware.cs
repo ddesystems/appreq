@@ -24,35 +24,30 @@ namespace Appreq {
       other.IsDiffMode = true;
       if (null != CPU && null != other.CPU) {
         foreach (var cpu in CPU) {
+          var found = false;
           foreach (var cpuOther in other.CPU) {
             cpu.Diff(cpuOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && cpuOther.CheckPassed.GetValueOrDefault();
-            } else {
-              other.CheckPassed = cpuOther.CheckPassed.GetValueOrDefault();
-            }
+            found = cpuOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
+          other.CheckPassed = found;
         }
       }
       if (null != Disks && null != other.Disks) {
         foreach (var disk in Disks) {
+          var found = false;
           foreach (var diskOther in other.Disks) {
             disk.Diff(diskOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && diskOther.CheckPassed.GetValueOrDefault();
-            } else {
-              other.CheckPassed = diskOther.CheckPassed.GetValueOrDefault();
-            }
+            found = diskOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
+          other.CheckPassed = (other.CheckPassed ?? true) && found;
+          if (found) { break; }
         }
       }
       if (null != RAM && null != other.RAM) {
         RAM.Diff(other.RAM);
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.RAM.CheckPassed.GetValueOrDefault();
-        } else {
-          other.CheckPassed = other.RAM.CheckPassed.GetValueOrDefault();
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && other.RAM.CheckPassed.GetValueOrDefault();
       }
     }
   }

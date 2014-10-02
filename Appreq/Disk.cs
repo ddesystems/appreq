@@ -21,25 +21,12 @@ namespace Appreq {
     public void Diff(Disk other) {
       other.IsDiffMode = true;
       other.CheckPassed = DriveType == other.DriveType;
-      if (!other.CheckPassed.GetValueOrDefault()) {
-        return;
-      }
+
       if(other.AvailableFreeSpace.HasValue && AvailableFreeSpace.HasValue) {
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.AvailableFreeSpace.Value >= AvailableFreeSpace.Value;
-        } else {
-          other.CheckPassed = other.AvailableFreeSpace.Value >= AvailableFreeSpace.Value;
-        }
-      }
-      if (!other.CheckPassed.GetValueOrDefault()) {
-        return;
+        other.CheckPassed = (other.CheckPassed ?? true) && (other.AvailableFreeSpace.Value >= AvailableFreeSpace.Value);
       }
       if(other.PercentFreeSpace.HasValue && PercentFreeSpace.HasValue) {
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.PercentFreeSpace.Value >= PercentFreeSpace.Value;
-        } else {
-          other.CheckPassed = other.PercentFreeSpace.Value >= PercentFreeSpace.Value;
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && (other.PercentFreeSpace.Value >= PercentFreeSpace.Value);
       }
     }
   }

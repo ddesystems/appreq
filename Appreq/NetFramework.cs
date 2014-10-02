@@ -26,9 +26,9 @@ namespace Appreq {
         foreach (var ver in Versions) {
           var found = false;
           foreach (var verOther in other.Versions) {
-            if (found) { break; }
             ver.Diff(verOther);
             found = verOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
           other.CheckPassed = found;
         }
