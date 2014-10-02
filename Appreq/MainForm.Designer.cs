@@ -159,15 +159,15 @@
           this.openMenuItem.Enabled = false;
           this.openMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openMenuItem.Image")));
           this.openMenuItem.Name = "openMenuItem";
-          this.openMenuItem.Size = new System.Drawing.Size(194, 22);
-          this.openMenuItem.Text = "Open...";
+          this.openMenuItem.Size = new System.Drawing.Size(197, 22);
+          this.openMenuItem.Text = "Import System Profile...";
           // 
           // exportMenuItem
           // 
           this.exportMenuItem.Enabled = false;
           this.exportMenuItem.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
           this.exportMenuItem.Name = "exportMenuItem";
-          this.exportMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.exportMenuItem.Size = new System.Drawing.Size(197, 22);
           this.exportMenuItem.Text = "Export System Profile...";
           this.exportMenuItem.Click += new System.EventHandler(this.ExportSystemProfile_Command);
           // 
@@ -176,7 +176,7 @@
           this.exportReportMenuItem.Enabled = false;
           this.exportReportMenuItem.Image = global::Appreq.Properties.Resources.Custom_Icon_Design_Mini_Save;
           this.exportReportMenuItem.Name = "exportReportMenuItem";
-          this.exportReportMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.exportReportMenuItem.Size = new System.Drawing.Size(197, 22);
           this.exportReportMenuItem.Text = "Export Report...";
           this.exportReportMenuItem.Click += new System.EventHandler(this.ExportReport_Command);
           // 
@@ -184,7 +184,7 @@
           // 
           this.exitMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("exitMenuItem.Image")));
           this.exitMenuItem.Name = "exitMenuItem";
-          this.exitMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.exitMenuItem.Size = new System.Drawing.Size(197, 22);
           this.exitMenuItem.Text = "Exit";
           this.exitMenuItem.Click += new System.EventHandler(this.Exit_Command);
           // 
@@ -421,9 +421,11 @@
           // 
           // externalModeCheck
           // 
+          this.externalModeCheck.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)));
           this.externalModeCheck.AutoSize = true;
           this.externalModeCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-          this.externalModeCheck.Location = new System.Drawing.Point(207, 24);
+          this.externalModeCheck.Location = new System.Drawing.Point(207, 43);
           this.externalModeCheck.Name = "externalModeCheck";
           this.externalModeCheck.Size = new System.Drawing.Size(93, 17);
           this.externalModeCheck.TabIndex = 13;

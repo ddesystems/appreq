@@ -5,6 +5,26 @@ using System.Management;
 using Microsoft.Win32;
 
 namespace Appreq {
+  // Get Installed Application information
+  // Id and name
+  // version
+  // Get Software requirement
+  // Os
+  // .Net framework
+  // IIS
+  // java Framework     
+  // Browser
+  // database
+  // Get Hardware requirement
+  // Processor (speed ?)     
+  // Disk
+  // RAM Memory
+  // Get Network requirement
+  // Protocol
+  // Which port is opened ?     
+  // Application Dependency
+  // Id and name
+  // version
   public class SystemProfiler {
     public const string NA = "N/A";
 

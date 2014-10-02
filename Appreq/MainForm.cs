@@ -16,11 +16,43 @@ namespace Appreq {
     private Profile _currentProfile;
     private Profile _appProfile;
     public const string FILE_DIALOG_FILTER = "XML Document | *.xml";
-    private ProfileMode _mode;
-    private string _extProfile;
+    public delegate void ProfileModeChangedHandler(ProfileMode newMode);
+    public event ProfileModeChangedHandler ProfileModeChanged;
+    private ProfileMode _mode;    
+    public ProfileMode Mode {
+      get {
+        return _mode;
+      }
+      private set {
+        _mode = value;
+        ProfileModeChanged(value);
+        if (ProfileMode.External == value) {
+          grpLocal.Text = "System Profile [OFFLINE]";
+          grpLocal.ForeColor = Color.Red;
+          grpLocal.Font = new Font(grpLocal.Font, FontStyle.Bold);
+          _currentProfile = null;
+          profileTreeView.Nodes.Clear();
+          openButton.PerformClick();
+        } else if (ProfileMode.System == value) {
+          grpLocal.Text = "System Profile";
+          grpLocal.Font = new Font(grpLocal.Font, FontStyle.Regular);          
+          grpLocal.ForeColor = Color.Black;
+          RefreshForm();
+        }
+      }
+    }
+
+    private string _extProfile;    
 
     public MainForm() {
       InitializeComponent();
+      this.ProfileModeChanged += (newMode) => {
+        if (ProfileMode.External == newMode) {
+          grpLocal.Text = "System Profile [OFFLINE]";
+        } else if (ProfileMode.System == newMode) {
+          grpLocal.Text = "System Profile";
+        }
+      };
     }
 
     private void RefreshForm() {
@@ -28,15 +60,15 @@ namespace Appreq {
 
       worker.DoWork += new DoWorkEventHandler((o, e) => {
         toolStripStatusLabel1.Text = "Loading, please wait...";
-        // Load from file
-        if (ProfileMode.External == _mode) {
+        if (ProfileMode.External == Mode) {
+          // Load from file
           if (String.IsNullOrEmpty(_extProfile)) {
             toolStripStatusLabel1.Text = "Please import a profile first";
           } else {
             e.Result = ProfileSerializer.Deserialize(_extProfile);
           }
+        } else { 
           // Get system profile
-        } else {
           var profiler = new SystemProfiler();
           e.Result = profiler.GetData();
         }
@@ -54,10 +86,10 @@ namespace Appreq {
             _currentProfile.IsDiffMode = true;
             _appProfile.Diff(_currentProfile);
           }
-          populateTreeView(_currentProfile, profileTreeView);
-          populateTreeView(_currentProfile, reportTreeView, true);
-          openButton.Enabled = ProfileMode.External == _mode;
-          openMenuItem.Enabled = ProfileMode.External == _mode;
+          TreeViewHelper.populateTreeView(_currentProfile, profileTreeView);
+          TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
+          openButton.Enabled = ProfileMode.External == Mode;
+          openMenuItem.Enabled = ProfileMode.External == Mode;
           exportMenuItem.Enabled = true;
           exportButton.Enabled = true;
           refreshMenuItem.Enabled = true;
@@ -77,86 +109,6 @@ namespace Appreq {
       worker.RunWorkerAsync();
     }
 
-    private void populateTreeView(Profile profile, TreeView treeView, bool diffOnly = false) {
-      if (null == profile || null == treeView) {
-        return;
-      }
-      var emptyNs = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
-      var xs = new XmlSerializer(typeof(Profile));
-      var settings = new XmlWriterSettings { OmitXmlDeclaration = true, Indent = true };
-      using (var ms = new MemoryStream()) {
-        using (var xw = XmlWriter.Create(ms, settings)) {
-          xs.Serialize(xw, profile, emptyNs);
-          var xmldoc = new XmlDocument();
-          ms.Seek(0, SeekOrigin.Begin);
-          xmldoc.Load(ms);
-          //var xmlnode = xmldoc.ChildNodes[0];
-          treeView.Nodes.Clear();
-          treeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
-          var tNode = treeView.Nodes[0];
-          if (diffOnly) {
-            var nodes = xmldoc.SelectNodes("/Profile/*[CheckPassed]");
-            if (null != nodes && nodes.Count > 0) {
-              AddNode(nodes.Item(0), tNode);
-            }
-          } else {
-            AddNode(xmldoc, tNode);
-          }
-        }
-      }
-      treeView.ExpandAll();
-    }
-
-    [Obsolete]
-        private void generatedoc()
-        {
-            // Get Installed Application information
-            // Id and name
-            // version
-            // Get Software requirement
-            // Os
-            // .Net framework
-            // IIS
-            // java Framework     
-            // Browser
-            // database
-            // Get Hardware requirement
-            // Processor (speed ?)     
-            // Disk
-            // RAM Memory
-            // Get Network requirement
-            // Protocol
-            // Which port is opened ?     
-            // Application Dependency
-            // Id and name
-            // version
-
-            // -- Study this sample
-            // XDocument doc = XDocument.Load(new StreamReader(Application.GetResourceStream(new Uri(@"\Data\XmlData.xml", UriKind.Relative)).Stream));
-            // this.treeView.DataContext = doc;
-
-            // ------------------------------------------
-            // Test Routine to insert in LOGIC session
-            // ------------------------------------------
-            // XElement prova = Build_Element_OS();  // OK
-            // prova.Save(Console.Out);
-
-            // int pino = Get_SPVersion_OS();
-
-            // string aaa = Get_Release_OS();
-            // -------------------------------------------
-
-            // -------------------------
-            //  DEMO with prebuild XML
-            // -------------------------
-            // XmlGen();
-
-            // --------------
-            //  LOGIC
-            // --------------
-            //XmlGather();
-
-        }
       //TODO: mock, remove after downgrade to .net 2.0
       class XElement {
         private string p;
@@ -489,42 +441,7 @@ namespace Appreq {
 
              }
             return xelem;
-        }
-
-        private void AddNode(XmlNode inXmlNode, TreeNode inTreeNode) {
-          XmlNode xNode ;
-          TreeNode tNode ;
-          XmlNodeList nodeList ;
-          var i = 0;
-          if (inXmlNode.HasChildNodes) {
-            nodeList = inXmlNode.ChildNodes;
-            for (i = 0; i <= nodeList.Count - 1; i++) {
-              xNode = inXmlNode.ChildNodes[i];
-              var newTreeNode = new TreeNode(xNode.Name);
-              // Set icon
-              var check = xNode["CheckPassed"];
-              if (null != check) {
-                if (check.InnerText == "true") {
-                  newTreeNode.ImageKey = "accept";
-                  newTreeNode.SelectedImageKey = "accept";
-                }
-                if (check.InnerText == "false") {
-                  newTreeNode.ImageKey = "alert";
-                  newTreeNode.SelectedImageKey = "alert";
-                }
-              }
-              // Don't display the check node
-              if (xNode.Name == "CheckPassed") {
-                continue;
-              }
-              inTreeNode.Nodes.Add(newTreeNode);
-              tNode = inTreeNode.Nodes[i];
-              AddNode(xNode, tNode);
-            }
-          } else {
-            inTreeNode.Text = inXmlNode.Value;
-          }
-        }
+        }        
 
         // ---------------------------------------------
         // Interesting to understand SQL SERVER Status
@@ -629,7 +546,7 @@ namespace Appreq {
         try {
           _currentProfile = ProfileSerializer.Deserialize(openFileDialog1.FileName);
           _extProfile = openFileDialog1.FileName;
-          _mode = ProfileMode.External;
+          Mode = ProfileMode.External;
           RefreshForm();
         } catch (Exception ex) {
           toolStripStatusLabel1.Text = ex.Message;
@@ -687,9 +604,9 @@ namespace Appreq {
             _currentProfile.IsDiffMode = true;
             appProfile.Diff(_currentProfile);
             _appProfile = appProfile;
-            populateTreeView(appProfile, appTreeView);
-            populateTreeView(_currentProfile, profileTreeView);
-            populateTreeView(_currentProfile, reportTreeView, true);
+            TreeViewHelper.populateTreeView(appProfile, appTreeView);
+            TreeViewHelper.populateTreeView(_currentProfile, profileTreeView);
+            TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
             toolStripStatusLabel1.Text = "Ready";
             profileTreeView.Focus();
             profileTreeView.SelectedNode = null;
@@ -774,14 +691,7 @@ namespace Appreq {
       var cb = (CheckBox)sender;
       openButton.Enabled = cb.Checked;
       openMenuItem.Enabled = cb.Checked;
-      _mode = cb.Checked ? ProfileMode.External : ProfileMode.System;
-      if (ProfileMode.External == _mode) {
-        _currentProfile = null;
-        profileTreeView.Nodes.Clear();
-        openButton.PerformClick();
-      } else {
-        RefreshForm();
-      }
+      Mode = cb.Checked ? ProfileMode.External : ProfileMode.System;
     }
   }
 }

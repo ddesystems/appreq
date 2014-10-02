@@ -77,6 +77,7 @@
     <Compile Include="Software.cs" />
     <Compile Include="SystemProfiler.cs" />
     <Compile Include="ApplicationSerializer.cs" />
+    <Compile Include="TreeViewHelper.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
