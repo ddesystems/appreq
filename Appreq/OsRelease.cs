@@ -16,14 +16,15 @@ namespace Appreq {
     public void Diff(OsRelease other) {
       if (null == other) {
         return;
-      } 
+      }
       other.IsDiffMode = true;
-      other.CheckPassed = !string.IsNullOrEmpty(Name) && 
-         !string.IsNullOrEmpty(other.Name) && 
-         Name == other.Name &&
-         !string.IsNullOrEmpty(ServicePack) && 
-         !string.IsNullOrEmpty(other.ServicePack) &&
-         ServicePack == other.ServicePack;
+      other.CheckPassed = null;
+      if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(other.Name)) {
+        other.CheckPassed = (other.CheckPassed ?? true) && VersionComparer.CompareMinorMajor(Name, other.Name);
+      }
+      if (!string.IsNullOrEmpty(ServicePack) && !string.IsNullOrEmpty(other.ServicePack)) {
+        other.CheckPassed = (other.CheckPassed ?? true) && ServicePack == other.ServicePack;
+      }
     }
   }
 }

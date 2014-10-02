@@ -40,8 +40,11 @@ namespace Appreq {
           var found = false;
           foreach (var osOther in other.OS) {
             os.Diff(osOther);
-            other.CheckPassed = osOther.CheckPassed;
+            found = osOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
+          other.CheckPassed = found;
+          if (found) { break; }
         }
       }
       if (null != Browser && null != other.Browser) {

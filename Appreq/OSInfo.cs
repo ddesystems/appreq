@@ -26,6 +26,7 @@ namespace Appreq {
         return;
       }
       other.IsDiffMode = true;
+
       other.CheckPassed = !string.IsNullOrEmpty(Name) && 
         !string.IsNullOrEmpty(other.Name) && 
         Name == other.Name && 
@@ -35,14 +36,14 @@ namespace Appreq {
 
       if (Release != null && other.Release != null) {
         foreach (var rel in Release) {
+          var found = false;
           foreach (var relOther in other.Release) {
             rel.Diff(relOther);
-            if (other.CheckPassed.HasValue) {
-              other.CheckPassed = other.CheckPassed.Value && relOther.CheckPassed.GetValueOrDefault();
-            } else {
-              other.CheckPassed = relOther.CheckPassed;
-            }
+            found = relOther.CheckPassed.GetValueOrDefault();
+            if (found) { break; }
           }
+          other.CheckPassed = (other.CheckPassed ?? true) && found;
+          if (found) { break; }
         }
       }
     }    

@@ -19,15 +19,11 @@ namespace Appreq {
       other.IsDiffMode = true;
       if (null != Hardware && null != other.Hardware) {
         Hardware.Diff(other.Hardware);
-        other.CheckPassed = other.Hardware.CheckPassed;
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Hardware.CheckPassed.GetValueOrDefault();
       }
       if (null != Software && null != other.Software) {
         Software.Diff(other.Software);
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.Software.CheckPassed.GetValueOrDefault();
-        } else {
-          other.CheckPassed = other.Software.CheckPassed;
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Software.CheckPassed.GetValueOrDefault();        
       }
     }
   }
