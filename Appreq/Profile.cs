@@ -13,14 +13,17 @@ namespace Appreq {
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
-    
+
     public void Diff(Profile other) {
       if (null == other) {
         return;
       }
       other.IsDiffMode = true;
-      //Dependencies.Diff(other.App);
-      Environment.Diff(other.Environment);
+      other.CheckPassed = null;
+      if (null != Environment && null != other.Environment) {
+        Environment.Diff(other.Environment);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Environment.CheckPassed.GetValueOrDefault();
+      }
     }
   }
 }

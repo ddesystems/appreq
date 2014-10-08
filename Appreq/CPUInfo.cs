@@ -6,8 +6,8 @@ namespace Appreq {
   public class CPUInfo {
     public string Manufacturer { get; set; }
     public string Name { get; set; }
-    public UInt64? Datawidth { get; set; }
-    public string Maxclockspeed { get; set; }
+    public UInt16? Datawidth { get; set; }
+    public UInt32? Maxclockspeed { get; set; }
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
@@ -18,22 +18,17 @@ namespace Appreq {
         return;
       }
       other.IsDiffMode = true;
+
       if(Datawidth.HasValue && other.Datawidth.HasValue) {
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && other.Datawidth >= Datawidth;
-        } else {
-          other.CheckPassed = other.Datawidth >= Datawidth;
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Datawidth >= Datawidth;
       }
-      if (!other.CheckPassed.GetValueOrDefault()) {
-        return;
+
+      if (Maxclockspeed.HasValue && other.Datawidth.HasValue) {
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Maxclockspeed >= Maxclockspeed;
       }
+      
       if(!string.IsNullOrEmpty(Manufacturer) && !string.IsNullOrEmpty(other.Manufacturer)) {
-        if (other.CheckPassed.HasValue) {
-          other.CheckPassed = other.CheckPassed.Value && Manufacturer == other.Manufacturer;
-        } else {
-          other.CheckPassed = Manufacturer == other.Manufacturer;
-        }
+        other.CheckPassed = (other.CheckPassed ?? true) && Manufacturer == other.Manufacturer;
       }
     }
   }

@@ -14,39 +14,45 @@
   </Apps>
   <Environment>
     <SW>
-      <OSs>
-        <OS>
-          <Name>Microsoft Windows 7 Ultimate </Name>
-          <Architecture>32-bit</Architecture>
-          <Releases>
-            <Release>
-              <Name>6.1.7601</Name>
-              <ServicePack>1</ServicePack>
-            </Release>
-          </Releases>
-        </OS>
-      </OSs>
+      <OS>
+        <OSs>
+          <OS>
+            <Name>Microsoft Windows 7 Ultimate </Name>
+            <Architecture>32-bit</Architecture>
+            <Releases>
+              <Release>
+                <Name>6.1.7601</Name>
+                <ServicePack>1</ServicePack>
+              </Release>
+            </Releases>
+          </OS>
+        </OSs>
+      </OS>
     </SW>
     <HW>
-      <Disks>
-        <Disk>          
-          <!--
-          <AvailableFreeSpace>4819554304</AvailableFreeSpace>
-          <PercentFreeSpace>0</PercentFreeSpace>
-          -->
-          <DriveType>Fixed</DriveType>
-        </Disk>
-        <Disk>
-          <DriveType>Removable</DriveType>
-        </Disk>
-      </Disks>
+      <Disk>
+        <Disks>
+          <Disk>          
+            <!--
+            <AvailableFreeSpace>4819554304</AvailableFreeSpace>
+            <PercentFreeSpace>0</PercentFreeSpace>
+            -->
+            <DriveType>Fixed</DriveType>
+          </Disk>
+          <Disk>
+            <DriveType>Removable</DriveType>
+          </Disk>
+        </Disks>
+      </Disk>
       <CPU>
-        <CPUInfo>
-          <Manufacturer>GenuineIntel</Manufacturer>          
-          <!--<Name>Intel(R) Core(TM)2 Duo CPU     E8235  @ 2.80GHz</Name>-->
-          <Datawidth>32</Datawidth>
-          <!--<Maxclockspeed>445</Maxclockspeed>-->
-        </CPUInfo>
+        <CPUs>
+          <CPU>
+            <Manufacturer>GenuineIntel</Manufacturer>          
+            <!--<Name>Intel(R) Core(TM)2 Duo CPU     E8235  @ 2.80GHz</Name>-->
+            <Datawidth>32</Datawidth>
+            <!--<Maxclockspeed>445</Maxclockspeed>-->
+          </CPU>
+        </CPUs>
       </CPU>
       <RAM>
         <TotalVisibleMemorySize>25329200</TotalVisibleMemorySize>

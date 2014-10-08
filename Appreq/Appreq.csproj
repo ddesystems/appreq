@@ -50,6 +50,7 @@
     <Compile Include="AppVersion.cs" />
     <Compile Include="Browser.cs" />
     <Compile Include="BrowserInfo.cs" />
+    <Compile Include="CPU.cs" />
     <Compile Include="CPUInfo.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskInfo.cs" />

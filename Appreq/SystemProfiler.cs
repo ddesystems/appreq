@@ -107,7 +107,7 @@ namespace Appreq {
                if (p.Name == "Manufacturer")  { cpuInfo.Manufacturer = p.Value.ToString(); }
           else if (p.Name == "Name")          { cpuInfo.Name = p.Value.ToString(); }
           else if (p.Name == "DataWidth")     { cpuInfo.Datawidth = (UInt16) p.Value; }
-          else if (p.Name == "MaxClockSpeed") { cpuInfo.Maxclockspeed = p.Value.ToString(); }
+          else if (p.Name == "MaxClockSpeed") { cpuInfo.Maxclockspeed = (UInt32) p.Value; }
         }
         ret.Add(cpuInfo);
       }
@@ -279,7 +279,8 @@ namespace Appreq {
         }
       };
       try {
-        app.Environment.Hardware.CPU = GetCPU().ToArray();
+        app.Environment.Hardware.CPU = new CPU();
+        app.Environment.Hardware.CPU.CPUs = GetCPU().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve CPU info", e);
       }

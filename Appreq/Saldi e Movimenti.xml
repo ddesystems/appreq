@@ -169,12 +169,20 @@
     </SW>
     <HW>
       <CPU>
-        <CPUInfo>
-          <Manufacturer>GenuineIntel</Manufacturer>
-          <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
-          <Datawidth>64</Datawidth>
-          <Maxclockspeed>2.594</Maxclockspeed>
-        </CPUInfo>
+        <CPUs>
+          <CPU>
+            <Manufacturer>GenuineIntel</Manufacturer>
+            <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+            <Datawidth>32</Datawidth>
+            <Maxclockspeed>2594</Maxclockspeed>
+          </CPU>
+          <CPU>
+            <Manufacturer>GenuineIntel</Manufacturer>
+            <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+            <Datawidth>64</Datawidth>
+            <Maxclockspeed>2594</Maxclockspeed>
+          </CPU>
+        </CPUs>
       </CPU>
       <Disk>
         <Disks>

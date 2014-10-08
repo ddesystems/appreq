@@ -6,10 +6,7 @@ using System.Xml.Serialization;
 namespace Appreq {
   [Serializable]
   public class Hardware {
-    [XmlArray("CPUs")]
-    [XmlArrayItem("CPU", typeof(CPUInfo))]
-    public CPUInfo[] CPU { get; set; }
-
+    public CPU CPU { get; set; }
     public DiskInfo Disk { get; set; }
     public RAMInfo RAM { get; set; }
     public bool? CheckPassed { get; set; }
@@ -23,15 +20,8 @@ namespace Appreq {
       }
       other.IsDiffMode = true;
       if (null != CPU && null != other.CPU) {
-        foreach (var cpu in CPU) {
-          var found = false;
-          foreach (var cpuOther in other.CPU) {
-            cpu.Diff(cpuOther);
-            found = cpuOther.CheckPassed.GetValueOrDefault();
-            if (found) { break; }
-          }
-          other.CheckPassed = found;
-        }
+        CPU.Diff(other.CPU);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.CPU.CheckPassed.GetValueOrDefault();
       }
       if (null != Disk && null != other.Disk) {
         Disk.Diff(other.Disk);
