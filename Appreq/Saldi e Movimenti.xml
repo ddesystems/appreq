@@ -176,12 +176,14 @@
           <Maxclockspeed>2.594</Maxclockspeed>
         </CPUInfo>
       </CPU>
-      <Disks>
-        <Disk>
-          <AvailableFreeSpace>3000000</AvailableFreeSpace>
-          <DriveType>Fixed</DriveType>
-        </Disk>
-      </Disks>
+      <Disk>
+        <Disks>
+          <Disk>
+            <AvailableFreeSpace>3000000</AvailableFreeSpace>
+            <DriveType>Fixed</DriveType>
+          </Disk>
+        </Disks>
+      </Disk>
       <RAM>
         <AppServer>
           <Min>4000000</Min>

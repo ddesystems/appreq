@@ -52,6 +52,7 @@
     <Compile Include="BrowserInfo.cs" />
     <Compile Include="CPUInfo.cs" />
     <Compile Include="Disk.cs" />
+    <Compile Include="DiskInfo.cs" />
     <Compile Include="Env.cs" />
     <Compile Include="JavaFramework.cs" />
     <Compile Include="MainForm.cs">

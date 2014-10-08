@@ -33,11 +33,11 @@ namespace Appreq.Test {
         Assert.IsNotNull(profile2.Environment);
         Assert.IsNotNull(profile2.Environment.Software);
         Assert.IsNotNull(profile2.Environment.Hardware);
-        Assert.IsNotEmpty(profile2.Environment.Hardware.Disks);
+        Assert.IsNotEmpty(profile2.Environment.Hardware.Disk.Disks);
         Assert.IsNotEmpty(profile2.Environment.Software.OS.Versions);
         Assert.AreEqual(profile.Environment.Software.OS.Versions.Length, profile2.Environment.Software.OS.Versions.Length);
         Assert.AreEqual(profile.Environment.Software.OS.Versions[0].Name, profile2.Environment.Software.OS.Versions[0].Name);
-        Assert.AreEqual(profile.Environment.Hardware.Disks.Length, profile2.Environment.Hardware.Disks.Length);
+        Assert.AreEqual(profile.Environment.Hardware.Disk.Disks.Length, profile2.Environment.Hardware.Disk.Disks.Length);
       }
     }    
   }

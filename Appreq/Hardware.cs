@@ -6,11 +6,11 @@ using System.Xml.Serialization;
 namespace Appreq {
   [Serializable]
   public class Hardware {
-    [XmlArray("Disks")]
-    public Disk[] Disks { get; set; }
     [XmlArray("CPUs")]
     [XmlArrayItem("CPU", typeof(CPUInfo))]
     public CPUInfo[] CPU { get; set; }
+
+    public DiskInfo Disk { get; set; }
     public RAMInfo RAM { get; set; }
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
@@ -33,17 +33,9 @@ namespace Appreq {
           other.CheckPassed = found;
         }
       }
-      if (null != Disks && null != other.Disks) {
-        foreach (var disk in Disks) {
-          var found = false;
-          foreach (var diskOther in other.Disks) {
-            disk.Diff(diskOther);
-            found = diskOther.CheckPassed.GetValueOrDefault();
-            if (found) { break; }
-          }
-          other.CheckPassed = (other.CheckPassed ?? true) && found;
-          if (found) { break; }
-        }
+      if (null != Disk && null != other.Disk) {
+        Disk.Diff(other.Disk);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Disk.CheckPassed.GetValueOrDefault();
       }
       if (null != RAM && null != other.RAM) {
         RAM.Diff(other.RAM);

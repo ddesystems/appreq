@@ -284,7 +284,8 @@ namespace Appreq {
         throw new Exception("Failed to retrieve CPU info", e);
       }
       try {
-        app.Environment.Hardware.Disks = GetDisks().ToArray();
+        app.Environment.Hardware.Disk = new DiskInfo();
+        app.Environment.Hardware.Disk.Disks = GetDisks().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve HDD info", e);
       }
