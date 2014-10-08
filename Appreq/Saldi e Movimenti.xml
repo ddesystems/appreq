@@ -13,43 +13,45 @@
   </App>
   <Environment>
     <SW>
-      <OSs>
-        <OS>
-          <Name>Microsoft Windows Server 2008</Name>
-          <Releases>
-            <Release>
-              <!-- Please insert correct number about R1 release in place of 6.3.9600-->
-              <Name>6.3.9600</Name>
-            </Release>
-            <Release>
-              <!-- Please insert correct number about R2 release in place of 6.3.9600-->
-              <Name>6.3.9600</Name>
-            </Release>
-          </Releases>
-        </OS>
-        <OS>
-          <Name>Microsoft Windows 7 Ultimate </Name>
-          <Architecture>32-bit</Architecture>
-          <Releases>
-            <Release>
-              <Name>6.1.7601</Name>
-              <ServicePack>1</ServicePack>
-            </Release>
-          </Releases>
-        </OS>
-        <OS>
-          <Name>Microsoft Windows Server 2012</Name>
-          <Releases>
-            <Release>
-              <!-- Please insert correct number about R1 release in place of 6.3.9600 -->
-              <Name>6.3.9600</Name>
-            </Release>
-            <Release>
-              <Name>6.3.9600</Name>
-            </Release>
-          </Releases>
-        </OS>
-      </OSs>
+      <OS>
+        <OSs>
+          <OS>
+            <Name>Microsoft Windows Server 2008</Name>
+            <Releases>
+              <Release>
+                <!-- Please insert correct number about R1 release in place of 6.3.9600-->
+                <Name>6.3.9600</Name>
+              </Release>
+              <Release>
+                <!-- Please insert correct number about R2 release in place of 6.3.9600-->
+                <Name>6.3.9600</Name>
+              </Release>
+            </Releases>
+          </OS>
+          <OS>
+            <Name>Microsoft Windows 7 Ultimate </Name>
+            <Architecture>32-bit</Architecture>
+            <Releases>
+              <Release>
+                <Name>6.1.7601</Name>
+                <ServicePack>1</ServicePack>
+              </Release>
+            </Releases>
+          </OS>
+          <OS>
+            <Name>Microsoft Windows Server 2012</Name>
+            <Releases>
+              <Release>
+                <!-- Please insert correct number about R1 release in place of 6.3.9600 -->
+                <Name>6.3.9600</Name>
+              </Release>
+              <Release>
+                <Name>6.3.9600</Name>
+              </Release>
+            </Releases>
+          </OS>
+        </OSs>
+      </OS>
       <NetFramework>
         <Versions>
           <Version>

@@ -294,7 +294,8 @@ namespace Appreq {
         throw new Exception("Failed to retrieve RAM info", e);
       }
       try {
-        app.Environment.Software.OS = GetOS().ToArray();
+        app.Environment.Software.OS = new OS();
+        app.Environment.Software.OS.Versions = GetOS().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve OS info", e);
       }

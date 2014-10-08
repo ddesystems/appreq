@@ -6,18 +6,11 @@ using System.ComponentModel;
 namespace Appreq {
   [Serializable]
   public class Software {
-    [XmlArray("OSs")]
-    [XmlArrayItem("OS", typeof(OSInfo))]
-    public OSInfo[] OS { get; set; }
-    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-    public bool ShouldSerializeOS() {
-      return OS != null && OS.Length > 0;
-    }
+    public OS OS { get; set; }
     public BrowserInfo Browsers { get; set; }
     public NetFramework NetFramework { get; set; }
     public JavaFramework JavaFramework { get; set; }
-    
-    
+        
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
@@ -30,16 +23,8 @@ namespace Appreq {
       }
       other.IsDiffMode = true;
       if (null != OS && null != other.OS) {
-        foreach (var os in OS) {
-          var found = false;
-          foreach (var osOther in other.OS) {
-            os.Diff(osOther);
-            found = osOther.CheckPassed.GetValueOrDefault();
-            if (found) { break; }
-          }
-          other.CheckPassed = found;
-          if (found) { break; }
-        }
+        OS.Diff(other.OS);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.OS.CheckPassed.GetValueOrDefault();
       }
       if (null != Browsers && null != other.Browsers) {
         Browsers.Diff(other.Browsers);
