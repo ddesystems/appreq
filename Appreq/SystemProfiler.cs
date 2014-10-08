@@ -299,7 +299,8 @@ namespace Appreq {
         throw new Exception("Failed to retrieve OS info", e);
       }
       try {
-        app.Environment.Software.Browser = GetBrowser().ToArray();
+        app.Environment.Software.Browsers = new BrowserInfo();
+        app.Environment.Software.Browsers.Browser = GetBrowser().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve Browser info", e);
       }

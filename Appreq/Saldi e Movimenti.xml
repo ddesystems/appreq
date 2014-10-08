@@ -95,16 +95,18 @@
         </Versions>
       </JavaFramework>
       <Browsers>
-        <Browser>
-          <Name>Internet Explorer</Name>
-          <Version>10</Version>
-          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
-        </Browser>
-        <Browser>
-          <Name>Internet Explorer</Name>
-          <Version>11</Version>
-          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
-        </Browser>
+        <Versions>
+          <Browser>
+            <Name>Internet Explorer</Name>
+            <Version>10</Version>
+            <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+          </Browser>
+          <Browser>
+            <Name>Internet Explorer</Name>
+            <Version>11</Version>
+            <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+          </Browser>
+        </Versions>
       </Browsers>
       <Databases>
         <!-- If is Server contains Application Server -->

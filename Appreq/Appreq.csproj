@@ -49,6 +49,7 @@
     <Compile Include="App.cs" />
     <Compile Include="AppVersion.cs" />
     <Compile Include="Browser.cs" />
+    <Compile Include="BrowserInfo.cs" />
     <Compile Include="CPUInfo.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="Env.cs" />

@@ -13,15 +13,10 @@ namespace Appreq {
     public bool ShouldSerializeOS() {
       return OS != null && OS.Length > 0;
     }
+    public BrowserInfo Browsers { get; set; }
     public NetFramework NetFramework { get; set; }
-    [XmlArray("Browsers")]
-    [XmlArrayItem("Browser", typeof(Browser))]
-    public Browser[] Browser { get; set; }
-    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-    public bool ShouldSerializeBrowser() {
-      return Browser != null && Browser.Length > 0;
-    }
     public JavaFramework JavaFramework { get; set; }
+    
     
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -46,16 +41,9 @@ namespace Appreq {
           if (found) { break; }
         }
       }
-      if (null != Browser && null != other.Browser) {
-        foreach (var browser in Browser) {
-          var found = false;
-          foreach (var browserOther in other.Browser) {
-            browser.Diff(browserOther);
-            found = browserOther.CheckPassed.GetValueOrDefault();
-            if(found) { break; }
-          }
-          other.CheckPassed = (other.CheckPassed ?? true) && found;
-        }
+      if (null != Browsers && null != other.Browsers) {
+        Browsers.Diff(other.Browsers);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.Browsers.CheckPassed.GetValueOrDefault();
       }
       if(null != NetFramework && null != other.NetFramework) {
         NetFramework.Diff(other.NetFramework);

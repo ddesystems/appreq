@@ -72,7 +72,6 @@ namespace Appreq {
       foreach(TreeNode node in treeView.Nodes) {
         ExpandRecursive(node);
       }
-      //treeView.ExpandAll();
     }
     public static void ExpandRecursive(TreeNode node) {
       if(null == node || 4 == node.Level) {
