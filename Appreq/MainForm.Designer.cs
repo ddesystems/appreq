@@ -414,6 +414,7 @@
           this.reportTreeView.SelectedImageIndex = 0;
           this.reportTreeView.Size = new System.Drawing.Size(1028, 582);
           this.reportTreeView.TabIndex = 0;
+          this.reportTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.reportTreeView_BeforeExpand);
           // 
           // openFileDialog1
           // 

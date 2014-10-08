@@ -21,9 +21,8 @@ namespace Appreq {
     public bool ShouldSerializeBrowser() {
       return Browser != null && Browser.Length > 0;
     }
-    [XmlArray("JavaFramework")]
-    [XmlArrayItem("Version", typeof(JavaInfo))]
-    public JavaInfo[] Java { get; set; }
+    public JavaFramework JavaFramework { get; set; }
+    
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
@@ -62,16 +61,9 @@ namespace Appreq {
         NetFramework.Diff(other.NetFramework);
         other.CheckPassed = (other.CheckPassed ?? true) && other.NetFramework.CheckPassed.GetValueOrDefault();
       }
-      if (null != Java && null != other.Java) {
-        foreach (var java in Java) {
-          var found = false;
-          foreach (var javaOther in other.Java) {
-            java.Diff(javaOther);
-            found = javaOther.CheckPassed.GetValueOrDefault();
-            if (found) { break; }
-          }
-          other.CheckPassed = (other.CheckPassed ?? true) && found;
-        }
+      if (null != JavaFramework && null != other.JavaFramework) {
+        JavaFramework.Diff(other.JavaFramework);
+        other.CheckPassed = (other.CheckPassed ?? true) && other.JavaFramework.CheckPassed.GetValueOrDefault();
       }
     }
   }

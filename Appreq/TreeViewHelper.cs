@@ -68,8 +68,22 @@ namespace Appreq {
             AddNode(xmldoc, tNode);
           }
         }
+      }            
+      foreach(TreeNode node in treeView.Nodes) {
+        ExpandRecursive(node);
       }
-      treeView.ExpandAll();
+      //treeView.ExpandAll();
+    }
+    public static void ExpandRecursive(TreeNode node) {
+      if(null == node || 4 == node.Level) {
+        return;
+      }
+      node.Expand();
+      if (null != node.Nodes) {
+        foreach (TreeNode innerNode in node.Nodes) {
+          ExpandRecursive(innerNode);
+        }
+      }
     }
   }
 }

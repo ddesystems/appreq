@@ -310,7 +310,8 @@ namespace Appreq {
         throw new Exception("Failed to retrieve NetFramework info", e);
       }
       try {
-        app.Environment.Software.Java = GetJava().ToArray();
+        app.Environment.Software.JavaFramework = new JavaFramework();
+        app.Environment.Software.JavaFramework.Versions = GetJava().ToArray();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve Java info", e);
       }

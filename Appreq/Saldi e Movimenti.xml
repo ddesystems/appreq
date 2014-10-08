@@ -83,14 +83,16 @@
         </AppServer>
       </IIS>
       <JavaFramework>
-        <Version>
-          <CurrentVersion>1.6</CurrentVersion>
-          <Security>no</Security>
-        </Version>
-        <Version>
-          <CurrentVersion>1.7</CurrentVersion>
-          <Security>yes</Security>
-        </Version>
+        <Versions>
+          <Version>
+            <CurrentVersion>1.6</CurrentVersion>
+            <Security>no</Security>
+          </Version>
+          <Version>
+            <CurrentVersion>1.7</CurrentVersion>
+            <Security>yes</Security>
+          </Version>
+        </Versions>
       </JavaFramework>
       <Browsers>
         <Browser>

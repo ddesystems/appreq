@@ -15,7 +15,11 @@ namespace Appreq {
     public bool IsDiffMode { get; set; }
 
     public void Diff(NetFrameworkVersion other) {
+      if (null == other) {
+        return;
+      }
       other.IsDiffMode = true;
+      other.CheckPassed = null;
       if (!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(other.Name)) {
         other.CheckPassed = VersionComparer.CompareMinorMajor(Name, other.Name);
       }

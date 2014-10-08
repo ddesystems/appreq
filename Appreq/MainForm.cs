@@ -698,5 +698,9 @@ namespace Appreq {
       openMenuItem.Enabled = cb.Checked;
       Mode = cb.Checked ? ProfileMode.External : ProfileMode.System;
     }
+
+    private void reportTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
+      
+    }
   }
 }
