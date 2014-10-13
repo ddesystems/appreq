@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   public class OS {
-    [XmlArray("OSs")]
+    //[XmlArray("OSs")]
     [XmlArrayItem("OS", typeof(OSInfo))]
     public OSInfo[] Versions { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]

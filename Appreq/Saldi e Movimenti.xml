@@ -14,7 +14,7 @@
   <Environment>
     <SW>
       <OS>
-        <OSs>
+        <Versions>
           <OS>
             <Name>Microsoft Windows Server 2008</Name>
             <Releases>
@@ -50,7 +50,7 @@
               </Release>
             </Releases>
           </OS>
-        </OSs>
+        </Versions>
       </OS>
       <NetFramework>
         <Versions>
