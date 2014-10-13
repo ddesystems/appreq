@@ -161,6 +161,7 @@
           this.openMenuItem.Name = "openMenuItem";
           this.openMenuItem.Size = new System.Drawing.Size(197, 22);
           this.openMenuItem.Text = "Import System Profile...";
+          this.openMenuItem.Click += new System.EventHandler(this.ImportProfile_Command);
           // 
           // exportMenuItem
           // 
@@ -200,7 +201,7 @@
           // 
           this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
           this.refreshMenuItem.Name = "refreshMenuItem";
-          this.refreshMenuItem.Size = new System.Drawing.Size(113, 22);
+          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
           this.refreshMenuItem.Text = "Refresh";
           this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
@@ -375,6 +376,9 @@
           // 
           // tabMain
           // 
+          this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.tabMain.Controls.Add(this.tabProfile);
           this.tabMain.Controls.Add(this.tabReport);
           this.tabMain.Location = new System.Drawing.Point(12, 66);
@@ -407,6 +411,9 @@
           // 
           // reportTreeView
           // 
+          this.reportTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                      | System.Windows.Forms.AnchorStyles.Left)
+                      | System.Windows.Forms.AnchorStyles.Right)));
           this.reportTreeView.ImageIndex = 0;
           this.reportTreeView.ImageList = this.imageList1;
           this.reportTreeView.Location = new System.Drawing.Point(6, 6);

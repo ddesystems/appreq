@@ -700,7 +700,7 @@ namespace Appreq {
     }
 
     private void reportTreeView_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
-      
+
     }
   }
 }
