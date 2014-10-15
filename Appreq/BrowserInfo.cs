@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Appreq {
   public class BrowserInfo {
-    [XmlArray("Versions")]
-    [XmlArrayItem("Browser", typeof(Browser))]
-    public Browser[] Browser { get; set; }
+    [XmlElement("Browser")]
+    public List<Browser> Browser { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeBrowser() {
-      return Browser != null && Browser.Length > 0;
+      return Browser != null && Browser.Count > 0;
     }
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }

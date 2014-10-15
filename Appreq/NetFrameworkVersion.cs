@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace Appreq {
@@ -9,6 +7,11 @@ namespace Appreq {
     public string Install { get; set; }
     public string SP { get; set; }
     public string WCFEnable { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+    public bool ShouldSerializeSP() {
+      return !string.IsNullOrEmpty(SP);
+    }
+
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]

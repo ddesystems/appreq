@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Appreq {
+  [Serializable]
   public class JavaFramework {
-    [XmlArray("Versions")]
-    [XmlArrayItem("Version", typeof(JavaInfo))]
-    public JavaInfo[] Versions { get; set; }
+    [XmlElement("JavaFramework")]
+    public List<JavaInfo> Versions { get; set; }
 
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeVersions() {
-      return Versions != null && Versions.Length > 0;
+      return Versions != null && Versions.Count > 0;
     }
 
     public bool? CheckPassed { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
 
     public void Diff(JavaFramework other) {
-     if (null == other) {
+      if (null == other) {
         return;
       }
       other.IsDiffMode = true;

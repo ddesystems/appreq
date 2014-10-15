@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace Appreq {
@@ -8,7 +9,9 @@ namespace Appreq {
     public string Name { get; set; }
     public UInt16? Datawidth { get; set; }
     public UInt32? Maxclockspeed { get; set; }
+
     public bool? CheckPassed { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }

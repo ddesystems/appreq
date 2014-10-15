@@ -6,13 +6,12 @@ using System.ComponentModel;
 
 namespace Appreq {
   public class DiskInfo {
-    [XmlArray("Disks")]
-    [XmlArrayItem("Disk", typeof(Disk))]
-    public Disk[] Disks { get; set; }
+    [XmlElement("Disk")]
+    public List<Disk> Disks { get; set; }
     
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeDisks() {
-      return Disks != null && Disks.Length > 0;
+      return Disks != null && Disks.Count > 0;
     }
 
     public bool? CheckPassed { get; set; }

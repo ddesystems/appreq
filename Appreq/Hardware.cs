@@ -7,8 +7,10 @@ namespace Appreq {
   [Serializable]
   public class Hardware {
     public CPU CPU { get; set; }
+    [XmlElement("Disks")]
     public DiskInfo Disk { get; set; }
     public RAMInfo RAM { get; set; }
+
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]

@@ -14,60 +14,50 @@
   <Environment>
     <SW>
       <OS>
-        <Versions>
-          <OS>
-            <Name>Microsoft Windows Server 2008</Name>
-            <Releases>
-              <Release>
-                <!-- Please insert correct number about R1 release in place of 6.3.9600-->
-                <Name>6.3.9600</Name>
-              </Release>
-              <Release>
-                <!-- Please insert correct number about R2 release in place of 6.3.9600-->
-                <Name>6.3.9600</Name>
-              </Release>
-            </Releases>
-          </OS>
-          <OS>
-            <Name>Microsoft Windows 7 Ultimate </Name>
-            <Architecture>32-bit</Architecture>
-            <Releases>
-              <Release>
-                <Name>6.1.7601</Name>
-                <ServicePack>1</ServicePack>
-              </Release>
-            </Releases>
-          </OS>
-          <OS>
-            <Name>Microsoft Windows Server 2012</Name>
-            <Releases>
-              <Release>
-                <!-- Please insert correct number about R1 release in place of 6.3.9600 -->
-                <Name>6.3.9600</Name>
-              </Release>
-              <Release>
-                <Name>6.3.9600</Name>
-              </Release>
-            </Releases>
-          </OS>
-        </Versions>
+        <OS>
+          <Name>Microsoft Windows Server 2008</Name>
+          <Release>
+            <!-- Please insert correct number about R1 release in place of 6.3.9600-->
+            <Name>6.3.9600</Name>
+          </Release>
+          <Release>
+            <!-- Please insert correct number about R2 release in place of 6.3.9600-->
+            <Name>6.3.9600</Name>
+          </Release>
+        </OS>
+        <OS>
+          <Name>Microsoft Windows 7 Ultimate </Name>
+          <Architecture>32-bit</Architecture>
+          <Release>
+            <Name>6.1.7601</Name>
+            <ServicePack>1</ServicePack>
+          </Release>
+        </OS>
+        <OS>
+          <Name>Microsoft Windows Server 2012</Name>
+          <Release>
+            <!-- Please insert correct number about R1 release in place of 6.3.9600 -->
+            <Name>6.3.9600</Name>
+          </Release>
+          <Release>
+            <Name>6.3.9600</Name>
+          </Release>
+        </OS>
       </OS>
-      <NetFramework>
-        <Versions>
-          <Version>
-            <Name>4.0.0.0</Name>
-            <versionKeyName>Client</versionKeyName>
-            <sp>null</sp>
-            <WCFEnable>yes</WCFEnable>
-          </Version>
-          <Version>
-            <Name>4.5.51641</Name>
-            <versionKeyName>Full</versionKeyName>
-            <sp>null</sp>
-            <WCFEnable>yes</WCFEnable>
-          </Version>
-        </Versions>
-      </NetFramework>
+      <NetFrameworks>
+        <NetFramework>
+          <Name>4.0.0.0</Name>
+          <versionKeyName>Client</versionKeyName>
+          <sp>null</sp>
+          <WCFEnable>yes</WCFEnable>
+        </NetFramework>
+        <NetFramework>
+          <Name>4.5.51641</Name>
+          <versionKeyName>Full</versionKeyName>
+          <sp>null</sp>
+          <WCFEnable>yes</WCFEnable>
+        </NetFramework>
+      </NetFrameworks>
       <IIS>
         <AppServer>
           <Version>
@@ -84,31 +74,27 @@
           </Version>
         </AppServer>
       </IIS>
-      <JavaFramework>
-        <Versions>
-          <Version>
-            <CurrentVersion>1.6</CurrentVersion>
-            <Security>no</Security>
-          </Version>
-          <Version>
-            <CurrentVersion>1.7</CurrentVersion>
-            <Security>yes</Security>
-          </Version>
-        </Versions>
-      </JavaFramework>
+      <JavaFrameworks>
+        <JavaFramework>
+          <CurrentVersion>1.6</CurrentVersion>
+          <Security>no</Security>
+        </JavaFramework>
+        <JavaFramework>
+          <CurrentVersion>1.7</CurrentVersion>
+          <Security>yes</Security>
+        </JavaFramework>        
+      </JavaFrameworks>
       <Browsers>
-        <Versions>
-          <Browser>
-            <Name>Internet Explorer</Name>
-            <Version>10</Version>
-            <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
-          </Browser>
-          <Browser>
-            <Name>Internet Explorer</Name>
-            <Version>11</Version>
-            <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
-          </Browser>
-        </Versions>
+        <Browser>
+          <Name>Internet Explorer</Name>
+          <Version>10</Version>
+          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+        </Browser>
+        <Browser>
+          <Name>Internet Explorer</Name>
+          <Version>11</Version>
+          <CompatibilityMode>yes with IE 9.0</CompatibilityMode>
+        </Browser>
       </Browsers>
       <Databases>
         <!-- If is Server contains Application Server -->
@@ -169,29 +155,25 @@
     </SW>
     <HW>
       <CPU>
-        <CPUs>
-          <CPU>
-            <Manufacturer>GenuineIntel</Manufacturer>
-            <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
-            <Datawidth>32</Datawidth>
-            <Maxclockspeed>2594</Maxclockspeed>
-          </CPU>
-          <CPU>
-            <Manufacturer>GenuineIntel</Manufacturer>
-            <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
-            <Datawidth>64</Datawidth>
-            <Maxclockspeed>2594</Maxclockspeed>
-          </CPU>
-        </CPUs>
+        <CPU>
+          <Manufacturer>GenuineIntel</Manufacturer>
+          <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+          <Datawidth>32</Datawidth>
+          <Maxclockspeed>2594</Maxclockspeed>
+        </CPU>
+        <CPU>
+          <Manufacturer>GenuineIntel</Manufacturer>
+          <Name>Intel(R) Core(TM) i5-3230M CPU @ 2.60GHz</Name>
+          <Datawidth>64</Datawidth>
+          <Maxclockspeed>2594</Maxclockspeed>
+        </CPU>
       </CPU>
-      <Disk>
-        <Disks>
-          <Disk>
-            <AvailableFreeSpace>3000000</AvailableFreeSpace>
-            <DriveType>Fixed</DriveType>
-          </Disk>
-        </Disks>
-      </Disk>
+      <Disks>
+        <Disk>
+          <AvailableFreeSpace>3000000</AvailableFreeSpace>
+          <DriveType>Fixed</DriveType>
+        </Disk>
+      </Disks>
       <RAM>
         <AppServer>
           <Min>4000000</Min>

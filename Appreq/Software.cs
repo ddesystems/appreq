@@ -8,7 +8,9 @@ namespace Appreq {
   public class Software {
     public OS OS { get; set; }
     public BrowserInfo Browsers { get; set; }
+    [XmlElement("NetFrameworks")]
     public NetFramework NetFramework { get; set; }
+    [XmlElement("JavaFrameworks")]
     public JavaFramework JavaFramework { get; set; }
         
     public bool? CheckPassed { get; set; }

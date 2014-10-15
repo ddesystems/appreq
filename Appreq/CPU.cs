@@ -6,13 +6,12 @@ using System.ComponentModel;
 
 namespace Appreq {
   public class CPU {
-    [XmlArray("CPUs")]
-    [XmlArrayItem("CPU", typeof(CPUInfo))]
-    public CPUInfo[] CPUs { get; set; }
+    [XmlElement("CPU")]
+    public List<CPUInfo> CPUs { get; set; }
     
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCPUs() {
-      return CPUs != null && CPUs.Length > 0;
+      return CPUs != null && CPUs.Count > 0;
     }
 
     public bool? CheckPassed { get; set; }

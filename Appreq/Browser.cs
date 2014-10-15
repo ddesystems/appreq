@@ -9,7 +9,7 @@ namespace Appreq {
   public class Browser {
     public string Name { get; set; }
     public string Version { get; set; }
-    //public string CompatibilityMode { get; set; }
+
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
@@ -25,9 +25,7 @@ namespace Appreq {
         !string.IsNullOrEmpty(Name) && 
         !string.IsNullOrEmpty(other.Name) &&
         Name == other.Name;        
-      if (!other.CheckPassed.GetValueOrDefault()) {
-        return;
-      }
+
       if(!string.IsNullOrEmpty(Version) && !string.IsNullOrEmpty(other.Version)) {
         var otherSplit = other.Version.Split(new[] {'.'}, 4);
         var split = Version.Split('.');

@@ -87,6 +87,7 @@ namespace Appreq {
           }
           TreeViewHelper.populateTreeView(_currentProfile, profileTreeView);
           TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
+          TreeViewHelper.populateTreeView(_appProfile, appTreeView);
           openButton.Enabled = ProfileMode.External == Mode;
           openMenuItem.Enabled = ProfileMode.External == Mode;
           exportMenuItem.Enabled = null != _currentProfile;
@@ -105,6 +106,8 @@ namespace Appreq {
       openMenuItem.Enabled = false;
       exportMenuItem.Enabled = false;
       exportButton.Enabled = false;
+      exportReportButton.Enabled = false;
+      exportReportMenuItem.Enabled = false;
       refreshMenuItem.Enabled = false;
       refreshButton.Enabled = false;
       appComboBox.Enabled = false;
@@ -602,26 +605,11 @@ namespace Appreq {
         // populate the application treeview
         _appProfile = null;
         var resourceStream = GetProfileResourceStream((string)((ComboBox)sender).SelectedItem);
-        using (Stream stream = resourceStream) {
-          var xs = new XmlSerializer(typeof(Profile));
-          using (StreamReader reader = new StreamReader(stream)) {
-            var appProfile = (Profile)xs.Deserialize(reader);
-            _currentProfile.IsDiffMode = true;
-            appProfile.Diff(_currentProfile);
-            _appProfile = appProfile;
-            TreeViewHelper.populateTreeView(appProfile, appTreeView);
-            TreeViewHelper.populateTreeView(_currentProfile, profileTreeView);
-            TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
-            toolStripStatusLabel1.Text = "Ready";
-            profileTreeView.Focus();
-            profileTreeView.SelectedNode = null;
-            exportReportButton.Enabled = null != _appProfile;
-            exportReportMenuItem.Enabled = null != _appProfile;
-          }
+        using (var stream = resourceStream) {
+          _appProfile = ProfileSerializer.Deserialize(stream);
         }
+        RefreshForm();
       } catch (Exception) {
-        exportReportButton.Enabled = false;
-        exportReportMenuItem.Enabled = false;
         toolStripStatusLabel1.Text = "Unable to load embedded resource";
       }
     }

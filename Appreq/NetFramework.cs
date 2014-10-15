@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
   public class NetFramework {
-    [XmlArray("Versions")]
-    [XmlArrayItem("Version", typeof(NetFrameworkVersion))]
-    public NetFrameworkVersion[] Versions { get; set; }
+    [XmlElement("NetFramework")]
+    public List<NetFrameworkVersion> Versions { get; set; }
+
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeVersions() {
-      return Versions != null && Versions.Length > 0;
+      return Versions != null && Versions.Count > 0;
     }
+
     public bool? CheckPassed { get; set; }
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
@@ -22,7 +25,6 @@ namespace Appreq {
         return;
       }
       other.IsDiffMode = true;
-      other.CheckPassed = null;
       if (null != Versions && null != other.Versions) {
         foreach (var ver in Versions) {
           foreach (var verOther in other.Versions) {

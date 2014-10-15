@@ -59,7 +59,7 @@ namespace Appreq {
             Win32_OperatingSystem");
       var os = new OSInfo();
       var release = new List<OsRelease>();
-      os.Release = new OsRelease[] {};
+      os.Release = new List<OsRelease>() {};
       foreach (var o in searcher.Get()) {
         var osRelease = new OsRelease();
         foreach (var p in o.Properties) {
@@ -69,7 +69,7 @@ namespace Appreq {
           else if(p.Name == "Version")                 { osRelease.Name = p.Value.ToString(); }
         }
         release.Add(osRelease);
-        os.Release = release.ToArray();
+        os.Release = release;
       }
       ret.Add(os);
       return ret.Count > 0 ? ret : null;
@@ -280,13 +280,13 @@ namespace Appreq {
       };
       try {
         app.Environment.Hardware.CPU = new CPU();
-        app.Environment.Hardware.CPU.CPUs = GetCPU().ToArray();
+        app.Environment.Hardware.CPU.CPUs = GetCPU();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve CPU info", e);
       }
       try {
         app.Environment.Hardware.Disk = new DiskInfo();
-        app.Environment.Hardware.Disk.Disks = GetDisks().ToArray();
+        app.Environment.Hardware.Disk.Disks = GetDisks();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve HDD info", e);
       }
@@ -296,26 +296,26 @@ namespace Appreq {
         throw new Exception("Failed to retrieve RAM info", e);
       }
       try {
-        app.Environment.Software.OS = new OS();
-        app.Environment.Software.OS.Versions = GetOS().ToArray();
+        app.Environment.Software.OS = new OS();        
+        app.Environment.Software.OS.Versions = GetOS();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve OS info", e);
       }
       try {
         app.Environment.Software.Browsers = new BrowserInfo();
-        app.Environment.Software.Browsers.Browser = GetBrowser().ToArray();
+        app.Environment.Software.Browsers.Browser = GetBrowser();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve Browser info", e);
       }
       try {
         app.Environment.Software.NetFramework = new NetFramework();
-        app.Environment.Software.NetFramework.Versions = GetNetFramework().ToArray();
+        app.Environment.Software.NetFramework.Versions = GetNetFramework();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve NetFramework info", e);
       }
       try {
         app.Environment.Software.JavaFramework = new JavaFramework();
-        app.Environment.Software.JavaFramework.Versions = GetJava().ToArray();
+        app.Environment.Software.JavaFramework.Versions = GetJava();
       } catch (Exception e) {
         throw new Exception("Failed to retrieve Java info", e);
       }

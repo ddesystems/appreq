@@ -8,12 +8,11 @@ namespace Appreq {
   public class OSInfo {
     public string Name { get; set; }
     public string Architecture { get; set; }
-    [XmlArray("Releases")]
-    [XmlArrayItem("Release", typeof(OsRelease))]    
-    public OsRelease[] Release { get; set; }
+    [XmlElement("Release")]
+    public List<OsRelease> Release { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeRelease() {
-      return Release != null && Release.Length > 0;
+      return Release != null && Release.Count > 0;
     }
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
