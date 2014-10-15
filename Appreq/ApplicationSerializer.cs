@@ -26,12 +26,6 @@ namespace Appreq {
     public static Profile Deserialize(string fileName) {
       using(var fs = new FileStream(fileName, FileMode.Open)) {
         return Deserialize(fs);
-        /*
-        using(var xr = XmlReader.Create(fs)) {
-          var xs = new XmlSerializer(typeof(Profile));
-          return (Profile) xs.Deserialize(xr);
-        }
-        */
       }
     }
   }

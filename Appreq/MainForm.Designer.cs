@@ -201,7 +201,7 @@
           // 
           this.refreshMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("refreshMenuItem.Image")));
           this.refreshMenuItem.Name = "refreshMenuItem";
-          this.refreshMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.refreshMenuItem.Size = new System.Drawing.Size(113, 22);
           this.refreshMenuItem.Text = "Refresh";
           this.refreshMenuItem.Click += new System.EventHandler(this.Refresh_Command);
           // 
@@ -349,11 +349,11 @@
           this.appComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
           this.appComboBox.FormattingEnabled = true;
           this.appComboBox.Items.AddRange(new object[] {
-            "test-app",
             "Saldi e Movimenti",
-            "Gant",
-            "Checkin",
-            "Comma"});
+            "test-app",
+            "Gant [TBC]",
+            "Checkin [TBC]",
+            "Comma [TBC]"});
           this.appComboBox.Location = new System.Drawing.Point(6, 21);
           this.appComboBox.Name = "appComboBox";
           this.appComboBox.Size = new System.Drawing.Size(503, 24);

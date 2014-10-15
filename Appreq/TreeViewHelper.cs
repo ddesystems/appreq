@@ -56,7 +56,6 @@ namespace Appreq {
           ms.Seek(0, SeekOrigin.Begin);
           xmldoc.Load(ms);
           treeView.Nodes.Clear();
-          System.Diagnostics.Debug.WriteLine(xmldoc.DocumentElement.Name);
           treeView.Nodes.Add(new TreeNode(xmldoc.DocumentElement.Name));
           var tNode = treeView.Nodes[0];
           if (diffOnly) {
