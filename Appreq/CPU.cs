@@ -16,8 +16,19 @@ namespace Appreq {
 
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    private bool _isDiffMode;
     [XmlIgnore]
-    public bool IsDiffMode { get; set; }
+    public bool IsDiffMode {
+      get {
+        return _isDiffMode;
+      }
+      set {
+        _isDiffMode = value;
+        foreach (var cpu in CPUs) {
+          cpu.IsDiffMode = value;
+        }
+      }
+    }
 
     public void Diff(CPU other) {
       if (null == other) {

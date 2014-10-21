@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
@@ -16,8 +15,20 @@ namespace Appreq {
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    private bool _isDiffMode;
     [XmlIgnore]
-    public bool IsDiffMode { get; set; }
+    public bool IsDiffMode {
+      get {
+        return _isDiffMode;
+      }
+      set {
+        _isDiffMode = value;
+        OS.IsDiffMode = value;
+        Browsers.IsDiffMode = value;
+        NetFramework.IsDiffMode = value;
+        JavaFramework.IsDiffMode = value;
+      }
+    }
 
     public void Diff(Software other) {
       if (null == other) {

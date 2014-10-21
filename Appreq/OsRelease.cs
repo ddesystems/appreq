@@ -10,6 +10,7 @@ namespace Appreq {
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    private bool _isDiffMode;
     [XmlIgnore]
     public bool IsDiffMode { get; set; }
 

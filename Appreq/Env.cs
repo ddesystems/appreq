@@ -12,8 +12,18 @@ namespace Appreq {
     public bool? CheckPassed { get; set; }
     [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    private bool _isDiffMode;
     [XmlIgnore]
-    public bool IsDiffMode { get; set; }
+    public bool IsDiffMode {
+      get {
+        return _isDiffMode;
+      }
+      set {
+        _isDiffMode = value;
+        Software.IsDiffMode = value;
+        Hardware.IsDiffMode = value;
+      }
+    }
 
     public void Diff(Env other) {
       if (null == other) {

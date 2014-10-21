@@ -3,19 +3,28 @@ using System.Xml.Serialization;
 
 namespace Appreq {
   [Serializable]
-  public class Profile/*: EntityBase*/ {
+  public class Profile {
     public App App { get; set; }
     public Env Environment { get; set; }
     /*
     [XmlArray("Dependencies")]
     [XmlArrayItem("App", typeof(App))]
     public App[] Dependencies { get; set; }
-    */
+    */    
     public bool? CheckPassed { get; set; }
     public bool ShouldSerializeCheckPassed() { return IsDiffMode; }
+    private bool _isDiffMode;
     [XmlIgnore]
-    public bool IsDiffMode { get; set; }
-
+    public bool IsDiffMode {
+      get {
+        return _isDiffMode;
+      }
+      set {
+        _isDiffMode = value;
+        Environment.IsDiffMode = value;
+      }
+    }
+    
     public void Diff(Profile other) {
       if (null == other) {
         return;

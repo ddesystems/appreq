@@ -547,6 +547,7 @@ namespace Appreq {
 
     private void ImportProfile_Command(object sender, EventArgs e) {
       openFileDialog1.Filter = FILE_DIALOG_FILTER;
+      openFileDialog1.FileName = string.Empty;
       var result = openFileDialog1.ShowDialog();
       if (DialogResult.OK == result) {
         try {
