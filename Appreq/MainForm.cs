@@ -86,7 +86,8 @@ namespace Appreq {
             _appProfile.Diff(_currentProfile);
           }
           TreeViewHelper.populateTreeView(_currentProfile, profileTreeView);
-          TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true);
+          // Display only top-level report nodes by default
+          TreeViewHelper.populateTreeView(_currentProfile, reportTreeView, true, 2);
           TreeViewHelper.populateTreeView(_appProfile, appTreeView);
           openButton.Enabled = ProfileMode.External == Mode;
           openMenuItem.Enabled = ProfileMode.External == Mode;
@@ -569,7 +570,10 @@ namespace Appreq {
       var result = saveFileDialog1.ShowDialog();
       if (result == DialogResult.OK) {
         try {
+          var isDiffMode = _currentProfile.IsDiffMode;
+          _currentProfile.IsDiffMode = false;
           ProfileSerializer.SerializeToFile(_currentProfile, saveFileDialog1.FileName);
+          _currentProfile.IsDiffMode = isDiffMode;
           toolStripStatusLabel1.Text = string.Format("Saved to: {0}", saveFileDialog1.FileName);
         } catch (Exception ex) {
           toolStripStatusLabel1.Text = ex.Message;

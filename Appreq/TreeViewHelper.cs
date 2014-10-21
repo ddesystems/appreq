@@ -42,7 +42,7 @@ namespace Appreq {
       }
     }
 
-    public static void populateTreeView(Profile profile, TreeView treeView, bool diffOnly = false) {
+    public static void populateTreeView(Profile profile, TreeView treeView, bool diffOnly = false, int nodeLevel = 4) {
       if (null == profile || null == treeView) {
         return;
       }
@@ -69,17 +69,17 @@ namespace Appreq {
         }
       }            
       foreach(TreeNode node in treeView.Nodes) {
-        ExpandRecursive(node);
+        ExpandRecursive(node, nodeLevel);
       }
     }
-    public static void ExpandRecursive(TreeNode node) {
-      if(null == node || 4 == node.Level) {
+    public static void ExpandRecursive(TreeNode node, int nodeLevel) {
+      if (null == node || nodeLevel == node.Level) {
         return;
       }
       node.Expand();
       if (null != node.Nodes) {
         foreach (TreeNode innerNode in node.Nodes) {
-          ExpandRecursive(innerNode);
+          ExpandRecursive(innerNode, nodeLevel);
         }
       }
     }

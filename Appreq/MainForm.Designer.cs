@@ -118,6 +118,10 @@
           this.grpLocal.TabStop = false;
           this.grpLocal.Text = "System Profile";
           // 
+          // saveFileDialog1
+          // 
+          this.saveFileDialog1.Filter = "XML files|*.xml";
+          // 
           // ststatus
           // 
           this.ststatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -425,7 +429,7 @@
           // 
           // openFileDialog1
           // 
-          this.openFileDialog1.FileName = "openFileDialog1";
+          this.openFileDialog1.Filter = "XML files|*.xml";
           // 
           // externalModeCheck
           // 

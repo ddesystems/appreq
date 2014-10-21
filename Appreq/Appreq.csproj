@@ -70,6 +70,7 @@
     <Compile Include="OSInfo.cs" />
     <Compile Include="OsRelease.cs" />
     <Compile Include="Profile.cs" />
+    <Compile Include="EntityBase.cs" />
     <Compile Include="ProfileMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

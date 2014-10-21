@@ -271,8 +271,9 @@ namespace Appreq {
     }
     public Profile GetData() {
       var app = new Profile {
-        App = GetApps()[0],
-        Dependencies = GetApps(),
+        //App = GetApps()[0],
+        //TODO: Implement dependencies
+        //Dependencies = GetApps(),
         Environment = new Env {
           Hardware = new Hardware(),
           Software = new Software(),          
